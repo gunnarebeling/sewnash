@@ -1,0 +1,6 @@
+@sewnash_HostAddress = http://localhost:5054
+
+GET {{sewnash_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
