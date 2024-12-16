@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 import { Route, Routes } from "react-router-dom";
-import { AuthorizedRoute } from "./auth/AuthorizedRoute";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
-import { useEffect, useState } from "react";
-import { tryGetLoggedInUser } from "../managers/authManager";
-import { Spinner } from "reactstrap";
-import { EmployeeRoutes } from "./employee/EmployeeRoutes";
-import { CustomerRoutes } from "./customer/CustomerRoutes";
 
+import { useEffect, useState } from "react";
+
+import { Spinner } from "reactstrap";
+import { AuthorizedRoute } from "./components/auth/AuthorizedRoute";
+import { Login } from "./components/auth/Login";
+import {Register} from "./components/auth/Register"
+import { tryGetLoggedInUser } from "./managers/authManager";
+import { EmployeeRoutes } from "./components/employee/EmployeeRoutes";
+import { CustomerRoutes } from "./components/customer/CustomerRoutes";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   const [loggedInUser, setLoggedInUser] = useState();
@@ -26,10 +28,13 @@ export default function App() {
   }
   return (
     <Routes>
-      <CustomerRoutes/>  
-      <AuthorizedRoute loggedInUser={loggedInUser}>
-        <EmployeeRoutes/>
-      </AuthorizedRoute>
+      <Route path="/" element={<CustomerRoutes/>}/> 
+      <Route path="/employee/*" element= {
+        <AuthorizedRoute loggedInUser={loggedInUser}>
+          <EmployeeRoutes/>
+        </AuthorizedRoute>
+      }
+      />
       <Route
         path="login"
         element={<Login setLoggedInUser={setLoggedInUser} />}

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
 
-export default function Register({ setLoggedInUser }) {
+export function Register({ setLoggedInUser }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");

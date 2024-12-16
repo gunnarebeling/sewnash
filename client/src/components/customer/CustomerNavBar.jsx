@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
 Button,
@@ -20,8 +20,8 @@ return (
         
         <Nav navbar>
             <NavItem>
-            <NavLink tag={RRNavLink} to="/login">
-                <Button color="primary">Employee Login</Button>
+            <NavLink tag={RRNavLink} to="/employee">
+                <Button color="primary">Employee</Button>
             </NavLink>
             </NavItem>
         </Nav>
