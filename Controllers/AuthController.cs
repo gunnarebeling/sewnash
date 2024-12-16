@@ -8,6 +8,7 @@ using System.Text;
 using SewNash.Models;
 using SewNash.Models.DTOs;
 using SewNash.Data;
+using System.Net.Sockets;
 
 namespace SewNash.Controllers;
 
@@ -109,7 +110,7 @@ public class AuthController : ControllerBase
                 LastName = profile.LastName,
                 IdentityUserId = identityUserId,
                 UserName = User.FindFirstValue(ClaimTypes.Name),
-
+                Email = User.FindFirstValue(ClaimTypes.Email),
                 Roles = roles
             };
 
