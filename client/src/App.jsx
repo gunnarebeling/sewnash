@@ -11,6 +11,7 @@ import { tryGetLoggedInUser } from "./managers/authManager";
 import { EmployeeRoutes } from "./components/employee/EmployeeRoutes";
 import { CustomerRoutes } from "./components/customer/CustomerRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-datepicker/dist/react-datepicker.css";
 import './App.css'
 export const UserContext = createContext()
 export default function App() {
@@ -30,7 +31,7 @@ export default function App() {
   return (
     <UserContext.Provider value={{loggedInUser, setLoggedInUser}}>
       <Routes>
-        <Route path="/" element={<CustomerRoutes/>}/> 
+        <Route path="/*" element={<CustomerRoutes/>}/> 
         <Route path="/employee/*" element= {
           <AuthorizedRoute loggedInUser={loggedInUser}>
             <EmployeeRoutes/>

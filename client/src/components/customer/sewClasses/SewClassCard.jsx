@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 
+import { convertToDollars } from '../../../managers/FormatFunctions'
 import './SewClassCard.css'
 
 
@@ -18,8 +19,9 @@ export const SewClassCard = ({sewClass}) => {
                         <span className="m-2 mb-1" >{sewClass?.name}</span>
 
                     </div>
-                    <div className="m-2 mb-1"><span >something</span></div>
-                    <div className="m-2 mb-1"><span>lefdsklfdsajfldsanfvdavdsavdafa</span></div>
+                    <div className="m-2 mb-1"><span >{convertToDollars(sewClass.pricePerPerson)} per person</span></div>
+                    <div className="m-2 mb-1"><span>Max capacity: {sewClass.maxPeople}</span></div>
+                    <div className="m-2 mb-1"><span>Duration: {sewClass.duration} hours</span></div>
                     
                 </div>
             

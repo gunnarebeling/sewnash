@@ -1,78 +1,45 @@
-
-
-.custom-img{
+.custom-img {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
-.card{
+
+.card {
+    display: flex;
     max-width: 1500px;
 }
+
+.image-container {
+    flex: 0 0 150px; /* Do not grow or shrink, fixed width */
+}
+
+.details {
+    flex: 1 1 auto; /* Shrinks and grows to fit */
+    overflow: hidden; /* Prevents content overflow */
+}
+
 @media (max-width: 768px) {
-    
-    
     .custom-img {
-        height: 150px; 
+        height: 150px; /* Adjust image height for medium screens */
     }
 
-    .card {
-        max-width: 150px; 
-
-}
+    .image-container {
+        flex: 0 0 120px; /* Slightly smaller fixed width */
+    }
 
     
 }
+
 @media (max-width: 576px) {
-    .vinyl-card {
-        max-width: 100px;
-        min-height: 100px;
-    }
-    
     .custom-img {
-        height: 100px;
+        height: 100px; /* Smaller height for very small screens */
     }
 
-    .vinyl {
-        max-width: 100px;
+    .image-container {
+        flex: 0 0 100px; /* Fixed width for smallest screens */
     }
-    .card-likes{
-        display: none;
+
+    .details {
+        font-size: 0.8rem; /* Further reduce text size */
     }
-  
-
-}
-.btn{
-    max-height: 55px;
-}
-
-.like-icon{
-    color:red;
-    
-}
-.popover-details{
-    color: black;
-}
-.likes-count{
-    color: black;
-}
-.likes-icon{
-    color: rgba(212, 94, 94, 0.482);
-    color: rgba(0, 0, 0, 0.482);
-}
-
-.likes-onvinyl{
-    max-height: 17px;
-}
-.owner-link{
-    color: var(--bs-primary);
-    cursor: pointer;
-}
-.owner-link:hover{
-    font-size: 1.2rem; 
-    transition: font-size 0.3s ease;
-}
-
-audio {
-    width: 100%; 
-    margin-top: 10px; 
 }

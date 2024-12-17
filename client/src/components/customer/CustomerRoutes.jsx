@@ -1,21 +1,17 @@
-import { Outlet, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import CustomerNavBar from "./CustomerNavBar"
 import { CustomerHome } from "./CustomerHome"
+import { BookByClass } from "./sewClasses/BookByClass"
 
 export const CustomerRoutes = () => {
     return (
-        <Routes>
-            <Route
-                path="/"
-                element={
-                    <>
-                        <CustomerNavBar/>
-                        <Outlet/>
-                    </>
-                }
-                >
-                    <Route index element={<CustomerHome/>}/>
-            </Route>
-        </Routes>
+        <>
+      <CustomerNavBar />
+      <Routes>
+        <Route path="/" element={<CustomerHome />} />
+        <Route path="/bookings/class/:classId" element={<BookByClass />} />
+      </Routes>
+      
+    </>
     )
 }
