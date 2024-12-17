@@ -8,12 +8,13 @@ NavItem,
 Navbar,
 NavbarBrand,
 } from "reactstrap";
+import './CustomerNavBar.css'
 
 
 export default function CustomerNavBar() {
 return (
-    <div>
-    <Navbar color="light" light fixed="true" expand="lg">
+    <div >
+    <Navbar className="nav-bg" light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
         sewnash
         </NavbarBrand>
