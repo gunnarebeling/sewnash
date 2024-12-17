@@ -15,6 +15,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Availability> Availabilities { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Booking> Bookings { get; set; }
+    public DbSet<SewClass> SewClasses {get; set;}
     
 
     public SewNashDbContext(DbContextOptions<SewNashDbContext> context, IConfiguration config) : base(context)
@@ -105,6 +106,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Description = "Learn to build a bag.",
                 MaxPeople = 8,
                 PricePerPerson = 50.00m,
+                Duration = 2
             },
             new SewClass
             {
@@ -113,6 +115,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Description = "Learn to build a Dog Bandana.",
                 MaxPeople = 6,
                 PricePerPerson = 75.00m,
+                Duration = 2
             },
             new SewClass
             {
@@ -121,6 +124,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Description = "Learn to build a boot stocking .",
                 MaxPeople = 10,
                 PricePerPerson = 60.00m,
+                Duration = 2
             }
             
         });

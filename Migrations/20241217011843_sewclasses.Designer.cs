@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241217011843_sewclasses")]
+    partial class sewclasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa8540c1-6bc2-46db-b0e0-ed75f40053a1",
+                            ConcurrencyStamp = "475b0720-cb30-47b4-98ea-4ba72e96674f",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMXbO1q4kMyj+ptQGO8EYJFhPOCPvjUmso0bPFSuiFdm6fcqTMwwBZxFVNPWFxsiRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMfNgW8j6yOMk4D+sxevJ/hddP5/qDIo1B+GN7DUzteCJeXL9HIEC8V/S+oBzTwM7Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a00cbde3-af55-4297-96e9-dd69d139d882",
+                            SecurityStamp = "9e58bf39-b89e-41f6-943d-b59ec42ce032",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4ad9d719-dd68-45ca-8a7a-bcd79f19173c",
+                            ConcurrencyStamp = "c2e76d9e-8a8a-47ef-8e38-beb85701d34e",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENamA3K+mUPkZQMHivazwl/yWSNX/Du8qF9+TxksvI05kzvBnQn+c5xzfoSs5sbWsQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGFHc1gkgtppsKyrmcpq3eCrpiXC0H5+Nc4XciejPpBrPg5qv6qz3LhGY2zsGHSzCQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a1cc5725-687b-4f08-9d8a-c99b7019155e",
+                            SecurityStamp = "617f4a8d-8939-4fa6-8b99-f1d235743741",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -683,9 +686,6 @@ namespace sewnash.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("integer");
-
                     b.Property<int>("MaxPeople")
                         .HasColumnType("integer");
 
@@ -705,7 +705,6 @@ namespace sewnash.Migrations
                         {
                             Id = 1,
                             Description = "Learn to build a bag.",
-                            Duration = 2,
                             MaxPeople = 8,
                             Name = "Bag class",
                             PricePerPerson = 50.00m
@@ -714,7 +713,6 @@ namespace sewnash.Migrations
                         {
                             Id = 2,
                             Description = "Learn to build a Dog Bandana.",
-                            Duration = 2,
                             MaxPeople = 6,
                             Name = "Dog Bandana",
                             PricePerPerson = 75.00m
@@ -723,7 +721,6 @@ namespace sewnash.Migrations
                         {
                             Id = 3,
                             Description = "Learn to build a boot stocking .",
-                            Duration = 2,
                             MaxPeople = 10,
                             Name = "boot stocking",
                             PricePerPerson = 60.00m
