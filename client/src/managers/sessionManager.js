@@ -6,3 +6,6 @@ export const getSessionByClassId = (classId) => {
 export const getSessionById = (sessionId) => {
     return fetch(`${_apiUrl}/${sessionId}`).then(res => res.json())
 }
+export const getAllSessions = () => {
+    return fetch(_apiUrl).then(res => res.json())
+}

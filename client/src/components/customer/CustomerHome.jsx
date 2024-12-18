@@ -43,8 +43,8 @@ export const CustomerHome = () => {
                       className="datepicker-input"
                       aria-label="Pick a date using the calendar"
                       customInput={
-                        <button type="button" className="btn m-2 d-flex align-items-center">
-                          <FiCalendar className="icon-calendar me-1" />
+                        <button type="button" className="btn m-2 search-btn d-flex align-items-center ">
+                          <FiCalendar className="icon-calendar  me-1" />
                           <span>
                             {selectedDate
                               ? selectedDate.toLocaleDateString()
