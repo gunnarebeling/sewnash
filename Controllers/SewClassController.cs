@@ -28,6 +28,13 @@ public class SewClassController : ControllerBase
         return Ok( _dbContext.SewClasses.ProjectTo<SewClassDTO>(_mapper.ConfigurationProvider));
     }
 
+    [HttpGet("{id}")]
+    public IActionResult GetDetails(string id)
+    {
+        SewClassDTO sewClass = _dbContext.SewClasses.ProjectTo<SewClassDTO>(_mapper.ConfigurationProvider).Single(s => s.Id == int.Parse(id));
+        return Ok(sewClass);
+    }
+
     
 
 }

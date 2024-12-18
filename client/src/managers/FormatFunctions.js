@@ -6,8 +6,9 @@ export const convertToDollars = (price) => {
       
 }
 
-export const normalizeDate = (date) => {
-    const normalizedDate = new Date(date);
-    normalizedDate.setHours(0, 0, 0, 0); // Remove time part
-    return normalizedDate;
-  };
+export const formatDate = (date) => {
+  if (typeof date === "string") {
+    date = new Date(date)
+  }
+  return date.toISOString().split("T")[0]
+};

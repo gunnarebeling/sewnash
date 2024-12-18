@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getClassById } from "../../../managers/sewClassManager"
 import { Col, Container, Row } from "reactstrap"
-import { convertToDollars, normalizeDate } from "../../../managers/FormatFunctions"
+import { convertToDollars, formatDate } from "../../../managers/FormatFunctions"
 import DatePicker from "react-datepicker"
 import { getSessionByClassId } from "../../../managers/sessionManager"
 
@@ -11,6 +11,7 @@ export const BookByClass = () => {
     const [sessions, setSessions] = useState([])
     const [highlightDates, setHighlightDates] = useState([])
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectSessions, setSelectSessions] = useState([])
     const {classId} = useParams()
 
     useEffect(() => {
@@ -27,11 +28,15 @@ export const BookByClass = () => {
         })
         setHighlightDates(dates)  // Set the highlightDates to an array of Date objects
     }, [sessions])
+    useEffect(() => {
+        const dateSessions = sessions.filter(s => formatDate(s.dateTime) === formatDate(selectedDate))
+        setSelectSessions(dateSessions)
+    }, [selectedDate])
 
     return (
         <Container fluid>
             <Row>
-                <Col md="6" sm="6" className=" text-center">
+                <Col  className=" text-center">
                     <div id='detail-header' className="m-5">
                         <h2>{sewClass.name}</h2>
                         <p></p>
@@ -61,6 +66,18 @@ export const BookByClass = () => {
                         inline
 
                     />
+                </div>
+                <div className="m-4 d-flex justify-content-center">
+                    {selectSessions.map(s => {
+                        return(
+                        <div key={s.id} >
+                            <span className="border border-2 bg-white p-2 rounded">{sewClass.name} {s.time?.startTime} {'>'}</span>
+                            
+                        </div>
+                        )
+
+                    })}
+
                 </div>
                 </Col>
             </Row>
