@@ -34,8 +34,7 @@ export const CustomerHome = () => {
               <div className="flow-header-button  flow-search-button d-flex align-items-center justify-content-center" >
                 {/* Datepicker Button */}
                 <div className="datepicker-button shadow ">
-                  <button type="button" className="btn  d-flex align-items-center">
-                    
+                  
                     <DatePicker
                       selected={selectedDate}
                       onChange={(date) => setSelectedDate(date)}
@@ -54,7 +53,6 @@ export const CustomerHome = () => {
                         </button>
                       }
                     />
-                  </button>
                 <div className="search-icon rounded-end">
                   <a
                     href="#"
