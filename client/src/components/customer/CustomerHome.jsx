@@ -20,7 +20,7 @@ export const CustomerHome = () => {
     const handleClassClick = (e) => {
       e.preventDefault()
       const classId = e.currentTarget.dataset.id
-      navigate(`bookings/class/${classId}`)
+      navigate(`class/${classId}`)
 
     }
     return (

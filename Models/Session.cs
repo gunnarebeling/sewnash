@@ -19,9 +19,9 @@ public class Session
     
     public Day Day { get; set; }
     [Required]
-    public bool Open { get; set; }
     public List<Booking> Bookings { get; set; }
     public List<Employee> Employees { get; set; }
 
+    public bool Open { get; set; }
 
 }
