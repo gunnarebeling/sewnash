@@ -5,3 +5,6 @@ html, body {
   height: 100%; /* Ensure the root elements are full height */
   margin: 0; /* Remove default margin */
 }
+.clickable-div {
+  cursor: pointer; /* Changes the cursor to a pointer when hovering over the div */
+}

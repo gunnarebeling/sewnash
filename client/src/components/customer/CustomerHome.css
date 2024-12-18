@@ -42,13 +42,13 @@
     color: #5c5c5c; /* Gray color for the calendar icon */
   }
   
-  button.btn {
+  /* button.btn {
     display: flex;
     align-items: center;
     border: none;
 
     padding: 0;
-  }
+  } */
   
   button.btn:hover {
     cursor: pointer;

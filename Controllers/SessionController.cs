@@ -22,10 +22,17 @@ public class SessionController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet("{classId}")]
-    public IActionResult GetDetails(string classId)
+    [HttpGet("class/{classId}")]
+    public IActionResult GetDetailsForClass(string classId)
     {
-       return Ok(  _dbContext.Sessions.ProjectTo<SessionForClassBookingDTO>(_mapper.ConfigurationProvider).Where(s => s.SewClassId == int.Parse(classId)));
+       return Ok(  _dbContext.Sessions.ProjectTo<SessionDTO>(_mapper.ConfigurationProvider).Where(s => s.SewClassId == int.Parse(classId)));
+        
+    }
+
+    [HttpGet("{sessionId}")]
+    public IActionResult GetSessionById(string sessionId)
+    {
+       return Ok(  _dbContext.Sessions.ProjectTo<SessionDTO>(_mapper.ConfigurationProvider).SingleOrDefault(s => s.Id == int.Parse(sessionId)));
         
     }
 

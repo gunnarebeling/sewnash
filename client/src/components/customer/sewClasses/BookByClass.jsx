@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getClassById } from "../../../managers/sewClassManager"
 import { Col, Container, Row } from "reactstrap"
 import { convertToDollars, formatDate } from "../../../managers/FormatFunctions"
@@ -13,6 +13,7 @@ export const BookByClass = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectSessions, setSelectSessions] = useState([])
     const {classId} = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getClassById(classId).then(setSewClass)
@@ -32,6 +33,12 @@ export const BookByClass = () => {
         const dateSessions = sessions.filter(s => formatDate(s.dateTime) === formatDate(selectedDate))
         setSelectSessions(dateSessions)
     }, [selectedDate])
+
+    const handleSessionClick = (e) => {
+        const sessionId = e.target.dataset.id
+        navigate(`/booking/${sessionId}`)
+    }
+    
 
     return (
         <Container fluid>
@@ -71,7 +78,7 @@ export const BookByClass = () => {
                     {selectSessions.map(s => {
                         return(
                         <div key={s.id} >
-                            <span className="border border-2 bg-white p-2 rounded">{sewClass.name} {s.time?.startTime} {'>'}</span>
+                            <span data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-2 rounded clickable-div">{sewClass.name} {s.time?.startTime} {'>'}</span>
                             
                         </div>
                         )
