@@ -18,10 +18,10 @@ export const BookingsList = () => {
         let newDate = new Date(s.dateTime); 
         newDate.setHours(newDate.getHours() + s.sewClass.duration);
         const event = {
-            title: s.sewClass?.name,
-            desc: `total people ${s.totalPeople}`,
+            title: `${!s.open ? `🔒` : "" } ${s.sewClass?.name}`,
             start: new Date(s.dateTime),
-            end: newDate
+            end: newDate,
+            
 
         }
         return event
@@ -53,7 +53,8 @@ export const BookingsList = () => {
       events={events}
       startAccessor="start"
       endAccessor="end"
-      style={{ height: 600 }}
+      style={{ height: 1000 }}
+      
     />
   );
 }
