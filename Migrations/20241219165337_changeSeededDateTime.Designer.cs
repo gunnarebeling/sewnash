@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219165337_changeSeededDateTime")]
+    partial class changeSeededDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "802bfe8c-84b4-40a3-bcc6-19758db90014",
+                            ConcurrencyStamp = "eb64bfe7-2f52-401b-a1c0-08e1b0663523",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKa6Kl3+Dpo+NokPBk29fSBpPqFw6bZHfmRVSRtZkyrXs7vjXC8y6NshH3Boz0VVTg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK279ZlGswCoAZe5ySWTLmoQjKOp96iDw826Du96Td0QGhmgB4K5owO3//s8exxA6A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "65c366f5-bc08-4801-b0ab-c918923cc0e3",
+                            SecurityStamp = "14aa8adb-0643-4c9a-8582-569c3f73af0a",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4506506-e7bf-4b3b-aa12-5e91b5400721",
+                            ConcurrencyStamp = "28a0ccd2-24a3-439d-a19f-32e5f1ccee6d",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEAG/ps2wAWRku0U6QZwHyYhh/60OWQjNMfaBKOOeTiVXtHmo0kTE+HxlzJ2SA756eg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIHniJfLYF5cd3P6uJqWcTR8qJmdREbMwZSqK8Yzy7txpso2SO3X403x6TUe1zyX6Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6c807b8a-84a8-43c2-b712-2ac9f0f20c05",
+                            SecurityStamp = "0205cffc-cb73-4372-9cf2-8f8b8a2990e0",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -645,7 +648,7 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 1,
-                            DateTime = new DateTime(2025, 1, 15, 16, 0, 0, 0, DateTimeKind.Utc),
+                            DateTime = new DateTime(2025, 1, 15, 10, 0, 0, 0, DateTimeKind.Local),
                             DayId = 1,
                             Open = true,
                             SewClassId = 1,
@@ -654,7 +657,7 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 2,
-                            DateTime = new DateTime(2025, 1, 16, 20, 0, 0, 0, DateTimeKind.Utc),
+                            DateTime = new DateTime(2025, 1, 16, 14, 0, 0, 0, DateTimeKind.Local),
                             DayId = 2,
                             Open = true,
                             SewClassId = 2,
@@ -663,7 +666,7 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 3,
-                            DateTime = new DateTime(2025, 1, 16, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateTime = new DateTime(2025, 1, 15, 18, 0, 0, 0, DateTimeKind.Local),
                             DayId = 5,
                             Open = true,
                             SewClassId = 3,

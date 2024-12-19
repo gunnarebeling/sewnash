@@ -22,6 +22,14 @@ public class SessionController : ControllerBase
         _mapper = mapper;
     }
 
+    [HttpGet]
+    [Authorize]
+    public IActionResult GetAll()
+    {
+       return Ok( _dbContext.Sessions.ProjectTo<SessionDTO>(_mapper.ConfigurationProvider));
+        
+    }
+
     [HttpGet("class/{classId}")]
     public IActionResult GetDetailsForClass(string classId)
     {

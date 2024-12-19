@@ -12,6 +12,7 @@ import { EmployeeRoutes } from "./components/employee/EmployeeRoutes";
 import { CustomerRoutes } from "./components/customer/CustomerRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './App.css'
 export const UserContext = createContext()
 export default function App() {
