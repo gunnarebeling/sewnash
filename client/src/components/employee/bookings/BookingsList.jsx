@@ -19,6 +19,7 @@ export const BookingsList = () => {
         newDate.setHours(newDate.getHours() + s.sewClass.duration);
         const event = {
             title: s.sewClass?.name,
+            desc: `total people ${s.totalPeople}`,
             start: new Date(s.dateTime),
             end: newDate
 

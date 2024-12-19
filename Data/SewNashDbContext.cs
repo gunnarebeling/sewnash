@@ -194,7 +194,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
             {
                 Id = 1,
                 SewClassId = 1, // Sewing Class 1
-                DateTime = new DateTime(2025, 1, 15, 10, 0, 0), // Jan 15, 2024, at 10:00 AM
+                DateTime = new DateTime(2025, 1, 15, 10, 0, 0, DateTimeKind.Local).ToUniversalTime(), // Jan 15, 2024, at 10:00 AM
                 TimeId = 1, // Example Time reference (10:00 AM)
                 DayId = 1, // Example Day reference (Monday)
                 Open = true
@@ -203,7 +203,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
             {
                 Id = 2,
                 SewClassId = 2, // Sewing Class 2
-                DateTime = new DateTime(2025, 1, 16, 14, 0, 0), // June 10, 2024, at 2:00 PM
+                DateTime = new DateTime(2025, 1, 16, 14, 0, 0, DateTimeKind.Local).ToUniversalTime(), // June 10, 2024, at 2:00 PM
                 TimeId = 2, // Example Time reference (2:00 PM)
                 DayId = 2, // Example Day reference (Tuesday)
                 Open = true
@@ -212,7 +212,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
             {
                 Id = 3,
                 SewClassId = 3, // Sewing Class 3
-                DateTime = new DateTime(2025, 1, 15, 18, 0, 0), // April 20, 2024, at 6:00 PM
+                DateTime = new DateTime(2025, 1, 15, 18, 0, 0, DateTimeKind.Local).ToUniversalTime(), // April 20, 2024, at 6:00 PM
                 TimeId = 3, // Example Time reference (6:00 PM)
                 DayId = 5, // Example Day reference (Saturday)
                 Open = true
