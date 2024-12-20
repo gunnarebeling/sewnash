@@ -2,8 +2,6 @@ import { useEffect, useState } from "react"
 
 import "./ClassList.css"
 import { Button, Col, Container, Row } from "reactstrap"
-import { FiCalendar, FiSearch } from "react-icons/fi"
-import DatePicker from "react-datepicker"
 import { useNavigate } from "react-router-dom"
 import { getAllClasses } from "../../../managers/sewClassManager"
 import { SewClassCard } from "../../customer/sewClasses/SewClassCard"
@@ -11,7 +9,6 @@ import { SewClassCard } from "../../customer/sewClasses/SewClassCard"
 
 export const ClassList = () => {
     const [allClasses, setAllClasses] = useState([])
-    const [selectedDate, setSelectedDate] = useState(null);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -21,7 +18,7 @@ export const ClassList = () => {
     const handleClassClick = (e) => {
       e.preventDefault()
       const classId = e.currentTarget.dataset.id
-      navigate(`class/${classId}`)
+      navigate(`${classId}`)
 
     }
     return (
