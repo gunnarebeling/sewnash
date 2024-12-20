@@ -14,7 +14,7 @@ import './CustomerNavBar.css'
 export default function CustomerNavBar() {
 return (
     <div >
-    <Navbar className="nav-bg" light fixed="true" expand="lg">
+    <Navbar className="nav-bg" light fixed="true" expand={false}>
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
         sewnash
         </NavbarBrand>

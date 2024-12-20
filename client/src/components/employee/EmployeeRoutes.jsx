@@ -1,6 +1,8 @@
 import { Outlet, Route, Routes } from "react-router-dom"
 import EmployeeNavBar from "./EmployeeNavBar"
 import { BookingsList } from "./bookings/BookingsList"
+import { ClassList } from "./Classes/ClassList"
+
 
 export const EmployeeRoutes = () => {
     return (
@@ -17,6 +19,7 @@ export const EmployeeRoutes = () => {
                 >
                     {/* Employee Routes here */}
                     <Route index element={<BookingsList/>} />
+                    <Route path="classes" element={<ClassList/>} />
                 
 
             </Route>

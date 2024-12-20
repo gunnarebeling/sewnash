@@ -19,12 +19,17 @@ export default function EmployeeNavBar() {
 
     return (
         <div>
-        <Navbar color="light" light fixed="true" expand="lg">
+        <Navbar color="light" light fixed="true" expand={true}>
             <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
             sewnash
             </NavbarBrand>
             
             <Nav navbar>
+            <NavItem>
+                <NavLink tag={RRNavLink} to="classes">
+                    Classes
+                </NavLink>
+                </NavItem>
                 <NavItem>
                 <NavLink tag={RRNavLink} to="/">
                     <Button color="primary">Customer</Button>
