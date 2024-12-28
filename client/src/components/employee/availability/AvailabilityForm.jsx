@@ -4,10 +4,13 @@ import DatePicker from "react-datepicker";
 import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllTimes } from "../../../managers/timeManager";
+import { getAllEmployees } from "../../../managers/employeeManager";
+import { postAvailability } from "../../../managers/availabilityManager";
 
 export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => {
     const [dropdownStates, setDropdownStates] = useState({});
-    const [newSession, setNewSession] = useState([]);
+    const [employees, setEmployees] = useState([]);
+    const [employeeDropDown, setEmployeeDropDown] = useState(false)
     const [allTimes, setAllTimes] = useState([]);
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedDateRange, setSelectedDateRange] = useState([selectedDate, null]); // [startDate, endDate]
@@ -16,7 +19,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
         days: [],
         employees: [],
     });
-    // const dropdownToggle = () => setDropdownOpen(!dropdownOpen);
+    const employeeDropdownToggle = () => setEmployeeDropDown(!employeeDropDown);
 
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -30,6 +33,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
         if (!selectedDate) return; // Exit if no date is provided
         setSelectedDateRange([selectedDate, selectedDate]);
         getAllTimes().then(setAllTimes);
+        getAllEmployees().then(setEmployees)
     }, [selectedDate]);
 
     // Handle updates to selectedDays and formData when date range changes
@@ -70,6 +74,20 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
 
     const onConfirm = (e) => {
         e.preventDefault();
+        let finalDays = selectedDays.reduce((list, d) => {
+            if (d.checked) {
+                list.push( {
+                    id: d.id,
+                    dayOfWeek: d.name,
+                    times: [...d.times]
+                })
+            }
+            return list
+        }, [])
+        let copy = {...formData,
+            days: finalDays
+        }
+        postAvailability(copy)
         toggle(); // Close the modal
     };
 
@@ -117,9 +135,22 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                 timeChangeDay.times.push(parseInt(time));
             }
         }
+
     
         setSelectedDays(updatedDays);
     };
+    const employeeChange = (e) => {
+        const id = parseInt(e.target.id)
+
+        let copy = {...formData}
+        if(!copy.employees.some(e => e === id))
+        {
+            copy.employees.push(id)
+        }else{
+            copy.employees = copy.employees.filter(e => e !== id)
+        }
+        setFormData(copy)
+    }
 
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
@@ -145,6 +176,28 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                                     <Button className="m-2" onClick={yearClick}>One Year</Button>
                                 </div>
                             </FormGroup>
+                            <div className="m-3">
+                                <Label>Employees</Label>
+                            <Dropdown isOpen={employeeDropDown} toggle={employeeDropdownToggle} className="m-3">
+                                              <DropdownToggle caret >Choose employees</DropdownToggle>
+                                              <DropdownMenu >
+                                                {employees.map((e) => (
+                                                  <DropdownItem key={e.id} toggle={false}>
+                                                    <input
+                                                      type="checkbox"
+                                                      id={e.id}
+                                                      name={e.fullName}
+                                                      onChange={employeeChange}
+                                                      checked={formData.employees.some(employee => parseInt(employee) === e.id)}
+                                                      
+                                                      
+                                                    />
+                                                    <label>{e.fullName}</label>
+                                                  </DropdownItem>
+                                                ))}
+                                              </DropdownMenu>
+                                            </Dropdown>
+                            </div>
                         </Col>
                         <Col>
                             {selectedDays.map((d) => {
@@ -182,6 +235,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                                     </div>
                                 );
                             })}
+                            
                         </Col>
                     </Row>
                 </Form>

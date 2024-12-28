@@ -11,22 +11,22 @@ namespace SewNash.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AvailabilityController : ControllerBase
+public class EmployeeController : ControllerBase
 {
     private SewNashDbContext _dbContext;
     private IMapper _mapper;
 
-    public AvailabilityController(SewNashDbContext context, IMapper mapper)
+    public EmployeeController(SewNashDbContext context, IMapper mapper)
     {
         _dbContext = context;
         _mapper = mapper;
     }
 
-    [HttpPost]
+    [HttpGet]
     [Authorize]
-    public IActionResult Get([FromBody] AvailabilityPostDTO availabilityPost)
+    public IActionResult Get()
     {
-        return Ok(availabilityPost);
+        return Ok(_dbContext.Employees.ProjectTo<SimpleEmployeeDTO>(_mapper.ConfigurationProvider));
     }
 
 
