@@ -6,17 +6,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import { getAllTimes } from "../../../managers/timeManager";
 
 export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownStates, setDropdownStates] = useState({});
     const [newSession, setNewSession] = useState([]);
     const [allTimes, setAllTimes] = useState([]);
     const [selectedDays, setSelectedDays] = useState([]);
-    const [selectedDateRange, setSelectedDateRange] = useState([null, null]); // [startDate, endDate]
+    const [selectedDateRange, setSelectedDateRange] = useState([selectedDate, null]); // [startDate, endDate]
     const [formData, setFormData] = useState({
         dateRange: [],
         days: [],
         employees: [],
     });
-    const dropdownToggle = () => setDropdownOpen(!dropdownOpen);
+    // const dropdownToggle = () => setDropdownOpen(!dropdownOpen);
 
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -74,7 +74,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
     };
 
     const oneDayClick = () => {
-        // Set range to one day
+        // Set range to one time
         setSelectedDateRange([selectedDateRange[0], selectedDateRange[0]]);
     };
 
@@ -85,14 +85,40 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
     };
 
     const checkedDay = (e) => {
-        const day = e.target.name;
+        const time = e.target.name;
         let copy = [...selectedDays];
         copy.forEach((d) => {
-            if (d.id === parseInt(day)) {
+            if (d.id === parseInt(time)) {
                 d.checked = !d.checked;
             }
         });
         setSelectedDays(copy);
+    };
+    const toggleDropdown = (id) => {
+        setDropdownStates((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id],
+        }));
+    };
+
+    const timeChange = (e) => {
+        const { time, day } = e.target.dataset;
+    
+        // Create a deep copy of selectedDays to avoid direct mutation
+        let updatedDays = [...selectedDays];
+        let timeChangeDay = updatedDays.find(d => d.id === parseInt(day));
+    
+        if (timeChangeDay) {
+            if (timeChangeDay.times.includes(parseInt(time))) {
+                // Remove the time if it already exists
+                timeChangeDay.times = timeChangeDay.times.filter(t => t !== parseInt(time));
+            } else {
+                // Add the time if it doesn't exist
+                timeChangeDay.times.push(parseInt(time));
+            }
+        }
+    
+        setSelectedDays(updatedDays);
     };
 
     return (
@@ -131,19 +157,23 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                                             onChange={checkedDay}
                                         />
                                             <Label>{d.name}</Label>
-                                            <Dropdown isOpen={dropdownOpen} toggle={dropdownToggle}>
-                                              <DropdownToggle caret>Choose Days</DropdownToggle>
-                                              <DropdownMenu>
-                                                {weekdays.map((day, index) => (
-                                                  <DropdownItem key={index}>
+                                            <Dropdown isOpen={dropdownStates[d.id]} toggle={() => toggleDropdown(d.id)} className={!d.checked && 'd-none'}>
+                                              <DropdownToggle caret >Choose time</DropdownToggle>
+                                              <DropdownMenu >
+                                                {allTimes.map((time) => (
+                                                  <DropdownItem key={`${time.id}-${d.id}`} toggle={false}>
                                                     <input
                                                       type="checkbox"
-                                                      id={day}
-                                                      name={day}
-                                                      checked={selectedDays.includes(day)}
+                                                      id={`${time.id}-${d.id}`}
+                                                      data-day={d.id}
+                                                      data-time={time.id}
+                                                      name={time.startTime}
+                                                      onChange={timeChange}
+                                                      checked={d.times.some(t => parseInt(t) === time.id)}
+                                                      
                                                       
                                                     />
-                                                    <label htmlFor={day}>{day}</label>
+                                                    <label>{time.startTime}</label>
                                                   </DropdownItem>
                                                 ))}
                                               </DropdownMenu>
