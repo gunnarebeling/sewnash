@@ -15,6 +15,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
     const [selectedDays, setSelectedDays] = useState([]);
     const [selectedDateRange, setSelectedDateRange] = useState([selectedDate, null]); // [startDate, endDate]
     const [formData, setFormData] = useState({
+        sewClass: sewClass.id,
         dateRange: [],
         days: [],
         employees: [],
@@ -29,7 +30,10 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
 
     // Handle changes to the selected date range
     useEffect(() => {
-      
+        let copy = {...formData,
+            sewClass: sewClass.id
+        }
+        setFormData(copy)
         if (!selectedDate) return; // Exit if no date is provided
         setSelectedDateRange([selectedDate, selectedDate]);
         getAllTimes().then(setAllTimes);
