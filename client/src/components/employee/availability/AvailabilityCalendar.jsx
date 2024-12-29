@@ -6,8 +6,43 @@ import { useEffect, useState } from 'react';
 import { getAllSessions } from '../../../managers/sessionManager';
 import { Button } from 'reactstrap';
 
+import { useParams } from 'react-router-dom';
+import { setTimeFromString } from '../../../managers/FormatFunctions';
+import { AvailabilityForm } from './AvailabilityForm';
+
 export const AvailabilityCalendar = () => {
-  const [events, setEvents] = useState([]);
+  const {classId} = useParams()
+  const [sessions, setSessions] = useState([])
+  const [events, setEvents] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState("")
+  const [sewClass, setSewClass] = useState({})
+
+    useEffect(() => {
+        getAllSessions().then(setSessions)
+    }, [])
+
+    useEffect(() => {
+       const events = sessions.reduce((events , s) => {
+        if (s.sewClassId === parseInt(classId)) {
+          setSewClass(s.sewClass)
+          let newDate = setTimeFromString(new Date(s.dateTime), s.time?.startTime); 
+          const endDate = new Date(newDate); // Clone startDate
+          endDate.setHours(endDate.getHours() + s.sewClass.duration);
+
+          const event = {
+              title: `${!s.open ? `🔒` : "" } ${s.sewClass?.name}`,
+              start: newDate,
+              end: endDate,
+              
+  
+          }
+          events.push(event)
+        }
+        return events
+       }, []) 
+       setEvents(events)
+    }, [sessions])
   
   const locales = {
     'en-US': enUS,
@@ -23,30 +58,31 @@ export const AvailabilityCalendar = () => {
 
   const MyDateHeader = ({ date }) => {
     
-      return <div>{date.getDate()} <Button>+</Button></div>;
+      return <div>{date.getDate()} <Button onClick={(e => handleClick(date, e))}>+</Button></div>;
     }
-  
+    const toggleModal = () => {
+      setIsModalOpen(!isModalOpen);
+    };
 
-  const handleClick = (date) => {
-    console.log(`Clicked on day: ${date}`);
+  const handleClick = (date, e) => {
+    e.preventDefault()
+    console.log(`Clicked on day: ${date.toString()}`)
+    setSelectedDate(date.toString())
+    toggleModal()
+
     // Here, you can open a modal or perform any other action when the "+" button is clicked
   };
 
-  // Fetch sessions (events) if needed
-  useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        const sessions = await getAllSessions();  // Assuming getAllSessions returns an array of session data
-        setEvents(sessions);  // Update the events state with the fetched sessions
-      } catch (error) {
-        console.error('Error fetching sessions:', error);
-      }
-    };
-    fetchSessions();
-  }, []);
+  
 
   return (
     <div>
+      <AvailabilityForm 
+        isOpen = {isModalOpen}
+        toggle = {toggleModal}
+        selectedDate = {selectedDate}
+        sewClass={sewClass}
+      />
       <Calendar
         localizer={localizer}
         events={events} // Here you can pass the sessions or events

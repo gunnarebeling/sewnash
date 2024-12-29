@@ -16,6 +16,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<DayForAvailability, DayForAvailabilityDTO>();
         CreateMap<Time, TimeDTO>();
         CreateMap<Day, DayDTO>();
+        CreateMap<DayForAvailabilityPostDTO, Day>();
         CreateMap<Session, SessionForClassBookingDTO>();
         CreateMap<Session, SessionDTO>();
         CreateMap<Booking, BookingForSessionDTO>();

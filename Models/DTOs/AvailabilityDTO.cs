@@ -13,3 +13,10 @@ public class AvailabilityForClassDTO
 
 
 }
+public class AvailabilityPostDTO
+{
+    public int SewClass { get; set; }
+    public List<DateTime> DateRange { get; set; }
+    public List<DayForAvailabilityPostDTO> Days { get; set; }
+    public List<int> Employees { get; set; }
+}
