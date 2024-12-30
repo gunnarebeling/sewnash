@@ -3,13 +3,22 @@ import { useParams } from "react-router-dom"
 import { Button, Container,  Table } from "reactstrap"
 import { getSessionById } from "../../../managers/sessionManager"
 import { convertToDollars, formatAmericanDate } from "../../../managers/FormatFunctions"
+import { deleteBooking } from "../../../managers/bookingManager"
+import { UpdateBooking } from "./UpdateBooking"
 
 export const SessionDetails = () => {
     const {sessionId} = useParams()
+    const [modal, setModal] = useState(false);
     const [session , setSession] = useState({})
+
     useEffect(() => {
        getSessionById(sessionId).then(setSession) 
-    }, [sessionId])
+    }, [sessionId, modal])
+
+    const handleDeleteBooking = (e) => {
+        const id = e.target.dataset.id
+        deleteBooking(id).then(() => getSessionById(sessionId).then(setSession))
+    }
 
     return (
         <Container>
@@ -40,6 +49,8 @@ export const SessionDetails = () => {
                         <th>Phone Number</th>
                         <th>Occupancy</th>
                         <th>Date Booked</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +61,8 @@ export const SessionDetails = () => {
                                 <td>{b.phoneNumber}</td>
                                 <td>{b.occupancy}</td>
                                 <td>{formatAmericanDate(b.dateBooked)}</td>
-                                <td><Button color="danger">Delete</Button></td>
+                                <td><Button data-id={b.id} onClick={handleDeleteBooking} color="danger">Delete</Button></td>
+                                <td><UpdateBooking booking={b} modal={modal} setModal={setModal} /></td>
                             </tr>
                         )
 

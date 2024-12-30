@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { getAllSessions } from '../../../managers/sessionManager';
 import { Button } from 'reactstrap';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { setTimeFromString } from '../../../managers/FormatFunctions';
 import { AvailabilityForm } from './AvailabilityForm';
 import { getClassById } from '../../../managers/sewClassManager';
@@ -18,6 +18,7 @@ export const AvailabilityCalendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState("")
   const [sewClass, setSewClass] = useState({})
+  const navigate = useNavigate()
 
     useEffect(() => {
         getAllSessions().then(setSessions)
@@ -32,9 +33,10 @@ export const AvailabilityCalendar = () => {
           endDate.setHours(endDate.getHours() + s.sewClass.duration);
 
           const event = {
-              title: `${!s.open ? `🔒` : "" } ${s.sewClass?.name}`,
-              start: newDate,
-              end: endDate,
+            id: s.id,
+            title: `${!s.open ? `🔒` : "" } ${s.sewClass?.name}`,
+            start: newDate,
+            end: endDate,
               
   
           }
@@ -74,7 +76,11 @@ export const AvailabilityCalendar = () => {
     // Here, you can open a modal or perform any other action when the "+" button is clicked
   };
 
-  
+  const handleEventClick = (e) => {
+    navigate(`/employee/session/${e.id}`)
+
+
+  }
 
   return (
     <div>
@@ -90,6 +96,7 @@ export const AvailabilityCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 1000 }}
+        onSelectEvent={handleEventClick}
         components={{
             dateHeader: MyDateHeader,
           }}

@@ -9,3 +9,19 @@ export const PostBooking = (booking) => {
         body: JSON.stringify(booking)
     })
 }
+
+export const deleteBooking = (id) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: 'DELETE'
+    })
+}
+
+export const updateBooking = (id, formData) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+}
