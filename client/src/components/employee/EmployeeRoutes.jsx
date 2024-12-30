@@ -27,6 +27,7 @@ export const EmployeeRoutes = () => {
                             <Route index element={<ClassDetails/>}/>
                             <Route path="availability" element={<AvailabilityCalendar/>}/>
                         </Route>
+                        
                     </Route>
                 
 

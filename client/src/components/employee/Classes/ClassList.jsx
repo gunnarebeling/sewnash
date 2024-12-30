@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react"
 
 import "./ClassList.css"
-import { Button, Col, Container, Row } from "reactstrap"
+import { Col, Container, Row } from "reactstrap"
 import { useNavigate } from "react-router-dom"
 import { getAllClasses } from "../../../managers/sewClassManager"
 import { SewClassCard } from "../../customer/sewClasses/SewClassCard"
+import { AddClassForm } from "./AddClassForm"
 
 
 export const ClassList = () => {
     const [allClasses, setAllClasses] = useState([])
+    const [classChange, setClassChange] = useState(false)
+    const [modal, setModal] = useState(false);
     const navigate = useNavigate()
-
     useEffect(() => {
         getAllClasses().then(setAllClasses)
-    },[])
+    },[modal, classChange])
 
     const handleClassClick = (e) => {
       e.preventDefault()
@@ -27,7 +29,7 @@ export const ClassList = () => {
             <Row className="justify-content-center mb-4">
                 <header className="m-3 text-center">
                     <h2>classes</h2>
-                    <Button>add class</Button>
+                    <AddClassForm modal={modal} setModal={setModal}/>
                 </header>
             </Row>
 
@@ -41,7 +43,7 @@ export const ClassList = () => {
                 className="mb-4  justify-content-center"
                 >
                 <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
-                    <SewClassCard sewClass={c} />
+                    <SewClassCard sewClass={c} showDelete={true} setClassChange={setClassChange}/>
                 </div>
                 </Col>
             ))}

@@ -81,7 +81,7 @@ export const CustomerHome = () => {
           className="mb-4  justify-content-center"
         >
           <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
-            <SewClassCard sewClass={c} />
+            <SewClassCard sewClass={c} showDelete={false}/>
           </div>
         </Col>
       ))}

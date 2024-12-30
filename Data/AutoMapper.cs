@@ -11,6 +11,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<Employee, EmployeeDTO>();
         CreateMap<Employee, SimpleEmployeeDTO>();
         CreateMap<SewClass, SewClassDTO>();
+        CreateMap<PostClassDTO, SewClass>();
         CreateMap<SewClass, SewClassForSessionDTO>();
         CreateMap<Availability, AvailabilityForClassDTO>();
         CreateMap<DayForAvailability, DayForAvailabilityDTO>();

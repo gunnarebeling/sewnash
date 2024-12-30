@@ -42,7 +42,8 @@ public class AvailabilityController : ControllerBase
                 DateTime = day,
                 DayId = theDay.Id,
                 TimeId = time,
-                Employees = employees
+                Employees = employees,
+                Open = true
             }).ToList();
                 daySessions.ForEach(d => TotalSessions.Add(d));
                 

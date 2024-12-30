@@ -30,3 +30,14 @@ public class SewClassForSessionDTO
     public decimal PricePerPerson { get; set; }
     public int Duration { get; set; }
 }
+public class PostClassDTO
+{
+    public string Name { get; set; }
+    
+    public string Description { get; set; }
+    
+    public int MaxPeople { get; set; }
+    
+    public decimal PricePerPerson { get; set; }
+    public int Duration { get; set; }
+}

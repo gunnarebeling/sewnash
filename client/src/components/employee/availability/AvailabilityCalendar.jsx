@@ -9,6 +9,7 @@ import { Button } from 'reactstrap';
 import { useParams } from 'react-router-dom';
 import { setTimeFromString } from '../../../managers/FormatFunctions';
 import { AvailabilityForm } from './AvailabilityForm';
+import { getClassById } from '../../../managers/sewClassManager';
 
 export const AvailabilityCalendar = () => {
   const {classId} = useParams()
@@ -23,9 +24,9 @@ export const AvailabilityCalendar = () => {
     }, [])
 
     useEffect(() => {
+       getClassById(classId).then(setSewClass) 
        const events = sessions.reduce((events , s) => {
         if (s.sewClassId === parseInt(classId)) {
-          setSewClass(s.sewClass)
           let newDate = setTimeFromString(new Date(s.dateTime), s.time?.startTime); 
           const endDate = new Date(newDate); // Clone startDate
           endDate.setHours(endDate.getHours() + s.sewClass.duration);
