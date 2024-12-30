@@ -49,7 +49,7 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
     return (
       <div>
         <Button color="primary" onClick={toggle}>
-          UpdateClass
+          UpdateClass 
         </Button>
   
        

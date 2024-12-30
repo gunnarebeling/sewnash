@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 using Microsoft.AspNetCore.Identity;
 
 namespace SewNash.Models.DTOs;
@@ -37,6 +38,19 @@ public class SessionDTO
                 return total;
             });
             return totalPeople;
+        }
+    }
+    public decimal TotalAmount
+    {
+        get
+        {
+            decimal total = Bookings.Aggregate(0m, (decimal total, BookingForSessionDTO b) => 
+            {  
+                total += b.Occupancy * SewClass.PricePerPerson;
+                return total;
+
+            });
+            return total;
         }
     }
     private bool _isOpen;

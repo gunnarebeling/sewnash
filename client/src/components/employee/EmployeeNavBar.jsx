@@ -25,15 +25,20 @@ export default function EmployeeNavBar() {
             </NavbarBrand>
             
             <Nav navbar>
-            <NavItem>
-                <NavLink tag={RRNavLink} to="classes">
-                    Classes
-                </NavLink>
+                <NavItem>
+                    <NavLink tag={RRNavLink} to="/employee">
+                        Bookings
+                    </NavLink>
                 </NavItem>
                 <NavItem>
-                <NavLink tag={RRNavLink} to="/">
-                    <Button color="primary">Customer</Button>
-                </NavLink>
+                    <NavLink tag={RRNavLink} to="classes">
+                        Classes
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={RRNavLink} to="/">
+                    Customer
+                    </NavLink>
                 </NavItem>
                 <Button
                 color="primary"

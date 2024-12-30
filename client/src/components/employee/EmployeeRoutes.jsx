@@ -4,6 +4,7 @@ import { BookingsList } from "./bookings/BookingsList"
 import { ClassList } from "./Classes/ClassList"
 import { ClassDetails } from "./Classes/ClassDetails"
 import { AvailabilityCalendar } from "./availability/AvailabilityCalendar"
+import { SessionDetails } from "./sessions/SessionDetails"
 
 
 export const EmployeeRoutes = () => {
@@ -27,8 +28,8 @@ export const EmployeeRoutes = () => {
                             <Route index element={<ClassDetails/>}/>
                             <Route path="availability" element={<AvailabilityCalendar/>}/>
                         </Route>
-                        
                     </Route>
+                    <Route path="session/:sessionId" element={<SessionDetails/>}/>
                 
 
             </Route>
