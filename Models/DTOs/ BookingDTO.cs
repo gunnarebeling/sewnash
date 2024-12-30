@@ -32,3 +32,13 @@ public class BookingForPostDTO
     
     
 }
+
+public class BookingUpdateDTO
+{
+    [Required]
+    public string Name { get; set; }
+    [Required]
+    public string PhoneNumber { get; set; }
+    [Required]
+    public int Occupancy { get; set; }
+}
