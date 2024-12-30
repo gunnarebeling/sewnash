@@ -39,14 +39,24 @@ public class SessionDTO
             return totalPeople;
         }
     }
+    private bool _isOpen;
     public bool Open 
     { 
         get
+    {
+        if (_isOpen) // if it's true, apply the condition
         {
-            
             return TotalPeople < SewClass.MaxPeople;
-
         }
+        else
+        {
+            return false; // return false when it was set to false
+        }
+    }
+    set
+    {
+        _isOpen = value; // Allow manually setting the value to true or false
+    }
     }
 
     

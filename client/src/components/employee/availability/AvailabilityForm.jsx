@@ -30,15 +30,11 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
 
     // Handle changes to the selected date range
     useEffect(() => {
-        let copy = {...formData,
-            sewClass: sewClass.id
-        }
-        setFormData(copy)
         if (!selectedDate) return; // Exit if no date is provided
         setSelectedDateRange([selectedDate, selectedDate]);
         getAllTimes().then(setAllTimes);
         getAllEmployees().then(setEmployees)
-    }, [selectedDate]);
+    }, [selectedDate, sewClass]);
 
     // Handle updates to selectedDays and formData when date range changes
     useEffect(() => {
@@ -89,7 +85,8 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
             return list
         }, [])
         let copy = {...formData,
-            days: finalDays
+            days: finalDays,
+            sewClass: sewClass.id
         }
         postAvailability(copy)
         toggle(); // Close the modal
