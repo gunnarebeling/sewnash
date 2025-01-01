@@ -11,12 +11,18 @@ NavbarBrand,
 import './CustomerNavBar.css'
 
 
+
 export default function CustomerNavBar() {
 return (
     <div >
     <Navbar className="nav-bg" light fixed="true" expand={false}>
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        sewnash
+        <img 
+          src="./src/assets/SewNash1.png" 
+          alt="SewNash Logo" 
+          className="img-fluid" 
+          style={{ height: '80px' }} // Adjust height as needed
+        />
         </NavbarBrand>
         
         <Nav navbar>

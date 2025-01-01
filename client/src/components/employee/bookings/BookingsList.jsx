@@ -57,15 +57,18 @@ export const BookingsList = () => {
     }
 
     return (
-    <Calendar
-      localizer={localizer}
-      events={events}
-      startAccessor="start"
-      endAccessor="end"
-      style={{ height: 1000 }}
-      onSelectEvent={handleEventClick}
-      
-    />
+      <div>
+        <h4 className='m-3'>Bookings</h4>
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 800 }}
+          onSelectEvent={handleEventClick}
+          
+        />
+      </div>
   );
 }
 
