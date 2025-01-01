@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Button, Container,  Table } from "reactstrap"
-import { deleteSession, getSessionById } from "../../../managers/sessionManager"
+import { deleteSession, getSessionById, lockUnlockSession } from "../../../managers/sessionManager"
 import { convertToDollars, formatAmericanDate } from "../../../managers/FormatFunctions"
 import { deleteBooking } from "../../../managers/bookingManager"
 import { UpdateBooking } from "./UpdateBooking"
@@ -28,6 +28,10 @@ export const SessionDetails = () => {
            
         })
     }
+    const handleLock = (e) => {
+        e.preventDefault()
+        lockUnlockSession(sessionId).then(() => getSessionById(sessionId).then(setSession))
+    }
 
     return (
         <Container>
@@ -36,14 +40,16 @@ export const SessionDetails = () => {
                     <h4>
                         {session.sewClass?.name}
                     </h4>
-                    {session.bookings.length === 0 && 
+                    {session.bookings?.length === 0 && 
                         <Button 
                             color="danger" 
                             className="mx-3" 
                             onClick={handleDeleteSession} 
                         >Delete
                         </Button>}
-                    <Button color="warning">Lock</Button>
+                    {session.totalPeople <= session.sewClass?.maxPeople && 
+                        <Button color="warning" onClick={handleLock}>{session.open ? "lock" : "unlock"}</Button>
+                    }
                 </div>
                 <h5>{`${formatAmericanDate(session.dateTime)} ${session.time?.startTime}`}</h5>
             </header>
@@ -56,6 +62,10 @@ export const SessionDetails = () => {
                     <tr>
                         <th>Total Amount Accrued</th>
                         <td>{convertToDollars(session.totalAmount)}</td>
+                    </tr>
+                    <tr>
+                        <th>Locked/Unlocked</th>
+                        <td>{session.open ? "lock" : "unlock"}</td>
                     </tr>
                     
                 </tbody>

@@ -15,3 +15,9 @@ export const deleteSession = (id) => {
         method: 'DELETE'
     })
 }
+
+export const lockUnlockSession = (id) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: 'PUT'
+    })
+}

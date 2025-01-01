@@ -21,7 +21,12 @@ export default function EmployeeNavBar() {
         <div>
         <Navbar color="light" light fixed="true" expand={true}>
             <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-            sewnash
+                <img 
+                    src="./src/assets/SewNash1.png" 
+                    alt="SewNash Logo" 
+                    className="img-fluid" 
+                    style={{ height: '80px' }} 
+                    />
             </NavbarBrand>
             
             <Nav navbar>
