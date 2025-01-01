@@ -33,7 +33,7 @@ export const AvailabilityCalendar = () => {
           endDate.setHours(endDate.getHours() + s.sewClass.duration);
 
           const event = {
-            id: s.id,
+            id: s.id, 
             title: `${!s.open ? `🔒` : "" } ${s.sewClass?.name}`,
             start: newDate,
             end: endDate,
@@ -90,12 +90,16 @@ export const AvailabilityCalendar = () => {
         selectedDate = {selectedDate}
         sewClass={sewClass}
       />
+      <div className='m-3'>
+        <h3>{sewClass.name}</h3>
+        <Button onClick={toggleModal}>add availability</Button>
+      </div>
       <Calendar
         localizer={localizer}
         events={events} // Here you can pass the sessions or events
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 1000 }}
+        style={{ height: 800 }}
         onSelectEvent={handleEventClick}
         components={{
             dateHeader: MyDateHeader,

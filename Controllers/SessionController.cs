@@ -44,6 +44,23 @@ public class SessionController : ControllerBase
         
     }
 
+    [HttpDelete("{sessionId}")]
+    public IActionResult Delete(string sessionId)
+    {
+       Session session = _dbContext.Sessions.SingleOrDefault(s => s.Id == int.Parse(sessionId));
+       _dbContext.Sessions.Remove(session);
+       _dbContext.SaveChanges();
+       return NoContent();
+    }
+    [HttpPut("{sessionId}")]
+    public IActionResult toggleOpen(string sessionId)
+    {
+       Session session = _dbContext.Sessions.SingleOrDefault(s => s.Id == int.Parse(sessionId));
+       session.Open = !session.Open;
+       _dbContext.SaveChanges();
+       return NoContent();
+    }
+
     
 
 }

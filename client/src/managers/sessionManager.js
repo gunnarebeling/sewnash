@@ -9,3 +9,9 @@ export const getSessionById = (sessionId) => {
 export const getAllSessions = () => {
     return fetch(_apiUrl).then(res => res.json())
 }
+
+export const deleteSession = (id) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: 'DELETE'
+    })
+}
