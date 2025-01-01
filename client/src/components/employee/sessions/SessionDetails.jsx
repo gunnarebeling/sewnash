@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Button, Container,  Table } from "reactstrap"
-import { getSessionById } from "../../../managers/sessionManager"
+import { deleteSession, getSessionById } from "../../../managers/sessionManager"
 import { convertToDollars, formatAmericanDate } from "../../../managers/FormatFunctions"
 import { deleteBooking } from "../../../managers/bookingManager"
 import { UpdateBooking } from "./UpdateBooking"
@@ -10,6 +10,7 @@ export const SessionDetails = () => {
     const {sessionId} = useParams()
     const [modal, setModal] = useState(false);
     const [session , setSession] = useState({})
+    const navigate = useNavigate()
 
     useEffect(() => {
        getSessionById(sessionId).then(setSession) 
@@ -19,13 +20,31 @@ export const SessionDetails = () => {
         const id = e.target.dataset.id
         deleteBooking(id).then(() => getSessionById(sessionId).then(setSession))
     }
+    const handleDeleteSession = (e) => {
+        e.preventDefault()
+        deleteSession(sessionId).then(() => {
+            
+            navigate(`/employee/classes/${session.sewClassId}/availability`)
+           
+        })
+    }
 
     return (
         <Container>
             <header className="mt-2">
-                <h4>
-                    {session.sewClass?.name}
-                </h4>
+                <div className="d-flex">
+                    <h4>
+                        {session.sewClass?.name}
+                    </h4>
+                    {session.bookings.length === 0 && 
+                        <Button 
+                            color="danger" 
+                            className="mx-3" 
+                            onClick={handleDeleteSession} 
+                        >Delete
+                        </Button>}
+                    <Button color="warning">Lock</Button>
+                </div>
                 <h5>{`${formatAmericanDate(session.dateTime)} ${session.time?.startTime}`}</h5>
             </header>
             <Table>
