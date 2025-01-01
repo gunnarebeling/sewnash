@@ -55,7 +55,7 @@ export const CustomerHome = () => {
                     />
                 <div className="search-icon rounded-end">
                   <a
-                    href="#"
+                    href="/bookbydate"
                     aria-label="Search by date"
                     className="m-2"
                   >
