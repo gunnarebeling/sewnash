@@ -32,7 +32,7 @@ export const CustomerHome = () => {
       {/* Row for Header */}
         <Row className="justify-content-center mb-4">
           <Col md="8" className="text-center">
-            <h2>Sew Nash</h2>
+            <h1 className="m-3">Sew Nash</h1>
             <div>
 
               <div className="flow-header-button  flow-search-button d-flex align-items-center justify-content-center" >

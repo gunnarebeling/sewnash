@@ -7,60 +7,78 @@ NavLink,
 NavItem,
 Navbar,
 NavbarBrand,
+NavbarToggler,
+Collapse,
 } from "reactstrap";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import { logout } from "../../managers/authManager";
 
 
 export default function EmployeeNavBar() {
     const { setLoggedInUser} = useContext(UserContext)
+    const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <div>
-        <Navbar color="light" light fixed="true" expand={true}>
-            <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-                <img 
-                    src="./src/assets/SewNash1.png" 
-                    alt="SewNash Logo" 
-                    className="img-fluid" 
-                    style={{ height: '80px' }} 
-                    />
-            </NavbarBrand>
-            
-            <Nav navbar>
-                <NavItem>
-                    <NavLink tag={RRNavLink} to="/employee">
-                        Bookings
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink tag={RRNavLink} to="classes">
-                        Classes
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink tag={RRNavLink} to="/">
-                    Customer
-                    </NavLink>
-                </NavItem>
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <Navbar color="light" light expand="md" fixed="top">
+      <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
+        <img 
+          src="./src/assets/SewNash1.png" 
+          alt="SewNash Logo" 
+          className="img-fluid" 
+          style={{ height: '80px' }} 
+        />
+      </NavbarBrand>
+
+      {/* Toggler for smaller screens */}
+      <NavbarToggler onClick={toggleNavbar} />
+
+      {/* Collapsible part of the navbar */}
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="mx-auto d-flex justify-content-center" navbar>
+          <NavItem>
+            <NavLink tag={RRNavLink} to="/employee">
+              Bookings
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={RRNavLink} to="classes">
+              Classes
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={RRNavLink} to="/">
+              Customer
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={RRNavLink} to="/register">
+              Register Employee
+            </NavLink>
+          </NavItem>
+          </Nav>
+          <Nav className="ms-auto">
+
+            <NavItem>
                 <Button
                 color="primary"
                 onClick={(e) => {
                     e.preventDefault();
                     logout().then(() => {
-                    setLoggedInUser(null)
-                    
-                    ;
+                    setLoggedInUser(null);
                     });
                 }}
                 >
                 Logout
                 </Button>
-            
-            </Nav>
-        </Navbar>
-        </div>
-    );
+            </NavItem>
+          </Nav>
+      </Collapse>
+    </Navbar>
+  );
 }

@@ -75,7 +75,7 @@ export const BookByClass = () => {
                     />
                 </div>
                 <div className="m-4 d-flex justify-content-center flex-wrap gap-4">
-                    {selectSessions.map(s => {
+                    {selectSessions.filter(s => s.open).map(s => {
                         return(
                         <div key={s.id}  >
                             <span data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-2  rounded clickable-div text-nowrap">{`${sewClass.name} ${s.time?.startTime} ${'>'}`}</span>
