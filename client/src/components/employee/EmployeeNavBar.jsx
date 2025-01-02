@@ -40,7 +40,7 @@ export default function EmployeeNavBar() {
 
       {/* Collapsible part of the navbar */}
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="mx-auto d-flex justify-content-center" navbar>
+        <Nav className="mx-auto d-flex justify-content-center " navbar>
           <NavItem>
             <NavLink tag={RRNavLink} to="/employee">
               Bookings

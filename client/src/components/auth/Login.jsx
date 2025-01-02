@@ -54,7 +54,7 @@ export function Login({ setLoggedInUser }) {
       <Button color="primary" onClick={handleSubmit}>
         Login
       </Button>
-      <Button  className="mx-2" color="warning" onClick={() => navigate("/")}>
+      <Button  className="mx-2" color="warning" onClick={() => navigate("/employee")}>
         HOME
       </Button>
       
