@@ -16,13 +16,13 @@ export const AvailabilityCalendar = () => {
   const [sessions, setSessions] = useState([])
   const [events, setEvents] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedDate, setSelectedDate] = useState("")
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [sewClass, setSewClass] = useState({})
   const navigate = useNavigate()
 
     useEffect(() => {
         getAllSessions().then(setSessions)
-    }, [])
+    }, [isModalOpen])
 
     useEffect(() => {
        getClassById(classId).then(setSewClass) 

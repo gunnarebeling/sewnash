@@ -21,3 +21,11 @@ export const lockUnlockSession = (id) => {
         method: 'PUT'
     })
 }
+
+export const getSessionsByDate = (date) => {
+    if (!(date instanceof Date)) {
+        date = new Date(date); // Convert to Date object
+    }
+    date = date.toISOString().split('T')[0]
+    return fetch(`${_apiUrl}/date?date=${date}`).then(res => res.json())
+}
