@@ -74,11 +74,11 @@ export const BookByClass = () => {
 
                     />
                 </div>
-                <div className="m-4 d-flex justify-content-center">
+                <div className="m-4 d-flex justify-content-center flex-wrap gap-4">
                     {selectSessions.map(s => {
                         return(
-                        <div key={s.id} >
-                            <span data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-2 m-1 rounded clickable-div text-nowrap">{`${sewClass.name} ${s.time?.startTime} ${'>'}`}</span>
+                        <div key={s.id}  >
+                            <span data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-2  rounded clickable-div text-nowrap">{`${sewClass.name} ${s.time?.startTime} ${'>'}`}</span>
                             
                         </div>
                         )

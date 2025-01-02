@@ -17,24 +17,15 @@
     object-fit: cover;
 }
 /* Make sure no overflow is limiting sticky positioning */
-.container-fluid, .row, .col {
-    overflow: visible;
-}
 
-.row{
-    min-height: 100vh;
-}
+
+
 
 .image-container {
     flex: 0 0 150px;
     max-width: 300px; /* Do not grow or shrink, fixed width */
 }
-.date-nav {
-    position: sticky;
-    top: 0;
-    z-index: 102; /* Ensure it's above other content */
-    background-color: white; /* Optional: adds background color */
-}
+
 
 
 

@@ -23,6 +23,10 @@ export const CustomerHome = () => {
       navigate(`class/${classId}`)
 
     }
+    const handleDateSelect = (date) => {
+      setSelectedDate(date)
+      navigate('/bookbydate', {state: {date: date}})
+    }
     return (
       <Container>
       {/* Row for Header */}
@@ -37,7 +41,7 @@ export const CustomerHome = () => {
                   
                     <DatePicker
                       selected={selectedDate}
-                      onChange={(date) => setSelectedDate(date)}
+                      onChange={handleDateSelect}
                       placeholderText="Search by date"
                       isClearable
                       className="datepicker-input"
@@ -48,7 +52,7 @@ export const CustomerHome = () => {
                           <span>
                             {selectedDate
                               ? selectedDate.toLocaleDateString()
-                              : "Select a date"}
+                              : "Select by date"}
                           </span>
                         </button>
                       }

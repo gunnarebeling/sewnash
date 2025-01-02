@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { getClassById } from "../../../managers/sewClassManager"
-import { Card, Col, Container, Row } from "reactstrap"
-import { convertToDollars, formatDate } from "../../../managers/FormatFunctions"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import {  Col, Container, Row } from "reactstrap"
+import { convertToDollars} from "../../../managers/FormatFunctions"
 import DatePicker from "react-datepicker"
-import { getAllSessions, getSessionByClassId, getSessionsByDate } from "../../../managers/sessionManager"
+import { getAllSessions} from "../../../managers/sessionManager"
 import "./BookByDate.css"
 
 export const BookByDate = () => {
@@ -13,10 +13,14 @@ export const BookByDate = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [filteredSessions, setFilteredSessions] = useState([])
     const [filteredClasses, setFilteredClasses] = useState([])
+    const location = useLocation()
     const navigate = useNavigate()
+    const parentDate = location.state?.date || null
 
     useEffect(() => {
-        
+        if (parentDate) {
+            setSelectedDate(new Date(parentDate))
+        }
         getAllSessions().then((res) => {
             let sessions = []
             res.forEach(s => {
@@ -27,7 +31,7 @@ export const BookByDate = () => {
             setAllSessions(sessions)
             
         })
-    }, [])
+    }, [parentDate])
 
     useEffect(() => {
         
@@ -110,13 +114,13 @@ export const BookByDate = () => {
                                 <div className="pb-1">
                                     <span >{`${c.duration} Hours`}</span>
                                 </div>
-                                <div>
+                                <div className="mb-2">
                                     <span className="price-box p-1"><span>{convertToDollars(c.pricePerPerson)}</span></span>
                                 </div>
-                                <div className="d-flex">
+                                <div className="d-flex flex-wrap gap-2">
                                     {filteredSessions.filter(s => s.sewClassId === c.id).map(s => {
                                         return(
-                                            <span key={s.id} data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-1 my-3 mx-1 rounded clickable-div">{`${s.time?.startTime} ${'>'}`}</span>
+                                            <span key={s.id} data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-1  mx-1 rounded clickable-div text-nowrap">{`${s.time?.startTime} ${'>'}`}</span>
                                         )
                                     })}
                                 </div>
