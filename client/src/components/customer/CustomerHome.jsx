@@ -32,7 +32,12 @@ export const CustomerHome = () => {
       {/* Row for Header */}
         <Row className="justify-content-center mb-4">
           <Col md="8" className="text-center">
-            <h1 className="m-3">Sew Nash</h1>
+            <img 
+              src="./src/assets/SewNash1.png" 
+              alt="SewNash Logo" 
+              className="img-fluid m-2" 
+              style={{ height: '200px' }} // Adjust height as needed
+            />
             <div>
 
               <div className="flow-header-button  flow-search-button d-flex align-items-center justify-content-center" >
