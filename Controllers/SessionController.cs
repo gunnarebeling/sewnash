@@ -61,6 +61,19 @@ public class SessionController : ControllerBase
        return NoContent();
     }
 
+    [HttpGet("date")]
+    public IActionResult GetSesionsByDate([FromQuery] DateTime date)
+    {
+      List<Session> sessions = _dbContext.Sessions.ToList();
+      if (date != null)
+      {
+         sessions = sessions.Where(s => s.DateTime == date).ToList();
+         
+      }
+         return Ok( _mapper.Map<SessionDTO>(sessions));
+        
+    }
+
     
 
 }

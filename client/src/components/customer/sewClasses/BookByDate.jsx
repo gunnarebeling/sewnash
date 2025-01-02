@@ -4,34 +4,48 @@ import { getClassById } from "../../../managers/sewClassManager"
 import { Col, Container, Row } from "reactstrap"
 import { convertToDollars, formatDate } from "../../../managers/FormatFunctions"
 import DatePicker from "react-datepicker"
-import { getSessionByClassId } from "../../../managers/sessionManager"
+import { getAllSessions, getSessionByClassId, getSessionsByDate } from "../../../managers/sessionManager"
 
 export const BookByDate = () => {
-    const [sessions, setSessions] = useState([])
+    const [allSessions, setAllSessions] = useState([])
     const [highlightDates, setHighlightDates] = useState([])
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [selectSessions, setSelectSessions] = useState([])
-    const {classId} = useParams()
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [filteredSessions, setFilteredSessions] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         
-        getSessionByClassId(classId).then(setSessions)
-    }, [classId])
+        getAllSessions().then((res) => {
+            let sessions = []
+            res.forEach(s => {
+                if (s.open) {
+                    sessions.push(s)
+                }
+            })
+            setAllSessions(sessions)
+            
+        })
+    }, [])
 
     useEffect(() => {
-        let dates = sessions.map(s => {
-            if (s.open) {
-                return new Date(s.dateTime)  // Convert session dateTime to Date object
-                
-            }
+        
+        let dates = allSessions.map(s => {
+            return new Date(s.dateTime)
         })
+         
         setHighlightDates(dates)  // Set the highlightDates to an array of Date objects
-    }, [sessions])
+    }, [allSessions])
     useEffect(() => {
-        const dateSessions = sessions.filter(s => formatDate(s.dateTime) === formatDate(selectedDate))
-        setSelectSessions(dateSessions)
-    }, [selectedDate])
+        const dateSessions = allSessions.filter(s => {
+            const sessionDate = new Date(s.dateTime);
+            return (
+                sessionDate.getFullYear() === selectedDate.getFullYear() &&
+                sessionDate.getMonth() === selectedDate.getMonth() &&
+                sessionDate.getDate() === selectedDate.getDate()
+            );
+        });
+        setFilteredSessions(dateSessions);
+    }, [selectedDate, allSessions]);
 
     const handleSessionClick = (e) => {
         const sessionId = e.target.dataset.id
