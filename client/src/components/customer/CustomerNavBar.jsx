@@ -15,7 +15,7 @@ import './CustomerNavBar.css'
 export default function CustomerNavBar() {
 return (
     <div >
-    <Navbar className="nav-bg" light fixed="true" expand={false}>
+    <Navbar className="nav-bg" light fixed="top" expand={false}>
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
         <img 
           src="./src/assets/SewNash1.png" 
@@ -25,7 +25,7 @@ return (
         />
         </NavbarBrand>
         
-        <Nav navbar>
+        <Nav className=" ms-auto" navbar>
             <NavItem>
             <NavLink tag={RRNavLink} to="/employee">
                 <Button color="primary">Employee</Button>

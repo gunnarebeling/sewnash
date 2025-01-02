@@ -8,3 +8,6 @@ html, body {
 .clickable-div {
   cursor: pointer; /* Changes the cursor to a pointer when hovering over the div */
 }
+body {
+  padding-top: 110px; /* Adjust this value to match the height of your navbar */
+}

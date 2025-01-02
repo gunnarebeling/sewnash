@@ -16,6 +16,7 @@
 .details {
     flex: 1 1 auto; /* Shrinks and grows to fit */
     overflow: hidden; /* Prevents content overflow */
+    background-color: rgba(255, 192, 203, 0.483);
 }
 
 @media (max-width: 768px) {

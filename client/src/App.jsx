@@ -45,7 +45,12 @@ export default function App() {
         />
         <Route
           path="register"
-          element={<Register setLoggedInUser={setLoggedInUser} />}
+          element={
+            <AuthorizedRoute roles={["Admin"]} loggedInUser={loggedInUser}>
+
+              <Register setLoggedInUser={setLoggedInUser} />
+            </AuthorizedRoute>
+          }
         />
 
       </Routes>

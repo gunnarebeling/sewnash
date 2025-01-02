@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { login } from "../../managers/authManager";
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
@@ -57,9 +57,7 @@ export function Login({ setLoggedInUser }) {
       <Button  className="mx-2" color="warning" onClick={() => navigate("/")}>
         HOME
       </Button>
-      <p>
-        Not signed up? Register <Link to="/register">here</Link>
-      </p>
+      
     </div>
   );
 }
