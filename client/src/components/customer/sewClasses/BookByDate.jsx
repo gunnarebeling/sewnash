@@ -92,7 +92,7 @@ export const BookByDate = () => {
                 </div>
                 </Col>
                 <Col  className=" border-start  p-0">
-                    <nav className="border-bottom position-relative">
+                    <nav className="border-bottom position-relative date-nav">
                         
                         <h5 className="text-center p-2 ">{selectedDate.toDateString()}</h5>
                         <a id="date-prev" onClick={handleArrows} className=" border-end search-by-date-arrows d-flex align-items-center justify-content-center position-absolute top-0 bottom-0 start-0">
@@ -116,11 +116,11 @@ export const BookByDate = () => {
                                 <div className="d-flex">
                                     {filteredSessions.filter(s => s.sewClassId === c.id).map(s => {
                                         return(
-                                            <span key={s.id} data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-1 my-3 rounded clickable-div">{`${s.time?.startTime} ${'>'}`}</span>
+                                            <span key={s.id} data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-1 my-3 mx-1 rounded clickable-div">{`${s.time?.startTime} ${'>'}`}</span>
                                         )
                                     })}
                                 </div>
-                                <div className="py-3 px-2 image-container">
+                                <div className="py-3 px-2 image-container  ">
                                 <img src={`https://static.wixstatic.com/media/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png/v1/fill/w_250,h_250,al_c,q_95,enc_auto/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png`} alt={`album art`} className="img-fluid custom-img fixed-size "/>
                                 </div>
 
