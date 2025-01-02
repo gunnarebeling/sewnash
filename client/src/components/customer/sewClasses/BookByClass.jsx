@@ -78,7 +78,7 @@ export const BookByClass = () => {
                     {selectSessions.map(s => {
                         return(
                         <div key={s.id} >
-                            <span data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-2 rounded clickable-div">{sewClass.name} {s.time?.startTime} {'>'}</span>
+                            <span data-id={s.id} onClick={handleSessionClick} className="border border-2 bg-white p-2 rounded clickable-div">{`${sewClass.name} ${s.time?.startTime} ${'>'}`}</span>
                             
                         </div>
                         )
