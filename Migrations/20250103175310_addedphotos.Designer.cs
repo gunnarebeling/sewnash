@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250103175310_addedphotos")]
+    partial class addedphotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

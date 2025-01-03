@@ -35,7 +35,7 @@ export const CustomerHome = () => {
             <img 
               src="./src/assets/SewNash1.png" 
               alt="SewNash Logo" 
-              className="img-fluid m-2" 
+              className="img-fluid m-3" 
               style={{ height: '200px' }} // Adjust height as needed
             />
             <div>
