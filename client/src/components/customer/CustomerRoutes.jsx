@@ -5,6 +5,7 @@ import { BookByClass } from "./sewClasses/BookByClass"
 import { BookingForm } from "./customerForm/BookingForm"
 import { BookByDate } from "./sewClasses/BookByDate"
 
+
 export const CustomerRoutes = () => {
     return (
         <>

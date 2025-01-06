@@ -18,7 +18,7 @@
           }
         }
       },
-      "AWSSDK.Core/3.7.400.71": {
+      "AWSSDK.Core/3.7.400.72": {
         "type": "package",
         "compile": {
           "lib/net8.0/AWSSDK.Core.dll": {
@@ -31,10 +31,29 @@
           }
         }
       },
-      "AWSSDK.S3/3.7.410.13": {
+      "AWSSDK.Extensions.NETCore.Setup/3.7.301": {
         "type": "package",
         "dependencies": {
-          "AWSSDK.Core": "[3.7.400.71, 4.0.0)"
+          "AWSSDK.Core": "3.7.300",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.dll": {
+            "related": ".pdb"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.dll": {
+            "related": ".pdb"
+          }
+        }
+      },
+      "AWSSDK.S3/3.7.411": {
+        "type": "package",
+        "dependencies": {
+          "AWSSDK.Core": "[3.7.400.72, 4.0.0)"
         },
         "compile": {
           "lib/net8.0/AWSSDK.S3.dll": {
@@ -1115,15 +1134,15 @@
         "lib/net6.0/AutoMapper.xml"
       ]
     },
-    "AWSSDK.Core/3.7.400.71": {
-      "sha512": "XON2p7CcsspejVaCDgYHMe8Ml+b7YMfoE1vRLjmFJ+sjhZ0c9UduII+XiIkoOS7eyl2nizYTP2LRFJoj3Fd90A==",
+    "AWSSDK.Core/3.7.400.72": {
+      "sha512": "L/3vuMdnTwLjfJm8pPUJXl2cKmam4rDnOC1mrJjUGdoSDzExIJxgzMjZi1cdCGd8aWJGPkizJGQz6+q2wwnHVA==",
       "type": "package",
-      "path": "awssdk.core/3.7.400.71",
+      "path": "awssdk.core/3.7.400.72",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "awssdk.core.3.7.400.71.nupkg.sha512",
+        "awssdk.core.3.7.400.72.nupkg.sha512",
         "awssdk.core.nuspec",
         "images/AWSLogo.png",
         "lib/net35/AWSSDK.Core.dll",
@@ -1144,17 +1163,35 @@
         "tools/account-management.ps1"
       ]
     },
-    "AWSSDK.S3/3.7.410.13": {
-      "sha512": "iI1eZM6Kavl5v6rwtdsdTM4ygpu6nlx6b9FYDJmPTR9c9lX7iw2hiGlFIv75POo9csayevfUo8p7DjZmV8WwYg==",
+    "AWSSDK.Extensions.NETCore.Setup/3.7.301": {
+      "sha512": "hXejqa+G72kVCSmpKlNVWDEqa8KVWOFL/asgoE2mairQOnmTCv6vMxaXjJ0nQaad5/21zTdKDIfDiki5YTne1Q==",
       "type": "package",
-      "path": "awssdk.s3/3.7.410.13",
+      "path": "awssdk.extensions.netcore.setup/3.7.301",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.extensions.netcore.setup.3.7.301.nupkg.sha512",
+        "awssdk.extensions.netcore.setup.nuspec",
+        "images/AWSLogo.png",
+        "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.dll",
+        "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.pdb",
+        "lib/netcoreapp3.1/AWSSDK.Extensions.NETCore.Setup.dll",
+        "lib/netcoreapp3.1/AWSSDK.Extensions.NETCore.Setup.pdb",
+        "lib/netstandard2.0/AWSSDK.Extensions.NETCore.Setup.dll",
+        "lib/netstandard2.0/AWSSDK.Extensions.NETCore.Setup.pdb"
+      ]
+    },
+    "AWSSDK.S3/3.7.411": {
+      "sha512": "nIpjKnAnSTDzBwGBoRhkVChXDxX8ivc6Pe1aX1ITQsvx4HVfXn/knYh6euHHNknt1uuOMS2I8Zu0LG4nzjn9jw==",
+      "type": "package",
+      "path": "awssdk.s3/3.7.411",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "analyzers/dotnet/cs/AWSSDK.S3.CodeAnalysis.dll",
         "analyzers/dotnet/cs/SharedAnalysisCode.dll",
-        "awssdk.s3.3.7.410.13.nupkg.sha512",
+        "awssdk.s3.3.7.411.nupkg.sha512",
         "awssdk.s3.nuspec",
         "images/AWSLogo.png",
         "lib/net35/AWSSDK.S3.dll",
@@ -2993,8 +3030,9 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "AWSSDK.Core >= 3.7.400.71",
-      "AWSSDK.S3 >= 3.7.410.13",
+      "AWSSDK.Core >= 3.7.400.72",
+      "AWSSDK.Extensions.NETCore.Setup >= 3.7.301",
+      "AWSSDK.S3 >= 3.7.411",
       "AutoMapper >= 13.0.1",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.0",
       "Microsoft.AspNetCore.OpenApi >= 8.0.1",
@@ -3042,11 +3080,15 @@
         "dependencies": {
           "AWSSDK.Core": {
             "target": "Package",
-            "version": "[3.7.400.71, )"
+            "version": "[3.7.400.72, )"
+          },
+          "AWSSDK.Extensions.NETCore.Setup": {
+            "target": "Package",
+            "version": "[3.7.301, )"
           },
           "AWSSDK.S3": {
             "target": "Package",
-            "version": "[3.7.410.13, )"
+            "version": "[3.7.411, )"
           },
           "AutoMapper": {
             "target": "Package",

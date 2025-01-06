@@ -40,11 +40,15 @@
           "dependencies": {
             "AWSSDK.Core": {
               "target": "Package",
-              "version": "[3.7.400.71, )"
+              "version": "[3.7.400.72, )"
+            },
+            "AWSSDK.Extensions.NETCore.Setup": {
+              "target": "Package",
+              "version": "[3.7.301, )"
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.7.410.13, )"
+              "version": "[3.7.411, )"
             },
             "AutoMapper": {
               "target": "Package",

@@ -110,3 +110,4 @@
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.csproj.CopyComplete
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.Core.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.S3.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.Extensions.NETCore.Setup.dll

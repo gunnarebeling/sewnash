@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106170419_addedMainPhoto")]
+    partial class addedMainPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8ef686cc-34ab-496e-b902-9e3ff5b4f2c7",
+                            ConcurrencyStamp = "bfd6092d-0584-4efd-a1ce-6cb7016628dc",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGfc16MVHio06tEQkbfqz6en1pTuwRfhbZSTK9zO9zHD2Wzc+hCxwXWTj5EmqjCJnw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG/q9ozzZNDPl2AivDAb1M90yEHElYDeKVHPlZ4ILsnz6UMS9Ci0E4Ge4yWvvcvhGQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "97f08218-e2f2-4f5f-a99a-485593d75d0e",
+                            SecurityStamp = "d0b5e75b-2f28-4f05-86cb-2e7d3fd56355",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "11ea2ba8-1df5-4c9b-8ee4-b4494b877c79",
+                            ConcurrencyStamp = "fe497794-945a-4378-b23e-9ad259035a73",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENY9fKGducc74k+eKe4jv9GzgDa49I6izOSsMuG/SROjnqAe7y0l6gaTVJy0tznrRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKRUgdV8A9IxuI8XZ42Ck4quqev+OjkEWJ4QRZPBjVBVEGqlpGUL/v2ixSGXAndL5w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "19122153-a160-4781-aea7-dedebe00a5c3",
+                            SecurityStamp = "42b25746-85ce-42a7-9cf3-6f56aece8cf4",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });

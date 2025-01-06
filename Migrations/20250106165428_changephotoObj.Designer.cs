@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106165428_changephotoObj")]
+    partial class changephotoObj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8ef686cc-34ab-496e-b902-9e3ff5b4f2c7",
+                            ConcurrencyStamp = "d413c28a-d848-4fe0-8a62-c26601328c33",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGfc16MVHio06tEQkbfqz6en1pTuwRfhbZSTK9zO9zHD2Wzc+hCxwXWTj5EmqjCJnw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMAfenkmRKc/Zjd7xM03YinbrZoXoe34EGbzzacQYA6OvXNOCEQAblrMhmiyg8VXXg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "97f08218-e2f2-4f5f-a99a-485593d75d0e",
+                            SecurityStamp = "eb04069e-02ed-40af-ac08-3ea4be1c1fb5",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "11ea2ba8-1df5-4c9b-8ee4-b4494b877c79",
+                            ConcurrencyStamp = "1b98fabb-aa97-4e94-a11b-f979a1d316bb",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENY9fKGducc74k+eKe4jv9GzgDa49I6izOSsMuG/SROjnqAe7y0l6gaTVJy0tznrRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK1m/1FjbhoVsp71C+MMWks0M8fVpD3PVy3XRSg1hg74+Vgtqd/xSOi3qmdIsKXeMQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "19122153-a160-4781-aea7-dedebe00a5c3",
+                            SecurityStamp = "4fbac1ec-8d0c-4c3c-b56b-4e0e17f9b907",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -619,9 +622,6 @@ namespace sewnash.Migrations
                     b.Property<string>("FileKey")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("MainPhoto")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("SewClassId")
                         .HasColumnType("integer");
