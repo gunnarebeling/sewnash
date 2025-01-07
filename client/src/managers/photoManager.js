@@ -11,3 +11,6 @@ export const uploadClassPhoto =  (file, classId) => {
     })
         
 }
+export const getClassPhoto = (classId) => {
+    return fetch(`${_apiUrl}/class/${classId}`).then(res => res.json())
+}

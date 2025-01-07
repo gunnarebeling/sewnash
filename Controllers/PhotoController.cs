@@ -102,36 +102,34 @@ public class PhotoController : ControllerBase
     }
 
     // GET function to retrieve the photo's URL from S3
-    [HttpGet("get/{fileKey}")]
-public async Task<IActionResult> GetPhoto(string fileKey)
+    [HttpGet("class/{classId}")]
+public async Task<IActionResult> GetPhoto(int classId)
 {
-    if (string.IsNullOrEmpty(fileKey))
+    if (classId <= 0)
     {
-        return BadRequest("File key is required");
+        return BadRequest("Class ID is required");
     }
 
-    var fileUrl = $"https://{BucketName}.s3.amazonaws.com/{fileKey}";
+    List<PhotoDTO> photos = _dbContext.Photos
+        .Where(p => p.SewClassId == classId)
+        .ProjectTo<PhotoDTO>(_mapper.ConfigurationProvider).ToList();
+        
 
     try
     {
-        // Using GetObjectMetadataRequest to check if the file exists
-        var metadataRequest = new GetObjectMetadataRequest
-        {
-            BucketName = BucketName,
-            Key = fileKey
-        };
+       foreach (var photo in photos)
+                {
+                    var request = new GetPreSignedUrlRequest
+                    {
+                        BucketName = BucketName,
+                        Key = photo.FileKey,
+                        Expires = DateTime.Now.AddHours(1)
+                    };
 
-        var metadataResponse = await _s3Client.GetObjectMetadataAsync(metadataRequest);
+                    photo.FileKey = _s3Client.GetPreSignedURL(request);
+                }
 
-        // If metadata retrieval is successful, the file exists
-        if (metadataResponse.HttpStatusCode == System.Net.HttpStatusCode.OK)
-        {
-            return Ok(new { FileUrl = fileUrl });
-        }
-        else
-        {
-            return NotFound("File not found in S3");
-        }
+                return Ok(photos);
     }
     catch (AmazonS3Exception s3Ex)
     {

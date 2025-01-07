@@ -45,9 +45,15 @@ export const ClassDetails = () => {
                     
                 </tbody>
             </Table>
-            <Button color="primary" onClick={() => {
-                navigate('availability')
-            }}> Availability Calendar</Button>
+            <div>
+
+                <Button color="primary" onClick={() => {
+                    navigate('availability')
+                }}> Availability Calendar</Button>
+                <Button  onClick={() => {
+                    navigate('photos')
+                }}>Photos</Button>
+            </div>
             <div className="mt-4">
 
             <Label>upload photo</Label>

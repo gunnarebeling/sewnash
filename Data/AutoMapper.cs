@@ -22,6 +22,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<Session, SessionDTO>();
         CreateMap<Booking, BookingForSessionDTO>();
         CreateMap<BookingForPostDTO, Booking>();
+        CreateMap<Photo, PhotoDTO>();
         
 
     }

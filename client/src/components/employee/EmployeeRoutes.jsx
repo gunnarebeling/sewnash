@@ -2,9 +2,11 @@ import { Outlet, Route, Routes } from "react-router-dom"
 import EmployeeNavBar from "./EmployeeNavBar"
 import { BookingsList } from "./bookings/BookingsList"
 import { ClassList } from "./Classes/ClassList"
-import { ClassDetails } from "./Classes/ClassDetails"
+
 import { AvailabilityCalendar } from "./availability/AvailabilityCalendar"
 import { SessionDetails } from "./sessions/SessionDetails"
+import { ClassPhotos } from "./photos/ClassPhotos"
+import { ClassDetails } from "./classes/ClassDetails"
 
 
 export const EmployeeRoutes = () => {
@@ -27,6 +29,7 @@ export const EmployeeRoutes = () => {
                         <Route path=":classId">
                             <Route index element={<ClassDetails/>}/>
                             <Route path="availability" element={<AvailabilityCalendar/>}/>
+                            <Route path="photos" element={<ClassPhotos/>}/>
                         </Route>
                     </Route>
                     <Route path="session/:sessionId" element={<SessionDetails/>}/>
