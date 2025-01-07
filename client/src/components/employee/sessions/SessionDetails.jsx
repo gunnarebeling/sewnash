@@ -64,8 +64,8 @@ export const SessionDetails = () => {
                         <td>{convertToDollars(session.totalAmount)}</td>
                     </tr>
                     <tr>
-                        <th>Locked/Unlocked</th>
-                        <td>{session.open ? "lock" : "unlock"}</td>
+                        <th>open/closed</th>
+                        <td>{session.open ? "open" : "closed"}</td>
                     </tr>
                     
                 </tbody>

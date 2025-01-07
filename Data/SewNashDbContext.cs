@@ -16,6 +16,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<SewClass> SewClasses {get; set;}
+    public DbSet<Photo> Photos { get; set; }
     
 
     public SewNashDbContext(DbContextOptions<SewNashDbContext> context, IConfiguration config) : base(context)

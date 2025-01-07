@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250103175310_addedphotos")]
+    partial class addedphotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8ef686cc-34ab-496e-b902-9e3ff5b4f2c7",
+                            ConcurrencyStamp = "4f8e70df-984e-4e08-8b88-ff599f3d3cde",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGfc16MVHio06tEQkbfqz6en1pTuwRfhbZSTK9zO9zHD2Wzc+hCxwXWTj5EmqjCJnw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFlMaFAg1I2RET2TBH2h8nJ4iDWWMB3N+T3bOL7mGKTlzHfQ2b4Spwliqfy2rhLtcA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "97f08218-e2f2-4f5f-a99a-485593d75d0e",
+                            SecurityStamp = "879ebbc5-5d8b-43ed-902b-d0e864cad3ec",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "11ea2ba8-1df5-4c9b-8ee4-b4494b877c79",
+                            ConcurrencyStamp = "dd6360ea-e6e1-4fd3-9caf-6131c7182a03",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENY9fKGducc74k+eKe4jv9GzgDa49I6izOSsMuG/SROjnqAe7y0l6gaTVJy0tznrRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDb6ai6oUlcJFiqjDegNgTI4DTfii86yT//ccVYFTNobE2I/do7j9LMQOfejzLT94Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "19122153-a160-4781-aea7-dedebe00a5c3",
+                            SecurityStamp = "461e977d-4f17-4686-8694-86e4dd29bcc6",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -616,15 +619,12 @@ namespace sewnash.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FileKey")
+                    b.Property<int>("SewClassId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("MainPhoto")
-                        .HasColumnType("boolean");
-
-                    b.Property<int?>("SewClassId")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -966,7 +966,9 @@ namespace sewnash.Migrations
                 {
                     b.HasOne("SewNash.Models.SewClass", "SewClass")
                         .WithMany("Photos")
-                        .HasForeignKey("SewClassId");
+                        .HasForeignKey("SewClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SewClass");
                 });
