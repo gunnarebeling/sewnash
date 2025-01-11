@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { getAllClasses } from "../../managers/sewClassManager"
-import { SewClassCard } from "./sewClasses/SewClassCard"
 import "./CustomerHome.css"
 import { Col, Container, Row } from "reactstrap"
 import { FiCalendar, FiSearch } from "react-icons/fi"
 import DatePicker from "react-datepicker"
 import { useNavigate } from "react-router-dom"
+import { CustomerClassCard } from "./CustomerClassCard"
 
 
 export const CustomerHome = () => {
@@ -28,10 +28,10 @@ export const CustomerHome = () => {
       navigate('/bookbydate', {state: {date: date}})
     }
     return (
-      <Container>
+      <Container className="main">
       {/* Row for Header */}
-        <Row className="justify-content-center mb-4">
-          <Col md="8" className="text-center">
+        <Row className="justify-content-center mb-4 mt-4">
+          <Col md="8" className="text-center mt-5">
             <img 
               src="./src/assets/SewNash1.png" 
               alt="SewNash Logo" 
@@ -90,7 +90,7 @@ export const CustomerHome = () => {
           className="mb-4  justify-content-center"
         >
           <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
-            <SewClassCard sewClass={c} showDelete={false}/>
+            <CustomerClassCard sewClass={c} showDelete={false}/>
           </div>
         </Col>
       ))}

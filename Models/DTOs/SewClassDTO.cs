@@ -15,7 +15,8 @@ public class SewClassDTO
     
     public decimal PricePerPerson { get; set; }
     public int Duration { get; set; }
-    public List<AvailabilityForClassDTO> Availabilities { get; set; }
+    public List<PhotoDTO> Photos { get; set; }
+
 }
 public class SewClassForSessionDTO
 {

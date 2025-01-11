@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 
 import { Button } from 'reactstrap'
-import { convertToDollars } from '../../../managers/FormatFunctions'
+import { convertToDollars } from '../../managers/FormatFunctions'
 import './SewClassCard.css'
-import { deleteClass } from '../../../managers/sewClassManager'
-import { UpdateClassForm } from '../../employee/classes/UpdateClassForm'
+import { deleteClass } from '../../managers/sewClassManager'
+import { UpdateClassForm } from './classes/UpdateClassForm'
 
 
 
-export const SewClassCard = ({sewClass, showDelete, setClassChange}) => {
+export const EmployeeSewClassCard = ({sewClass, showDelete, setClassChange}) => {
     const handleDelete = (e) => {
         e.stopPropagation()
         const id = e.target.dataset.id

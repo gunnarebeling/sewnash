@@ -1,6 +1,9 @@
 .cst-bg {
     background-color: rgba(251, 248, 70, 0.719);
 }
+.main-content {
+  margin-top: 1px; /* Adjust this value based on the height of your navbar */
+}
 .flow-header-button {
     display: flex;
     align-items: center;

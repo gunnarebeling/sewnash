@@ -6,6 +6,8 @@ using SewNash.Models;
 using SewNash.Models.DTOs;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
+using Amazon.S3;
+using Amazon.S3.Model;
 
 namespace SewNash.Controllers;
 
@@ -15,17 +17,37 @@ public class SewClassController : ControllerBase
 {
     private SewNashDbContext _dbContext;
     private IMapper _mapper;
+    private IConfiguration _configuration;
+    private readonly IAmazonS3 _s3Client;
+    private const string BucketName = "sewnashbucket";
 
-    public SewClassController(SewNashDbContext context, IMapper mapper)
+    public SewClassController(SewNashDbContext context, IMapper mapper, IAmazonS3 s3Client, IConfiguration configuration)
     {
         _dbContext = context;
         _mapper = mapper;
+        _configuration = configuration;
+         _s3Client = s3Client;
+        _s3Client = new AmazonS3Client(
+            _configuration["AWS:AccessKey"],
+            _configuration["AWS:SecretKey"],
+            new AmazonS3Config
+            {
+                RegionEndpoint = Amazon.RegionEndpoint.USEast2 // Correct region for your bucket
+            });
     }
 
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok( _dbContext.SewClasses.ProjectTo<SewClassDTO>(_mapper.ConfigurationProvider));
+
+        List<SewClassDTO> sewClasses = _dbContext.SewClasses.ProjectTo<SewClassDTO>(_mapper.ConfigurationProvider).ToList();
+        sewClasses.ForEach(c => c.Photos.ForEach(p => p.FileKey = _s3Client.GetPreSignedURL(new GetPreSignedUrlRequest
+        {
+            BucketName = BucketName,
+            Key = p.FileKey,
+            Expires = DateTime.Now.AddMinutes(5)
+        })));
+        return Ok(sewClasses);
     }
 
     [HttpGet("{id}")]

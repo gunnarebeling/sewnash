@@ -4,8 +4,10 @@ import "./ClassList.css"
 import { Col, Container, Row } from "reactstrap"
 import { useNavigate } from "react-router-dom"
 import { getAllClasses } from "../../../managers/sewClassManager"
-import { SewClassCard } from "../../customer/sewClasses/SewClassCard"
+
 import { AddClassForm } from "./AddClassForm"
+import { EmployeeSewClassCard } from "../EmployeeSewClassCard"
+
 
 
 export const ClassList = () => {
@@ -43,7 +45,7 @@ export const ClassList = () => {
                 className="mb-4  justify-content-center"
                 >
                 <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
-                    <SewClassCard sewClass={c} showDelete={true} setClassChange={setClassChange}/>
+                    <EmployeeSewClassCard sewClass={c} showDelete={true} setClassChange={setClassChange}/>
                 </div>
                 </Col>
             ))}

@@ -5,6 +5,8 @@ import { Col, Container, Row } from "reactstrap"
 import { convertToDollars, formatDate } from "../../../managers/FormatFunctions"
 import DatePicker from "react-datepicker"
 import { getSessionByClassId } from "../../../managers/sessionManager"
+import { getClassPhoto } from "../../../managers/photoManager"
+import './BookByClass.css'
 
 export const BookByClass = () => {
     const [sewClass, setSewClass] = useState({})
@@ -12,12 +14,16 @@ export const BookByClass = () => {
     const [highlightDates, setHighlightDates] = useState([])
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectSessions, setSelectSessions] = useState([])
+    const [Photos, setPhotos] = useState([])
     const {classId} = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
         getClassById(classId).then(setSewClass)
         getSessionByClassId(classId).then(setSessions)
+        getClassPhoto(classId).then((photos) => {
+            setPhotos(photos.map(p => p.fileKey))
+        })
     }, [classId])
 
     useEffect(() => {
@@ -50,7 +56,7 @@ export const BookByClass = () => {
                     </div>
                         <p>location - berry hill  &#8226; {sewClass.duration} hours long</p>
                     <div>
-                        <img src="https://static.wixstatic.com/media/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png/v1/fill/w_250,h_250,al_c,q_95,enc_auto/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png" alt="class picture" />
+                        <img src={Photos[0]} alt="class picture" className="custom-img" />
                     </div>
                     <div>
                         <h4>Price</h4>
