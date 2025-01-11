@@ -81,13 +81,13 @@ export const CustomerHome = () => {
     </Row>
 
     {/* Row for Cards */}
-    <Row className="justify-content-center">
+    <Row className="justify-content-center mx-5">
       {allClasses.map((c) => (
         <Col
           key={c.id}
           xs="12"
           lg="6"
-          className="mb-4  justify-content-center"
+          className="mb-2  p-4 mx-5 justify-content-center"
         >
           <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
             <CustomerClassCard sewClass={c} showDelete={false}/>

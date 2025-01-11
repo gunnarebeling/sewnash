@@ -4,8 +4,10 @@ import { getClassById } from "../../../managers/sewClassManager"
 import { Col, Container, Row } from "reactstrap"
 import { convertToDollars, formatDate } from "../../../managers/FormatFunctions"
 import DatePicker from "react-datepicker"
+import Slider from "react-slick";
 import { getSessionByClassId } from "../../../managers/sessionManager"
 import { getClassPhoto } from "../../../managers/photoManager"
+
 import './BookByClass.css'
 
 export const BookByClass = () => {
@@ -14,7 +16,12 @@ export const BookByClass = () => {
     const [highlightDates, setHighlightDates] = useState([])
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectSessions, setSelectSessions] = useState([])
-    const [Photos, setPhotos] = useState([])
+    const [allPhotos, setAllPhotos] = useState([])
+    const [mainPhoto, setMainPhoto] = useState('')
+    const [filteredPhotos, setFilteredPhotos] = useState([])
+    const [photoSettings, setPhotoSettings] = useState({})
+
+
     const {classId} = useParams()
     const navigate = useNavigate()
 
@@ -22,9 +29,31 @@ export const BookByClass = () => {
         getClassById(classId).then(setSewClass)
         getSessionByClassId(classId).then(setSessions)
         getClassPhoto(classId).then((photos) => {
-            setPhotos(photos.map(p => p.fileKey))
+            setAllPhotos(photos)
+            
         })
     }, [classId])
+
+    useEffect(() => {
+        const mainPhoto = allPhotos.find(p => p.mainPhoto)
+        setMainPhoto(mainPhoto?.fileKey)
+        const newPhotos = allPhotos.filter(p =>p.mainPhoto === false)
+        setFilteredPhotos(newPhotos)
+        
+    }, [allPhotos])
+    useEffect(() => {
+        const slidesToShow = 2;
+        const settings = {
+            dots: true,
+            infinite: filteredPhotos.length > slidesToShow,
+            speed: 1000,
+            slidesToShow: Math.min(slidesToShow, filteredPhotos.length),
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 3000,
+        };
+        setPhotoSettings(settings)
+    },[filteredPhotos])
 
     useEffect(() => {
         let dates = sessions.map(s => {
@@ -45,36 +74,52 @@ export const BookByClass = () => {
         navigate(`/booking/${sessionId}`)
     }
     
+    
+    
+
+    
 
     return (
-        <Container fluid>
+        <Container fluid className="mt-4 ">
             <Row>
-                <Col  className=" text-center">
-                    <div id='detail-header' className="m-5">
+                <Col  md={8} className=" text-center d-flex flex-column align-items-center justify-content-center">
+                    <div className="w-100">
+                        <img src={mainPhoto} alt="class picture" className="custom-img rounded border border-3" />
+                    </div>
+                    <Container className="border p-2 m-2 mb-4 slider-container rounded" style={{ maxWidth: '500px' }}>
+                    <Slider {...photoSettings}>
+                        {filteredPhotos.map((photo, index) => (
+                            <div key={index}>
+                                <img src={photo.fileKey} alt={`class picture ${index}`} className="custom-img rounded border border-3 m-1" />
+                            </div>
+                        ))}
+                    </Slider>
+                    </Container>
+                    <Container className="border border-3 bg-light rounded" style={{ maxWidth: '500px' }}>
+                    <div id='detail-header' className="">
                         <h2>{sewClass.name}</h2>
                         <p></p>
                     </div>
                         <p>location - berry hill  &#8226; {sewClass.duration} hours long</p>
-                    <div>
-                        <img src={Photos[0]} alt="class picture" className="custom-img" />
-                    </div>
-                    <div>
-                        <h4>Price</h4>
-                        <p>{convertToDollars(sewClass.pricePerPerson)}</p>
-                    </div>
-                    <div>
-                        <h4>Description</h4>
-                        <p>{sewClass.description}</p>
-                    </div>
+                    
+                        <div className="mt-2 ">
+                            <h4>Price</h4>
+                            <p>{convertToDollars(sewClass.pricePerPerson)}</p>
+                        </div>
+                        <div>
+                            <h4>Description</h4>
+                            <p>{sewClass.description}</p>
+                        </div>
+                    </Container>
 
                 </Col>
 
-                <Col className=" border-start ">
+                <Col md={4} className=" border-start ">
                 <div className="m-4 d-flex justify-content-center">
 
                     <DatePicker
                         selected={selectedDate}
-                        onChange={(date) => setSelectedDate(date)}
+                        onChange={(date) => date && setSelectedDate(date)}
                         highlightDates={highlightDates}
                         inline
 

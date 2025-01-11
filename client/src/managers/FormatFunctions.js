@@ -7,11 +7,17 @@ export const convertToDollars = (price) => {
 }
 
 export const formatDate = (date) => {
-  if (typeof date === "string") {
-    date = new Date(date)
+  if (date !== null) {
+    if (typeof date === "string") {
+      date = new Date(date)
+      
+    };
+      return date.toISOString().split("T")[0]
+    
+  }else {
+    return ""
   }
-  return date.toISOString().split("T")[0]
-};
+  }
 
 export const formatAmericanDate = (date) => {
   if (typeof date === "string") {
