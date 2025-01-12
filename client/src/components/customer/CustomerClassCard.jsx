@@ -8,18 +8,19 @@ import './CustomerClassCard.css'
 
 
 
+
 export const CustomerClassCard = ({sewClass }) => {
     const [mainPhoto, setMainPhoto] = useState('')
 
     useEffect(() => {
         const mainPhoto = sewClass.photos.find(p => p.mainPhoto)
-        setMainPhoto(mainPhoto.fileKey)
+        setMainPhoto(mainPhoto?.fileKey)
        
     }, [sewClass])
     
 
     return (
-        <Card  className="customer-class-card" style={{ backgroundImage: `url(${mainPhoto})` }}>
+        <Card  className="customer-class-card" style={{ backgroundImage: `url(${mainPhoto ? mainPhoto : "photo"})` }}>
             <Container className="card-content d-flex flex-column justify-content-between ">
                 
                 <div className="mt-auto d-flex  justify-content-between py-3">

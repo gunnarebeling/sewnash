@@ -14,3 +14,15 @@ export const uploadClassPhoto =  (file, classId) => {
 export const getClassPhoto = (classId) => {
     return fetch(`${_apiUrl}/class/${classId}`).then(res => res.json())
 }
+
+export const deletePhoto = (photoId) =>{
+    return fetch(`${_apiUrl}/${photoId}`, {
+        method: 'DELETE'
+    })
+}
+
+export const setMainPhoto = (classId, photoId) => {
+    return fetch(`${_apiUrl}/class/${classId}/setmain/${photoId}`, {
+        method: 'PUT'
+    })
+}

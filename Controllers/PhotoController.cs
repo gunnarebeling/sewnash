@@ -144,18 +144,20 @@ public async Task<IActionResult> GetPhoto(int classId)
 }
 
     // DELETE function to remove the photo from S3
-    [HttpDelete("delete/{fileKey}")]
-    public async Task<IActionResult> DeletePhoto(string fileKey)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePhoto( int id)
     {
-        if (string.IsNullOrEmpty(fileKey))
+        
+        Photo photoObj = _dbContext.Photos.SingleOrDefault(p => p.Id == id);
+        if (photoObj == default)
         {
-            return BadRequest("File key is required");
+            return NotFound("photo not found");
         }
 
         var deleteRequest = new DeleteObjectRequest
         {
             BucketName = BucketName,
-            Key = fileKey
+            Key = photoObj.FileKey
         };
 
         try
@@ -163,6 +165,8 @@ public async Task<IActionResult> GetPhoto(int classId)
             var response = await _s3Client.DeleteObjectAsync(deleteRequest);
             if (response.HttpStatusCode == System.Net.HttpStatusCode.NoContent)
             {
+                _dbContext.Photos.Remove(photoObj);
+                await _dbContext.SaveChangesAsync();
                 return Ok(new { Message = "File deleted successfully" });
             }
             else
@@ -178,5 +182,27 @@ public async Task<IActionResult> GetPhoto(int classId)
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
+    }
+
+    [HttpPut("class/{classId}/setmain/{photoId}")]
+    [Authorize]
+    public IActionResult UpdateMain(int classId, int photoId)
+    {
+        Photo photo = _dbContext.Photos.SingleOrDefault(p => p.Id == photoId);
+        Photo oldMain = _dbContext.Photos.SingleOrDefault(p => p.MainPhoto && p.SewClassId == classId);
+        if (photo == default)
+        {
+            return NotFound("photo not found");
+
+        }
+        photo.MainPhoto = true;
+        if (oldMain != default)
+        {
+            oldMain.MainPhoto = false;
+            
+        }
+        _dbContext.SaveChanges();
+        return NoContent();
+
     }
 }

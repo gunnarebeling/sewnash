@@ -5,10 +5,18 @@ import { convertToDollars } from '../../managers/FormatFunctions'
 import './SewClassCard.css'
 import { deleteClass } from '../../managers/sewClassManager'
 import { UpdateClassForm } from './classes/UpdateClassForm'
+import { useEffect, useState } from 'react'
 
 
 
 export const EmployeeSewClassCard = ({sewClass, showDelete, setClassChange}) => {
+    const [mainPhoto, setMainPhoto] = useState('')
+    
+        useEffect(() => {
+            const mainPhoto = sewClass.photos.find(p => p.mainPhoto)
+            setMainPhoto(mainPhoto?.fileKey)
+           
+        }, [sewClass])
     const handleDelete = (e) => {
         e.stopPropagation()
         const id = e.target.dataset.id
@@ -24,20 +32,21 @@ export const EmployeeSewClassCard = ({sewClass, showDelete, setClassChange}) => 
     return (
         <div className='card d-flex flex-row align-times-start'>
             <div>
-                <img src={`https://static.wixstatic.com/media/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png/v1/fill/w_250,h_250,al_c,q_95,enc_auto/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png`} alt={`album art`} className="img-fluid custom-img fixed-size"/>
+                <img src={mainPhoto} alt={`class photo`} className=" employee-class-img "/>
             </div> 
             <div className="details d-flex flex-column ">
                 <div className="info ">
-                    <div className="mx-1 d-flex justify-content-between  mb-1">
-                        <span className="m-2 mb-1" >{sewClass?.name}</span>
-
+                    <div className="mx-1 d-flex justify-content-start mb-1">
+                       
+                        <h5>{sewClass?.name}</h5>
+                       
                     </div>
-                    <div className="m-2 mb-1"><span >{convertToDollars(sewClass.pricePerPerson)} per person</span></div>
-                    <div className="m-2 mb-1"><span>Max capacity: {sewClass.maxPeople}</span></div>
-                    <div className="m-2 mb-1"><span>Duration: {sewClass.duration} hours</span></div>
+                    <div className="my-2 mb-1"><span ><span style={{backgroundColor:'rgba(169, 235, 26, 0.472)'}}>{convertToDollars(sewClass.pricePerPerson)}</span> each</span></div>
+                    <div className="my-2 mb-1"><span>Max capacity: {sewClass.maxPeople}</span></div>
+                    <div className="my-2 mb-1"><span>Duration: {sewClass.duration} hours</span></div>
                     {showDelete && 
-                        <div className='m-3'>
-                            <Button color='danger' className='m-1' data-id={sewClass.id} onClick={handleDelete}>delete</Button>
+                        <div className='my-3 d-flex align-items-center'>
+                            <Button size='sm' color='danger' className='m-1' data-id={sewClass.id} onClick={handleDelete}>delete</Button>
                             <UpdateClassForm sewClass={sewClass} setClassChange={setClassChange} />
                         </div>
                     }

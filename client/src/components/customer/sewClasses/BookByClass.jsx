@@ -86,6 +86,8 @@ export const BookByClass = () => {
                     <div className="w-100">
                         <img src={mainPhoto} alt="class picture" className="custom-img rounded border border-3" />
                     </div>
+                    {filteredPhotos.length > 0 && 
+                    
                     <Container className="border p-2 m-2 mb-4 slider-container rounded" style={{ maxWidth: '500px' }}>
                     <Slider {...photoSettings}>
                         {filteredPhotos.map((photo, index) => (
@@ -95,7 +97,8 @@ export const BookByClass = () => {
                         ))}
                     </Slider>
                     </Container>
-                    <Container className="border border-3 bg-light rounded" style={{ maxWidth: '500px' }}>
+                    }
+                    <Container className="border border-3 bg-light mt-2 rounded" style={{ maxWidth: '500px' }}>
                     <div id='detail-header' className="">
                         <h2>{sewClass.name}</h2>
                         <p></p>
