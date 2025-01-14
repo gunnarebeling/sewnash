@@ -88,7 +88,7 @@ public class PhotoController : ControllerBase
             
                 await _dbContext.SaveChangesAsync();
 
-                return Ok(new { FileUrl = $"https://{BucketName}.s3.amazonaws.com/{fileKey}" });
+                return Ok(new { FileUrl = $"https://{BucketName}.s3.amazonaws.com/{fileKey}"});
             }
             catch (AmazonS3Exception s3Ex)
             {

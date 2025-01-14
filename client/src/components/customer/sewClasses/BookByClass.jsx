@@ -118,7 +118,7 @@ export const BookByClass = () => {
                 </Col>
 
                 <Col md={4} className=" border-start ">
-                <div className="m-4 d-flex justify-content-center">
+                <div className="m-4 text-center">
 
                     <DatePicker
                         selected={selectedDate}

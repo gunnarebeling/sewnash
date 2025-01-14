@@ -29,28 +29,3 @@
 
 
 
-@media (max-width: 768px) {
-    .custom-img {
-        height: 150px; /* Adjust image height for medium screens */
-    }
-
-    .image-container {
-        flex: 0 0 120px; /* Slightly smaller fixed width */
-    }
-
-    
-}
-
-@media (max-width: 576px) {
-    .custom-img {
-        height: 100px; /* Smaller height for very small screens */
-    }
-
-    .image-container {
-        flex: 0 0 100px; /* Fixed width for smallest screens */
-    }
-
-    .details {
-        font-size: 0.8rem; /* Further reduce text size */
-    }
-}

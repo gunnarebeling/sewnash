@@ -85,7 +85,7 @@ export const BookByDate = () => {
         <Container fluid>
             <Row>
                 <Col className=" border-start ">
-                <div className="m-4 d-flex justify-content-center">
+                <div className="m-4 text-center">
 
                     <DatePicker
                         selected={selectedDate}
