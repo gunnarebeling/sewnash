@@ -18,11 +18,12 @@ export const AvailabilityCalendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [sewClass, setSewClass] = useState({})
+  const [newAvailability, setNewAvailability] = useState(false)
   const navigate = useNavigate()
 
     useEffect(() => {
         getAllSessions().then(setSessions)
-    }, [isModalOpen])
+    }, [isModalOpen, newAvailability])
 
     useEffect(() => {
        getClassById(classId).then(setSewClass) 
@@ -89,6 +90,7 @@ export const AvailabilityCalendar = () => {
         toggle = {toggleModal}
         selectedDate = {selectedDate}
         sewClass={sewClass}
+        setNewAvailability = {setNewAvailability}
       />
       <div className='m-3'>
         <h3>{sewClass.name}</h3>
