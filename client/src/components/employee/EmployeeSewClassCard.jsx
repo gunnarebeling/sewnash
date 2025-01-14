@@ -30,9 +30,9 @@ export const EmployeeSewClassCard = ({sewClass, showDelete, setClassChange}) => 
     }
 
     return (
-        <div className='card d-flex flex-row align-times-start'>
+        <div className='card d-flex border border-3 flex-row align-times-start'>
             <div>
-                <img src={mainPhoto} alt={`class photo`} className=" employee-class-img "/>
+                <img src={mainPhoto ? mainPhoto : 'https://tinyurl.com/sewnashpic'} alt={`class photo`} className=" employee-class-img "/>
             </div> 
             <div className="details d-flex flex-column ">
                 <div className="info ">

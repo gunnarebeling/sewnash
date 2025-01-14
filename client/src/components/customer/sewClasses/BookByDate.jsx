@@ -78,6 +78,7 @@ export const BookByDate = () => {
         }
         setSelectedDate(newDate)
     }
+
     
 
     return (
@@ -125,7 +126,7 @@ export const BookByDate = () => {
                                     })}
                                 </div>
                                 <div className="py-3 px-2 image-container  ">
-                                <img src={`https://static.wixstatic.com/media/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png/v1/fill/w_250,h_250,al_c,q_95,enc_auto/cc057e_078e2d80a13a44cba226ea4549b9a745~mv2.png`} alt={`album art`} className="img-fluid custom-img fixed-size "/>
+                                <img src={c.mainPhoto.fileKey ? c.mainPhoto.fileKey : 'https://tinyurl.com/sewnashpic'} alt={`album art`} className="img-fluid custom-img fixed-size "/>
                                 </div>        
                             </article>
                         )

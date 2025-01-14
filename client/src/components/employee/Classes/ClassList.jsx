@@ -30,7 +30,7 @@ export const ClassList = () => {
       {/* Row for Header */}
             <Row className="justify-content-center mb-4">
                 <header className="m-3 text-center">
-                    <h2>classes</h2>
+                    <h1 className="raleway-dots-regular">classes</h1>
                     <AddClassForm modal={modal} setModal={setModal}/>
                 </header>
             </Row>

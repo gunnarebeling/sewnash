@@ -42,22 +42,22 @@ export default function EmployeeNavBar() {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mx-auto d-flex justify-content-center " navbar>
           <NavItem>
-            <NavLink tag={RRNavLink} to="/employee">
+            <NavLink tag={RRNavLink} onClick={toggleNavbar} to="/employee">
               Bookings
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={RRNavLink} to="classes">
+            <NavLink tag={RRNavLink} onClick={toggleNavbar} to="classes">
               Classes
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={RRNavLink} to="/">
+            <NavLink tag={RRNavLink}  onClick={toggleNavbar} to="/">
               Customer
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={RRNavLink} to="/register">
+            <NavLink tag={RRNavLink} onClick={toggleNavbar} to="/register">
               Register Employee
             </NavLink>
           </NavItem>

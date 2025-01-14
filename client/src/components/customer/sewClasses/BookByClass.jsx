@@ -84,7 +84,7 @@ export const BookByClass = () => {
             <Row>
                 <Col  md={8} className=" text-center d-flex flex-column align-items-center justify-content-center">
                     <div className="w-100">
-                        <img src={mainPhoto} alt="class picture" className="custom-img rounded border border-3" />
+                        <img src={mainPhoto ? mainPhoto : 'https://tinyurl.com/sewnashpic'} alt="class picture" className="custom-img rounded border border-3" />
                     </div>
                     {filteredPhotos.length > 0 && 
                     

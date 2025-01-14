@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { updateClass } from "../../../managers/sewClassManager";
+import * as Yup from "yup";
 
 export const UpdateClassForm = ({ sewClass, setClassChange}) => {
     const [modal, setModal] = useState(false);
+    const [errors, setErrors] = useState({})
     const [formData, setFormData] = useState({
         name: "",
         description:"",
@@ -12,6 +14,23 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
         pricePerPerson: 0,
         duration: 0
     })
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        description: Yup.string().required("description is required"),
+        maxPeople: Yup
+        .number()
+        .required("Age is required")
+        .integer("Age must be an integer")
+        .min(1, "must be at least one person"),
+        pricePerPerson: Yup.number()
+        .required("must set a price")
+        .min(0, "must be a positive amount"),
+        duration: Yup.number()
+        .required("must enter a duration in hours")
+        .min(0.5, "must be at least half an hour")
+        });
+
     useEffect(() => {
         let copy = {formData,
             name: sewClass.name,
@@ -34,15 +53,25 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
         }
         setFormData(copy)
     }
-    const handleSubmit = () => {
-        let copy = {...formData}
-        copy.maxPeople = parseInt(copy.maxPeople)
-        copy.duration = parseInt(copy.duration)
-        copy.pricePerPerson = parseFloat(copy.pricePerPerson)
-        updateClass(sewClass.id, copy).then(()=>{
-            setClassChange(c => !c)
-            setModal(!modal)
-        })
+    const handleSubmit = async () => {
+        try {
+            await validationSchema.validate(formData, {abortEarly: false})
+            let copy = {...formData}
+            copy.maxPeople = parseInt(copy.maxPeople)
+            copy.duration = parseInt(copy.duration)
+            copy.pricePerPerson = parseFloat(copy.pricePerPerson)
+            updateClass(sewClass.id, copy).then(()=>{
+                setClassChange(c => !c)
+                setModal(!modal)
+            })
+            
+        } catch (validationErrors) {
+            const formattedErrors = validationErrors.inner.reduce((acc,err) => {
+                acc[err.path] = err.message
+                return acc
+            }, {})
+            setErrors(formattedErrors)
+        }
         
     }
   
@@ -64,8 +93,9 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
                         name="name"
                         value={formData.name}
                         onChange={onChange}
+                        invalid= {!!errors?.name}
                     />
-
+                    <FormFeedback type='invalid'>{errors.name}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label>Max People</Label>
@@ -74,8 +104,9 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
                         name="maxPeople"
                         value={formData.maxPeople}
                         onChange={onChange}
+                        invalid= {!!errors?.maxPeople}
                     />
-
+                    <FormFeedback type='invalid'>{errors.maxPeople}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                 <Label>Price Per Person</Label>
@@ -84,8 +115,9 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
                         name="pricePerPerson"
                         value={formData.pricePerPerson}
                         onChange={onChange}
+                        invalid= {!!errors?.pricePerPerson}
                     />
-
+                    <FormFeedback type='invalid'>{errors.pricePerPerson}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                 <Label>Duration by hour</Label>
@@ -94,8 +126,9 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
                         name="duration"
                         value={formData.duration}
                         onChange={onChange}
+                        invalid= {!!errors?.duration}
                     />
-
+                    <FormFeedback type='invalid'>{errors.duration}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label>Description</Label>
@@ -105,8 +138,9 @@ export const UpdateClassForm = ({ sewClass, setClassChange}) => {
                         rows="5"
                         value={formData.description}
                         onChange={onChange}
+                        invalid= {!!errors?.description}
                     />
-
+                    <FormFeedback type='invalid'>{errors.description}</FormFeedback>
                 </FormGroup>
             </Form>
           </ModalBody>

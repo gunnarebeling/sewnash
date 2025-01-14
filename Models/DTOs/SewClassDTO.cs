@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SewNash.Models.DTOs;
 
-public class SewClassDTO
+public class SewClassDTO : ClassWithPhotos
 {
     public int Id { get; set; }
     
@@ -18,7 +18,7 @@ public class SewClassDTO
     public List<PhotoDTO> Photos { get; set; }
 
 }
-public class SewClassForSessionDTO
+public class SewClassForSessionDTO : ClassWithPhotos
 {
     public int Id { get; set; }
     
@@ -30,6 +30,14 @@ public class SewClassForSessionDTO
     
     public decimal PricePerPerson { get; set; }
     public int Duration { get; set; }
+    public List<PhotoDTO> Photos { get; set; }
+    public PhotoDTO mainPhoto 
+    {
+        get
+        {
+            return Photos.SingleOrDefault(p => p.MainPhoto);
+        }
+    }
 }
 public class PostClassDTO
 {

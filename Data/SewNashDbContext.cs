@@ -54,7 +54,8 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
             IdentityUserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
             FirstName = "Admina",
             LastName = "Strator",
-            PhoneNumber = "123-123-1234"
+            PhoneNumber = "123-123-1234",
+            Email = "admina@strator.comx"
             
         });
         modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser
@@ -72,7 +73,9 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
             IdentityUserId = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0", // Links to the IdentityUser ID
             FirstName = "John",
             LastName = "Doe",
-            PhoneNumber = "222-222-2222"
+            PhoneNumber = "222-222-2222",
+            Email = "johndoe@example.com"
+
         });
         modelBuilder.Entity<Time>().HasData(new Time[]
         {
@@ -261,7 +264,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 new { SessionsId = 3, EmployeesId = 1 },
                 new { SessionsId = 2, EmployeesId = 1 }
                 
-            ));
+        ));
         modelBuilder.Entity<DayForAvailability>()
             .HasMany(d => d.Times)
             .WithMany(t => t.DayForAvailabilities)
@@ -276,7 +279,19 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 // For Session 3 (Day 6: Saturday, Time 6:00 PM)
                 new { DayForAvailabilitiesId = 4, TimesId = 3 },
                 new { DayForAvailabilitiesId = 5, TimesId = 3 } // Session 3 on Sunday, Time 6:00 PM
-    ));
+        ));
+
+        modelBuilder.Entity<Photo>()
+        .HasOne(p => p.SewClass)
+        .WithMany(s => s.Photos)
+        .HasForeignKey(p => p.SewClassId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Session>()
+        .HasOne(sc => sc.SewClass)
+        .WithMany(s => s.Sessions)
+        .HasForeignKey(sc => sc.SewClassId)
+        .OnDelete(DeleteBehavior.Cascade); 
 
 
     }

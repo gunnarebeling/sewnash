@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
+import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, FormGroup, FormText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from "reactstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllTimes } from "../../../managers/timeManager";
 import { getAllEmployees } from "../../../managers/employeeManager";
 import { postAvailability } from "../../../managers/availabilityManager";
+import * as Yup from "yup";
 
 export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => {
     const [dropdownStates, setDropdownStates] = useState({});
+    const [errors, setErrors] = useState({})
     const [employees, setEmployees] = useState([]);
     const [employeeDropDown, setEmployeeDropDown] = useState(false)
     const [allTimes, setAllTimes] = useState([]);
@@ -20,6 +22,45 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
         days: [],
         employees: [],
     });
+
+    const validationSchema = Yup.object().shape({
+        dateRange: Yup.array()
+        .of(Yup.date().required("Both start and end dates are required!"))
+        .test("valid-dates", "Start date must be today or in the future!", function (dates) {
+          const startDate = dates?.[0];
+          const today = new Date();
+          return startDate >= today.setHours(0, 0, 0, 0); // Ensure the start date is today or later
+        })
+        .test("end-after-start", "End date cannot be before the start date!", function (dates) {
+          const [startDate, endDate] = dates || [];
+          return endDate >= startDate;
+        }),
+        days: Yup.array()
+        .of(
+        Yup.object().shape({
+            times: Yup.array()
+            .of(Yup.string().required("Each time entry must have content."))
+            .min(1, "Times must have at least one item!")
+            .required("Times are required!")
+        })
+        )
+        .test("check-times", "One or more days are missing times.", function (days) {
+        const missingTimes = days?.filter(day => !day.times || day.times.length === 0);
+        if (missingTimes.length > 0) {
+            return this.createError({
+            message: "One or more days are missing times.",
+            path: "days"
+            });
+        }
+        return true;
+        })
+        .min(1, "You must select at least one day!"),
+        employees: Yup.array()
+        .min(1, "You must select an employee!")
+      
+        
+        });
+
     const employeeDropdownToggle = () => setEmployeeDropDown(!employeeDropDown);
 
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -72,24 +113,34 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
         }
     };
 
-    const onConfirm = (e) => {
+    const onConfirm = async (e) => {
         e.preventDefault();
-        let finalDays = selectedDays.reduce((list, d) => {
-            if (d.checked) {
-                list.push( {
-                    id: d.id,
-                    dayOfWeek: d.name,
-                    times: [...d.times]
-                })
+        try {
+            let finalDays = selectedDays.reduce((list, d) => {
+                if (d.checked) {
+                    list.push( {
+                        id: d.id,
+                        dayOfWeek: d.name,
+                        times: [...d.times]
+                    })
+                }
+                return list
+            }, [])
+            let copy = {...formData,
+                days: finalDays,
+                sewClass: sewClass.id
             }
-            return list
-        }, [])
-        let copy = {...formData,
-            days: finalDays,
-            sewClass: sewClass.id
+            await validationSchema.validate(copy, {abortEarly: false})
+            postAvailability(copy)
+            toggle(); // Close the modal
+            
+        } catch (validationErrors) {
+            const formattedErrors = validationErrors.inner.reduce((acc,err) => {
+                acc[err.path] = err.message
+                return acc
+            }, {})
+            setErrors(formattedErrors)
         }
-        postAvailability(copy)
-        toggle(); // Close the modal
     };
 
     const oneDayClick = () => {
@@ -176,28 +227,30 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                                     <Button className="m-2" onClick={oneDayClick}>One Day</Button>
                                     <Button className="m-2" onClick={yearClick}>One Year</Button>
                                 </div>
+                               {!!errors.dateRange && <FormText color="danger" style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}>{`${errors.dateRange}`}</FormText>}
                             </FormGroup>
                             <div className="m-3">
                                 <Label>Employees</Label>
-                            <Dropdown isOpen={employeeDropDown} toggle={employeeDropdownToggle} className="m-3">
-                                              <DropdownToggle caret >Choose employees</DropdownToggle>
-                                              <DropdownMenu >
-                                                {employees.map((e) => (
-                                                  <DropdownItem key={e.id} toggle={false}>
-                                                    <input
-                                                      type="checkbox"
-                                                      id={e.id}
-                                                      name={e.fullName}
-                                                      onChange={employeeChange}
-                                                      checked={formData.employees.some(employee => parseInt(employee) === e.id)}
-                                                      
-                                                      
-                                                    />
-                                                    <label>{e.fullName}</label>
-                                                  </DropdownItem>
-                                                ))}
-                                              </DropdownMenu>
-                                            </Dropdown>
+                                <Dropdown isOpen={employeeDropDown} toggle={employeeDropdownToggle} className="m-3">
+                                    <DropdownToggle caret >Choose employees</DropdownToggle>
+                                    <DropdownMenu >
+                                    {employees.map((e) => (
+                                        <DropdownItem key={e.id} toggle={false}>
+                                        <input
+                                            type="checkbox"
+                                            id={e.id}
+                                            name={e.fullName}
+                                            onChange={employeeChange}
+                                            checked={formData.employees.some(employee => parseInt(employee) === e.id)}
+                                            
+                                            
+                                        />
+                                        <label>{e.fullName}</label>
+                                        </DropdownItem>
+                                    ))}
+                                    </DropdownMenu>
+                                </Dropdown>
+                                {!!errors.employees && <FormText color="danger" style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}>{`${errors.employees}`}</FormText>}
                             </div>
                         </Col>
                         <Col>
@@ -212,7 +265,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                                         />
                                             <Label>{d.name}</Label>
                                             <Dropdown isOpen={dropdownStates[d.id]} toggle={() => toggleDropdown(d.id)} className={!d.checked && 'd-none'}>
-                                              <DropdownToggle caret >Choose time</DropdownToggle>
+                                              <DropdownToggle caret className="btn-sm">Choose time</DropdownToggle>
                                               <DropdownMenu >
                                                 {allTimes.map((time) => (
                                                   <DropdownItem key={`${time.id}-${d.id}`} toggle={false}>
@@ -236,7 +289,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                                     </div>
                                 );
                             })}
-                            
+                            {!!errors.days && <FormText color="danger" style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}>{`${errors.days}`}</FormText>}
                         </Col>
                     </Row>
                 </Form>

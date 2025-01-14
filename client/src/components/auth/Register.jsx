@@ -11,6 +11,7 @@ export function Register({ setLoggedInUser }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("")
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({})
@@ -32,6 +33,7 @@ export function Register({ setLoggedInUser }) {
         lastName,
         userName,
         email,
+        phoneNumber,
         address,
         password,
       };
@@ -42,7 +44,7 @@ export function Register({ setLoggedInUser }) {
         }
         else {
           setLoggedInUser(user);
-          navigate("/");
+          navigate("/employee");
         }
       });
     }
@@ -86,6 +88,18 @@ export function Register({ setLoggedInUser }) {
           invalid={!!errors.Email}
         />
         {errors.Email && <FormFeedback>{errors.Email.join(", ")}</FormFeedback>}
+      </FormGroup>
+      <FormGroup>
+        <Label>Phone Number</Label>
+        <Input
+          type="phoneNumber"
+          value={phoneNumber}
+          onChange={(e) => {
+            setPhoneNumber(e.target.value);
+          }}
+          invalid={!!errors.phoneNumber}
+        />
+        {errors.Email && <FormFeedback>{errors.phoneNumber.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label>User Name</Label>

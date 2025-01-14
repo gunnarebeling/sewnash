@@ -1,0 +1,58 @@
+@media (max-width: 576px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+    }
+
+    .d-flex {
+        flex-direction: column !important;
+    }
+
+    .d-flex .btn {
+        margin-top: 10px;
+       
+
+    }
+
+    .bookings-table {
+        display: block;
+    }
+
+    .bookings-table thead {
+        display: none;
+    }
+
+    .bookings-table tbody, .bookings-table tr, .bookings-table td, .bookings-table th {
+        display: block;
+        width: 100%;
+    }
+
+    .bookings-table td, .bookings-table th {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .bookings-table td::before, .bookings-table th::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .update-btn{
+        flex-grow: 1;
+        margin: 0 5px;
+    }
+   
+}

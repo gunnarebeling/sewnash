@@ -16,7 +16,8 @@
           "Microsoft.AspNetCore.OpenApi": "8.0.1",
           "Microsoft.EntityFrameworkCore.Design": "8.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0",
-          "Swashbuckle.AspNetCore": "6.4.0"
+          "Swashbuckle.AspNetCore": "6.4.0",
+          "dotenv.net": "3.2.1"
         },
         "runtime": {
           "sewnash.dll": {}
@@ -63,6 +64,14 @@
           "lib/net8.0/AWSSDK.S3.dll": {
             "assemblyVersion": "3.3.0.0",
             "fileVersion": "3.7.411.0"
+          }
+        }
+      },
+      "dotenv.net/3.2.1": {
+        "runtime": {
+          "lib/netstandard2.1/dotenv.net.dll": {
+            "assemblyVersion": "3.2.1.0",
+            "fileVersion": "3.2.1.0"
           }
         }
       },
@@ -662,6 +671,13 @@
       "sha512": "sha512-nIpjKnAnSTDzBwGBoRhkVChXDxX8ivc6Pe1aX1ITQsvx4HVfXn/knYh6euHHNknt1uuOMS2I8Zu0LG4nzjn9jw==",
       "path": "awssdk.s3/3.7.411",
       "hashPath": "awssdk.s3.3.7.411.nupkg.sha512"
+    },
+    "dotenv.net/3.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2fc2s5PH6wAoWQ8bpyVgz28y9qMs/t8ToiCKqSM6mWpjgg4QQSPtZ0nia0x/OebGLSDbxyOelVH+fULZH7N4mA==",
+      "path": "dotenv.net/3.2.1",
+      "hashPath": "dotenv.net.3.2.1.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",

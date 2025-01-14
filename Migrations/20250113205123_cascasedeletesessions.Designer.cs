@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250113205123_cascasedeletesessions")]
+    partial class cascasedeletesessions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a46db6e6-01f9-41f0-8b20-966ebcecfc4b",
+                            ConcurrencyStamp = "6ec07e58-af3f-4aa8-b263-2f43e4d1b085",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEAY/ecnZLMqZZF8dbcoCC6o3HqppRyQNxqyHKu3Zlr17VapNGUrbYAWT+5NY64GihQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHuFUA8+wDcNqYQVoZ4W+cs041E5+bQs8OC0oTsJeDw/EUxOqnJ6r9zr0BOpdUBvtQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2e818772-9b15-4dcf-8f54-8f4ede30f2a2",
+                            SecurityStamp = "19500fb7-664d-4be4-a0ce-f7d1edfb2186",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a5188c5c-1fa7-4342-9e61-99205afb83b3",
+                            ConcurrencyStamp = "cee41d72-fc98-4aed-9dca-ecd06aadf937",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBdsXVfosIrYEXOdFH1UHoalr5jxzfB4MJhiWaZhYXIGDTdY/xXUpc1hZL7j7z3deQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHXnnKmLQs+oB7uIAGCWqksqyvQchgu0b+XSddXMD9OZFGMYr9mPd1hEmLDOnXRXWg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "953acbbc-9138-4d09-a232-b0ae58bad69e",
+                            SecurityStamp = "27fa7a1a-3e15-4f72-ad3c-fa888204b013",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -567,10 +570,6 @@ namespace sewnash.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -597,7 +596,6 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "admina@strator.comx",
                             FirstName = "Admina",
                             IdentityUserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             LastName = "Strator",
@@ -606,7 +604,6 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 2,
-                            Email = "johndoe@example.com",
                             FirstName = "John",
                             IdentityUserId = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             LastName = "Doe",

@@ -1,9 +1,13 @@
 body{
-  background-color: rgba(251, 248, 70, 0.719);
+  
 }
 html, body {
   height: 100%; /* Ensure the root elements are full height */
-  margin: 0; /* Remove default margin */
+  margin: 0;
+  background-image: url('./assets/pexels-mdsnmdsnmdsn-1831234.jpg');
+  background-size: cover; /* Ensure the background image covers the entire area */
+  background-position: center; /* Center the background image */
+   /* Remove default margin */
 }
 .clickable-div {
   cursor: pointer; /* Changes the cursor to a pointer when hovering over the div */

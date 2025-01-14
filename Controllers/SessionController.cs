@@ -6,27 +6,33 @@ using SewNash.Models;
 using SewNash.Models.DTOs;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
+using Amazon.S3;
+
 
 namespace SewNash.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class SessionController : ControllerBase
+public class SessionController :  PhotoParent
 {
     private SewNashDbContext _dbContext;
     private IMapper _mapper;
 
-    public SessionController(SewNashDbContext context, IMapper mapper)
-    {
-        _dbContext = context;
-        _mapper = mapper;
-    }
+    public SessionController(SewNashDbContext context, IMapper mapper, IAmazonS3 s3Client)
+            : base(s3Client) // Pass the dependencies to the PhotoParent constructor
+        {
+            _dbContext = context;
+            _mapper = mapper;
+        }
 
     [HttpGet]
     [Authorize]
     public IActionResult GetAll()
     {
-       return Ok( _dbContext.Sessions.ProjectTo<SessionDTO>(_mapper.ConfigurationProvider));
+        List<SessionDTO> sessions = _dbContext.Sessions.ProjectTo<SessionDTO>(_mapper.ConfigurationProvider).ToList();
+        sessions.ForEach(s => ConvertFileKey(s.SewClass));
+        return Ok(sessions); 
+        
         
     }
 

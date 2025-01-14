@@ -20,7 +20,7 @@ export const CustomerClassCard = ({sewClass }) => {
     
 
     return (
-        <Card  className="customer-class-card" style={{ backgroundImage: `url(${mainPhoto ? mainPhoto : "photo"})` }}>
+        <Card  className="customer-class-card" style={{ backgroundImage: `url(${mainPhoto ? mainPhoto : "https://tinyurl.com/sewnashpic"})` }}>
             <Container className="card-content d-flex flex-column justify-content-between ">
                 
                 <div className="mt-auto d-flex  justify-content-between py-3">

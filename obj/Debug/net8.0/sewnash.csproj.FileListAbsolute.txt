@@ -16,6 +16,10 @@
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/sewnash.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/sewnash.pdb
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AutoMapper.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.Core.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.Extensions.NETCore.Setup.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.S3.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/dotenv.net.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/Humanizer.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
@@ -102,12 +106,9 @@
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.sewnash.props
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/staticwebassets.pack.json
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/scopedcss/bundle/sewnash.styles.css
+/Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.csproj.CopyComplete
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/refint/sewnash.dll
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.pdb
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.genruntimeconfig.cache
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/ref/sewnash.dll
-/Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.csproj.CopyComplete
-/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.Core.dll
-/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.S3.dll
-/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/AWSSDK.Extensions.NETCore.Setup.dll

@@ -6,11 +6,12 @@ using SewNash.Data;
 using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;
 using Microsoft.Extensions.Options;
+using dotenv.net;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+DotEnv.Load();
 // Add services to the container.
 
 builder.Services.AddControllers().AddJsonOptions(opts =>
@@ -27,8 +28,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
-builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddUserSecrets<Program>(); // Load User Secrets
+
+// Optionally, bind AWS options from configuration
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions("AWS"));
+// builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
+
+
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 

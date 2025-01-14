@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Scr8XESjbWzTdO0c5IvJHQQ7j3zFpl2pF1lPDFMmlod/5exldU/5dO1b4elvoW2/4hZ0oejue02pnhrnb1du9Q==",
+  "dgSpecHash": "UFEjp+XyZo4FflnSy0ON+TYgExGJf/lFqn0o8clYfBShLTMys9up0O01WFmLWjx1QMlLiBcEGBYYetWqbUY/JQ==",
   "success": true,
   "projectFilePath": "/Users/gunnarebeling/workspace/csharp/sewnash/sewnash.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "/Users/gunnarebeling/.nuget/packages/awssdk.core/3.7.400.72/awssdk.core.3.7.400.72.nupkg.sha512",
     "/Users/gunnarebeling/.nuget/packages/awssdk.extensions.netcore.setup/3.7.301/awssdk.extensions.netcore.setup.3.7.301.nupkg.sha512",
     "/Users/gunnarebeling/.nuget/packages/awssdk.s3/3.7.411/awssdk.s3.3.7.411.nupkg.sha512",
+    "/Users/gunnarebeling/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512",
     "/Users/gunnarebeling/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/gunnarebeling/.nuget/packages/microsoft.aspnetcore.cryptography.internal/8.0.0/microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512",
     "/Users/gunnarebeling/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/8.0.0/microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512",

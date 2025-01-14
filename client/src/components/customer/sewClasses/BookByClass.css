@@ -28,3 +28,25 @@
   .slider-container{
     background-color: rgb(248, 207, 214);
   }
+  @media (max-width: 576px) {
+    .custom-img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        
+    }
+
+    .slider {
+        margin: 0 10px;
+        padding: 1rem 0;
+    }
+
+    .slider img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .slider-container {
+        padding: 1rem;
+    }
+  }

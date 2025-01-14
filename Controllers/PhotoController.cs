@@ -73,12 +73,14 @@ public class PhotoController : ControllerBase
             try
             {
                 var response = await _s3Client.PutObjectAsync(putRequest);
+               
                 Photo photo = new Photo
                 {
                     FileKey = fileKey,
-                    SewClassId = classId
+                    SewClassId = classId,
+                    
                 };
-                if (!_dbContext.Photos.Any())
+                if (!_dbContext.Photos.Any(p => p.SewClassId == classId))
                 {
                     photo.MainPhoto = true;
                 }

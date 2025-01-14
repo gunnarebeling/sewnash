@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250113204535_addedcascasedelete")]
+    partial class addedcascasedelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a46db6e6-01f9-41f0-8b20-966ebcecfc4b",
+                            ConcurrencyStamp = "8f8b021c-edff-4f5d-a443-3d9246e6e163",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEAY/ecnZLMqZZF8dbcoCC6o3HqppRyQNxqyHKu3Zlr17VapNGUrbYAWT+5NY64GihQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJFffOgH7Z8wPT9bP0HsHFxEVvWbwpJS0m/WGfxF23w42QfWKvY0gNserb8VYGE1vA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2e818772-9b15-4dcf-8f54-8f4ede30f2a2",
+                            SecurityStamp = "1a279472-b818-42a1-a3b0-c8a891fe14df",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a5188c5c-1fa7-4342-9e61-99205afb83b3",
+                            ConcurrencyStamp = "e9d1dc10-5d86-4e5b-8073-18f6403b9a5c",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBdsXVfosIrYEXOdFH1UHoalr5jxzfB4MJhiWaZhYXIGDTdY/xXUpc1hZL7j7z3deQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOnnTzedxQhsTnOEt+BFV/atA3G7jKoMVsOfjQ4Ovv2EfvnpyLhMGSlA4qcde7Pmmg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "953acbbc-9138-4d09-a232-b0ae58bad69e",
+                            SecurityStamp = "c5398c62-acca-4fbc-8359-8dc55918b0a7",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -567,10 +570,6 @@ namespace sewnash.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -597,7 +596,6 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "admina@strator.comx",
                             FirstName = "Admina",
                             IdentityUserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             LastName = "Strator",
@@ -606,7 +604,6 @@ namespace sewnash.Migrations
                         new
                         {
                             Id = 2,
-                            Email = "johndoe@example.com",
                             FirstName = "John",
                             IdentityUserId = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             LastName = "Doe",
@@ -987,7 +984,7 @@ namespace sewnash.Migrations
                         .IsRequired();
 
                     b.HasOne("SewNash.Models.SewClass", "SewClass")
-                        .WithMany("Sessions")
+                        .WithMany()
                         .HasForeignKey("SewClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1020,8 +1017,6 @@ namespace sewnash.Migrations
                     b.Navigation("Availabilities");
 
                     b.Navigation("Photos");
-
-                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

@@ -56,3 +56,8 @@
   button.btn:hover {
     cursor: pointer;
   }
+  @media (max-width: 576px) {
+    .icon-calendar {
+        display: none;
+    }
+}

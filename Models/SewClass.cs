@@ -18,4 +18,5 @@ public class SewClass
     public int Duration { get; set; }
     public List<Availability> Availabilities { get; set; }
     public List<Photo> Photos { get; set; }
+    public List<Session> Sessions {get; set;}
 }

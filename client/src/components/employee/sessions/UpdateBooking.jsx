@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
 import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { updateBooking } from "../../../managers/bookingManager";
+import './SessionDetail.css'
 
 export const UpdateBooking = ({booking, modal, setModal}) => {
     const [formData, setFormData] = useState({
@@ -41,8 +42,8 @@ export const UpdateBooking = ({booking, modal, setModal}) => {
 
     };
     return (
-        <div>
-        <Button color="primary" onClick={toggle}>
+        <div className="d-flex">
+        <Button color="primary" className="update-btn" size="sm" onClick={toggle}>
           update
         </Button>
   
