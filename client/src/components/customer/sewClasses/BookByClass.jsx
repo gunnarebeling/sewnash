@@ -57,15 +57,16 @@ export const BookByClass = () => {
 
     useEffect(() => {
         let dates = sessions.map(s => {
-            if (s.open) {
-                return new Date(s.dateTime)  // Convert session dateTime to Date object
+            const sessionDate = new Date(s.dateTime)
+            if (s.open && sessionDate >= new Date() ) {
+                return  sessionDate  // Convert session dateTime to Date object
                 
             }
         })
         setHighlightDates(dates)  // Set the highlightDates to an array of Date objects
     }, [sessions])
     useEffect(() => {
-        const dateSessions = sessions.filter(s => formatDate(s.dateTime) === formatDate(selectedDate))
+        const dateSessions = sessions.filter(s => formatDate(s.dateTime) === formatDate(selectedDate)&& new Date(s.dateTime) >= new Date() && s.open)
         setSelectSessions(dateSessions)
     }, [selectedDate])
 
@@ -83,7 +84,7 @@ export const BookByClass = () => {
         <Container fluid className="mt-4 ">
             <Row>
                 <Col  md={8} className=" text-center d-flex flex-column align-items-center justify-content-center">
-                    <div className="w-100">
+                    <div >
                         <img src={mainPhoto ? mainPhoto : 'https://tinyurl.com/sewnashpic'} alt="class picture" className="custom-img rounded border border-3" />
                     </div>
                     {filteredPhotos.length > 0 && 

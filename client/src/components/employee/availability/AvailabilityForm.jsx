@@ -8,7 +8,7 @@ import { getAllEmployees } from "../../../managers/employeeManager";
 import { postAvailability } from "../../../managers/availabilityManager";
 import * as Yup from "yup";
 
-export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => {
+export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass, setNewAvailability }) => {
     const [dropdownStates, setDropdownStates] = useState({});
     const [errors, setErrors] = useState({})
     const [employees, setEmployees] = useState([]);
@@ -131,7 +131,7 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass }) => 
                 sewClass: sewClass.id
             }
             await validationSchema.validate(copy, {abortEarly: false})
-            postAvailability(copy)
+            postAvailability(copy).then(() => setNewAvailability(a => !a))
             toggle(); // Close the modal
             
         } catch (validationErrors) {

@@ -36,7 +36,10 @@ export const BookByDate = () => {
     useEffect(() => {
         
         let dates = allSessions.map(s => {
-            return new Date(s.dateTime)
+            const sessionDate =  new Date(s.dateTime)
+            if (sessionDate >= new Date()) {
+                return sessionDate
+            }
         })
          
         setHighlightDates(dates)  // Set the highlightDates to an array of Date objects
@@ -44,11 +47,14 @@ export const BookByDate = () => {
     useEffect(() => {
         const dateSessions = allSessions.filter(s => {
             const sessionDate = new Date(s.dateTime);
-            return (
-                sessionDate.getFullYear() === selectedDate.getFullYear() &&
-                sessionDate.getMonth() === selectedDate.getMonth() &&
-                sessionDate.getDate() === selectedDate.getDate()
-            );
+            if (sessionDate >= new Date()) {
+                return (
+                    sessionDate.getFullYear() === selectedDate.getFullYear() &&
+                    sessionDate.getMonth() === selectedDate.getMonth() &&
+                    sessionDate.getDate() === selectedDate.getDate()
+                );
+                
+            }
         });
 
         setFilteredSessions(dateSessions);
@@ -84,7 +90,10 @@ export const BookByDate = () => {
     return (
         <Container fluid>
             <Row>
-                <Col className=" border-start ">
+                <Col className=" border-start "
+                    xs={12} // Full width on small screens
+                    md={6}
+                > 
                 <div className="m-4 text-center">
 
                     <DatePicker
@@ -96,7 +105,10 @@ export const BookByDate = () => {
                     />
                 </div>
                 </Col>
-                <Col  className=" border-start  p-0">
+                <Col  className=" border-start  p-0"
+                    xs={12} // Full width on small screens
+                    md={6}
+                >
                     <nav className="border-bottom position-relative date-nav">
                         
                         <h5 className="text-center p-2 ">{selectedDate.toDateString()}</h5>

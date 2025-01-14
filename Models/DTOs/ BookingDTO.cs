@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace SewNash.Models;
+namespace SewNash.Models.DTOs;
 
 public class BookingForSessionDTO
 {
@@ -11,6 +11,8 @@ public class BookingForSessionDTO
     public DateTime DateBooked {get; set;}
    
     public string PhoneNumber { get; set; }
+    public int SessionId { get; set; }
+    public SessionForClassBookingDTO Session { get; set; }
   
     public int Occupancy { get; set; }
     

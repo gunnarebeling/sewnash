@@ -1,16 +1,33 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import ReactInputMask from "react-input-mask";
-import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Button, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { updateBooking } from "../../../managers/bookingManager";
-import './SessionDetail.css'
+import * as Yup from "yup";
+import '../sessions/SessionDetail.css'
+import { getClassById } from "../../../managers/sewClassManager";
 
 export const UpdateBooking = ({booking, modal, setModal}) => {
+    const [errors, setErrors] = useState({})
+    const [sewClass, setsewClass] = useState({})
     const [formData, setFormData] = useState({
         name: "",
         phoneNumber: "",
         occupancy: ""
     })
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        phoneNumber: Yup.string()
+            .matches(/^\d{3}-\d{3}-\d{4}$/, "Phone number must be in the format 123-456-7890")
+            .required("Phone number is required"),
+        occupancy: Yup
+        .number()
+        .required("Age is required")
+        .integer("Age must be an integer")
+        .min(1, "must be at least one person")
+        .max(sewClass?.maxPeople, "group cannot exceed the spots left")
+        });
 
     useEffect(() => {
         let copy = {...formData,
@@ -19,7 +36,8 @@ export const UpdateBooking = ({booking, modal, setModal}) => {
             occupancy: booking.occupancy
         }
         setFormData(copy)
-    }, [])
+        getClassById(booking.session?.sewClassId).then(setsewClass)
+    }, [booking])
 
     const onChange = (e) => {
         const {name, value} = e.target
@@ -29,11 +47,21 @@ export const UpdateBooking = ({booking, modal, setModal}) => {
         setFormData(copy)
     }
 
-    const onSubmit = () => {
-        let copy = {...formData,
-            occupancy: parseInt(formData.occupancy)
+    const onSubmit = async () => {
+        try {
+            await validationSchema.validate(formData, {abortEarly: false})
+            let copy = {...formData,
+                occupancy: parseInt(formData.occupancy)
+            }
+            updateBooking(booking.id, copy).then(toggle)
+            
+        } catch (validationErrors) {
+            const formattedErrors = validationErrors.inner.reduce((acc,err) => {
+                acc[err.path] = err.message
+                return acc
+            }, {})
+            setErrors(formattedErrors)
         }
-        updateBooking(booking.id, copy).then(toggle)
     }
 
     const toggle = () => {
@@ -59,8 +87,9 @@ export const UpdateBooking = ({booking, modal, setModal}) => {
                         name="name"
                         value={formData.name}
                         onChange={onChange}
+                        invalid= {!!errors?.name}
                     />
-
+                    <FormFeedback type='invalid'>{errors.name}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label>Phone Number</Label>
@@ -70,13 +99,13 @@ export const UpdateBooking = ({booking, modal, setModal}) => {
                             value={formData.phoneNumber}
                             onChange={onChange}
                             maskChar={null}
-                            // invalid= {!!errors?.phoneNumber}    
+                            invalid= {!!errors?.phoneNumber}    
                         >
                             {(inputProps) => (
                                 <Input {...inputProps} /> 
                             )}
                         </ReactInputMask>
-
+                        <FormFeedback type='invalid'>{errors.phoneNumber}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                 <Label>Occupancy</Label>
@@ -85,8 +114,9 @@ export const UpdateBooking = ({booking, modal, setModal}) => {
                         name="occupancy"
                         value={formData.occupancy}
                         onChange={onChange}
+                        invalid= {!!errors?.occupancy}
                     />
-
+                    <FormFeedback type='invalid'>{errors.occupancy}</FormFeedback>
                 </FormGroup>
             </Form>
           </ModalBody>

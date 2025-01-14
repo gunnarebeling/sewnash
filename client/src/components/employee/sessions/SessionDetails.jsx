@@ -4,8 +4,9 @@ import { Button, Container, Table } from "reactstrap";
 import { deleteSession, getSessionById, lockUnlockSession } from "../../../managers/sessionManager";
 import { convertToDollars, formatAmericanDate } from "../../../managers/FormatFunctions";
 import { deleteBooking } from "../../../managers/bookingManager";
-import { UpdateBooking } from "./UpdateBooking";
-import './SessionDetail.css';
+
+import './SessionDetail.css'
+import { UpdateBooking } from "../bookings/UpdateBooking";
 
 export const SessionDetails = () => {
     const { sessionId } = useParams();
