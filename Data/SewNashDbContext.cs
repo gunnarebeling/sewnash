@@ -110,6 +110,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Description = "Learn to build a bag.",
                 MaxPeople = 8,
                 PricePerPerson = 50.00m,
+                PriceId= "prod_RaVxV02HCSlej2",
                 Duration = 2
             },
             new SewClass
@@ -119,15 +120,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Description = "Learn to build a Dog Bandana.",
                 MaxPeople = 6,
                 PricePerPerson = 75.00m,
-                Duration = 2
-            },
-            new SewClass
-            {
-                Id = 3,
-                Name = "boot stocking",
-                Description = "Learn to build a boot stocking .",
-                MaxPeople = 10,
-                PricePerPerson = 60.00m,
+                PriceId = "prod_RaVyiIgmzIyGuB",
                 Duration = 2
             }
             
