@@ -7,6 +7,7 @@ using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;
 using Microsoft.Extensions.Options;
 using dotenv.net;
+using Stripe;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,7 +83,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // allows our api endpoints to access the database through Entity Framework Core
 builder.Services.AddNpgsql<SewNashDbContext>(builder.Configuration["SewNashDbConnectionString"]);
 builder.Configuration.AddUserSecrets<Program>();
-
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 var app = builder.Build();
 
 

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Button, Container, Form, FormFeedback, FormGroup, Input, Label } from "reactstrap"
+import { Button, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from "reactstrap"
 import { getSessionById } from "../../../managers/sessionManager"
 import { useNavigate, useParams } from "react-router-dom"
 import { formatAmericanDate } from "../../../managers/FormatFunctions"
 import InputMask from 'react-input-mask'
 import { PostBooking } from "../../../managers/bookingManager"
 import * as Yup from "yup";
+import { PaymentForm } from "./PaymentForm"
 
 
 export const BookingForm = () => {
@@ -75,57 +76,64 @@ export const BookingForm = () => {
                 <h4>{session.sewClass?.name}</h4>
                 <p>{formatAmericanDate(session?.dateTime)}{" "}{session.day?.dayOfWeek}{" "}{session.time?.startTime}</p>
             </header>
+            <Row>
+                <Col>
+                    <Form onSubmit={handleSubmit} >
+                        <FormGroup>
+                            <Label>Full Name</Label>
+                            <Input
+                            type="text"
+                            name="name"
+                            value={bookingForm.name || ""}
+                            onChange={handleChange}
+                            invalid= {!!errors?.name}
+                        
+                            />
+                            <FormFeedback type='invalid'>{errors.name}</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Phone Number</Label>
+                            <InputMask
+                                mask="999-999-9999"
+                                name="phoneNumber"
+                                value={bookingForm.phoneNumber ||""}
+                                onChange={handleChange}
+                                maskChar={null}
+                                invalid= {!!errors?.phoneNumber}    
+                            >
+                                {(inputProps) => (
+                                    <Input {...inputProps} /> 
+                                )}
+                            </InputMask>
+                            
+                        
+                            <FormFeedback type='invalid'>{errors.phoneNumber}</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>people</Label>
+                            <p>{maxPeople} slots left</p>
+                            <Input
+                            type="number"
+                            name="occupancy"
+                            value={bookingForm.occupancy || ""}
+                            onChange={handleChange}
+                            invalid= {!!errors?.occupancy}
+                        
+                            />
+                            <FormFeedback type='invalid'>{errors.occupancy}</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                        </FormGroup>
+                        <Button variant="primary" type="submit" className="mt-3">
+                            Submit
+                        </Button>
+                    </Form>
+                </Col>
+                <Col>
+                    <PaymentForm/>
+                </Col>
+            </Row>
 
-            <Form onSubmit={handleSubmit} >
-                <FormGroup>
-                    <Label>Full Name</Label>
-                    <Input
-                    type="text"
-                    name="name"
-                    value={bookingForm.name || ""}
-                    onChange={handleChange}
-                    invalid= {!!errors?.name}
-                
-                    />
-                    <FormFeedback type='invalid'>{errors.name}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                    <Label>Phone Number</Label>
-                    <InputMask
-                        mask="999-999-9999"
-                        name="phoneNumber"
-                        value={bookingForm.phoneNumber ||""}
-                        onChange={handleChange}
-                        maskChar={null}
-                        invalid= {!!errors?.phoneNumber}    
-                    >
-                        {(inputProps) => (
-                            <Input {...inputProps} /> 
-                        )}
-                    </InputMask>
-                    
-                  
-                    <FormFeedback type='invalid'>{errors.phoneNumber}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                    <Label>people</Label>
-                    <p>{maxPeople} slots left</p>
-                    <Input
-                    type="number"
-                    name="occupancy"
-                    value={bookingForm.occupancy || ""}
-                    onChange={handleChange}
-                    invalid= {!!errors?.occupancy}
-                
-                    />
-                    <FormFeedback type='invalid'>{errors.occupancy}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                </FormGroup>
-                <Button variant="primary" type="submit" className="mt-3">
-                    Submit
-                </Button>
-            </Form>
          </Container>
     )
 }
