@@ -7,11 +7,13 @@ import InputMask from 'react-input-mask'
 import { PostBooking } from "../../../managers/bookingManager"
 import * as Yup from "yup";
 import { PaymentForm } from "./PaymentForm"
+import { getStripeForm } from "../../../managers/StripeManager"
 
 
 export const BookingForm = () => {
     const [session, setSession] = useState({})
     const {sessionId} = useParams()
+    const [stripeData, setStripeData] = useState("")
     const navigate = useNavigate()
     const [errors, setErrors] = useState({})
     const [bookingForm, setBookingForm] = useState({
@@ -22,6 +24,15 @@ export const BookingForm = () => {
          sessionId: parseInt(sessionId)
  
         })
+    useEffect(() => {
+        const classId = session.sewClassId
+        if (classId) {
+            getStripeForm(classId).then(res => {
+                setStripeData(res.clientSecret)
+            })
+            
+        }
+    }, [session])
         
     const maxPeople = session.sewClass?.maxPeople - session.totalPeople
 
@@ -130,7 +141,7 @@ export const BookingForm = () => {
                     </Form>
                 </Col>
                 <Col>
-                    <PaymentForm/>
+                    <PaymentForm stripeData={stripeData}/>
                 </Col>
             </Row>
 

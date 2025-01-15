@@ -3,22 +3,29 @@ using Stripe;
 using Stripe.Checkout;
 using System.Threading.Tasks;
 using Stripe.Model;
+using SewNash.Data;
+using SewNash.Models;
 namespace sewnash.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class StripeController : ControllerBase
     {
-   
+        private SewNashDbContext _dbContext;
 
-        public StripeController()
+        public StripeController(SewNashDbContext dbContext)
         {
-           
+           _dbContext = dbContext;
         }
 
-        [HttpPost("create-checkout-session")]
-        public ActionResult Create()
+        [HttpPost("create-checkout-session/{classId}")]
+        public ActionResult Create(int classId)
         {
+            SewClass SewClass = _dbContext.SewClasses.SingleOrDefault(sc => sc.Id == classId);
+            if (classId == default)
+            {
+                return NotFound();
+            }
             var domain = "http://localhost:3000";
             var options = new SessionCreateOptions
             {
@@ -28,7 +35,7 @@ namespace sewnash.Controllers
                   new SessionLineItemOptions
                   {
                     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    Price = "{{PRICE_ID}}",
+                    Price = $"{SewClass.PriceId}",
                     Quantity = 1,
                   },
                 },
@@ -37,7 +44,7 @@ namespace sewnash.Controllers
                 AutomaticTax = new SessionAutomaticTaxOptions { Enabled = true },
             };
             var service = new SessionService();
-            Session session = service.Create(options);
+            Stripe.Checkout.Session session = service.Create(options);
 
             return new JsonResult(new { clientSecret = session.ClientSecret });
         }
@@ -46,7 +53,7 @@ namespace sewnash.Controllers
         public ActionResult SessionStatus([FromQuery] string session_id)
         {
             var sessionService = new SessionService();
-            Session session = sessionService.Get(session_id);
+            Stripe.Checkout.Session session = sessionService.Get(session_id);
 
             return new JsonResult(new {status = session.Status,  customer_email = session.CustomerDetails.Email});
         }

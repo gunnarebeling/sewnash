@@ -1,9 +1,9 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
-import { Button, Form } from "reactstrap";
+import { CardElement, EmbeddedCheckout, EmbeddedCheckoutProvider, useElements, useStripe } from "@stripe/react-stripe-js"
+import { Button, Container, Form } from "reactstrap";
 
-export const PaymentForm = ({handlePaymentSuccess}) => {
+export const PaymentForm = ({handlePaymentSuccess, stripeData}) => {
     const stripe = useStripe()
-    const elements = useElements()
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -13,26 +13,23 @@ export const PaymentForm = ({handlePaymentSuccess}) => {
         }
 
 
-        const cardElement = elements.getElement(CardElement);
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement,
-          });
-
-          if (error) {
-            console.error(error);
-          } else {
-            handlePaymentSuccess(paymentMethod);
-          }
+        
 
     }
+
+    const options = {
+      clientSecret: stripeData
+      
+    };
     return (
-    <Form onSubmit={handleSubmit}>
-        <CardElement />
-        <Button type="submit" color="primary" disabled={!stripe}>
-        Pay
-      </Button>
-    </Form>
+      <Container id="checkout">
+      <EmbeddedCheckoutProvider
+        stripe={stripe}
+        options={options}
+      >
+        <EmbeddedCheckout />
+      </EmbeddedCheckoutProvider>
+    </Container>
     )
         
 }
