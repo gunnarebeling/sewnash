@@ -52,9 +52,7 @@ export const BookingForm = () => {
         }
     }, [ priceOccupancy])
 
-    useEffect(() => {
-        window.alert(`${message}`)
-    }, [message])
+    
         
     const maxPeople = session.sewClass?.maxPeople - session.totalPeople
 
@@ -85,49 +83,50 @@ export const BookingForm = () => {
             setPriceOccupancy(parseInt(value))
         }
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
                 
-                await validationSchema.validate(bookingForm, {abortEarly: false})
-        } catch (validationErrors) {
-            const formattedErrors = validationErrors.inner.reduce((acc,err) => {
-                acc[err.path] = err.message
-                return acc
-            }, {})
-            setErrors(formattedErrors)
-        }
+    //             await validationSchema.validate(bookingForm, {abortEarly: false})
+    //     } catch (validationErrors) {
+    //         const formattedErrors = validationErrors.inner.reduce((acc,err) => {
+    //             acc[err.path] = err.message
+    //             return acc
+    //         }, {})
+    //         setErrors(formattedErrors)
+    //     }
                 
                 
             
-                setIsLoading(true);
+    //             setIsLoading(true);
             
-                const { error, paymentIntent } = await stripe.confirmPayment({
-                elements ,
-                confirmParams: {
-                    // Make sure to change this to your payment completion page
-                    return_url: "/complete",
-                },
-                });
+    //             const { error, paymentIntent } = await stripe.confirmPayment({
+    //             elements ,
+
+    //             confirmParams: {
+    //                 // Make sure to change this to your payment completion page
+    //                 return_url: "/complete",
+    //             },
+    //             });
             
-                // This point will only be reached if there is an immediate error when
-                // confirming the payment. Otherwise, your customer will be redirected to
-                // your `return_url`. For some payment methods like iDEAL, your customer will
-                // be redirected to an intermediate site first to authorize the payment, then
-                // redirected to the `return_url`.
-                if (error.type === "card_error" || error.type === "validation_error") {
-                setMessage(error.message);
-                } else {
-                setMessage("An unexpected error occurred.");
-                }
-                if (paymentIntent.status === "succeeded") {
-                    bookingForm.dateBooked = Date.now
-                    bookingForm.occupancy = parseInt(bookingForm.occupancy)
-                    PostBooking(bookingForm).then(() => setIsLoading(false))
+    //             // This point will only be reached if there is an immediate error when
+    //             // confirming the payment. Otherwise, your customer will be redirected to
+    //             // your `return_url`. For some payment methods like iDEAL, your customer will
+    //             // be redirected to an intermediate site first to authorize the payment, then
+    //             // redirected to the `return_url`.
+    //             if (error.type === "card_error" || error.type === "validation_error") {
+    //             setMessage(error.message);
+    //             } else {
+    //             setMessage("An unexpected error occurred.");
+    //             }
+    //             if (paymentIntent.status === "succeeded") {
+    //                 bookingForm.dateBooked = Date.now
+    //                 bookingForm.occupancy = parseInt(bookingForm.occupancy)
+    //                 PostBooking(bookingForm).then(() => setIsLoading(false))
                     
-                }
+    //             }
         
-      };
+    //   };
       const options = {
         clientSecret: stripeData.clientSecret
         
@@ -154,13 +153,12 @@ export const BookingForm = () => {
     // }
 
     return (
-        <Elements stripe={stripePromise}  options={options}>
          <Container className="">
             <header>
                 <h4>{session.sewClass?.name}</h4>
                 <p>{formatAmericanDate(session?.dateTime)}{" "}{session.day?.dayOfWeek}{" "}{session.time?.startTime}</p>
             </header>
-                <Form onSubmit={handleSubmit} >
+                <Form  >
             <Row>
                 <Col 
                     md={5}
@@ -220,33 +218,21 @@ export const BookingForm = () => {
                     <div className="payment-form-container ">
                     <Container id="checkout">
                         { options.clientSecret &&
-                       
-                            <PaymentElement />
-
-                        
+                        <Elements stripe={stripePromise}  options={options}>
+                           <PaymentForm stripeData={stripeData} validationSchema={validationSchema} bookingForm={bookingForm} setErrors={setErrors} setIsLoading={setIsLoading} setMessage={setMessage} options={options} elements={elements} stripe={stripe}/>
+                        </Elements>
 
                         }
                     </Container>
 
-                        <div className="py-3 px-2">
-                            
-                            <div className="d-flex justify-content-between">
-                                <h3 className="text-bold">Total</h3>
-                                <h3>{stripeData ? convertToDollars(stripeData?.totalAmount) : "$0"}</h3>
-                            </div>
-                        </div>
+                       
+                       
                     </div>
                 </Col>
-                    <div className="d-flex p-3 pb-5 text-center d-flex justify-content-center">
-
-                        <Button variant="primary" type="submit" className="mt-3">
-                            Submit
-                        </Button>
-                    </div>
+                   
             </Row>
                     </Form>
 
          </Container>
-         </Elements>
     )
 }
