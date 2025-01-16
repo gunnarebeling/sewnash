@@ -9,8 +9,10 @@ import * as Yup from "yup";
 import { PaymentForm } from "./PaymentForm"
 import { getStripeForm } from "../../../managers/StripeManager"
 import './BookingForm.css'
+import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 
-
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 export const BookingForm = () => {
     const [session, setSession] = useState({})
     const {sessionId} = useParams()
@@ -19,7 +21,10 @@ export const BookingForm = () => {
     const [errors, setErrors] = useState({})
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [priceOccupancy, setPriceOccupancy] = useState()
+    const [priceOccupancy, setPriceOccupancy] = useState(0)
+    const stripe = useStripe(); // Hook to access the stripe object
+    const elements = useElements(); // Hook to access elements
+
     const [bookingForm, setBookingForm] = useState({
          name: "",
          dateBooked: "" ,
@@ -45,7 +50,11 @@ export const BookingForm = () => {
             })
             
         }
-    }, [session, priceOccupancy])
+    }, [ priceOccupancy])
+
+    useEffect(() => {
+        window.alert(`${message}`)
+    }, [message])
         
     const maxPeople = session.sewClass?.maxPeople - session.totalPeople
 
@@ -76,50 +85,11 @@ export const BookingForm = () => {
             setPriceOccupancy(parseInt(value))
         }
     }
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    
-    //     if (!stripe || !elements) {
-    //       // Stripe.js hasn't yet loaded.
-    //       // Make sure to disable form submission until Stripe.js has loaded.
-    //       return;
-    //     }
-    
-    //     setIsLoading(true);
-    
-    //     const { error } = await stripe.confirmPayment({
-    //       elements,
-    //       confirmParams: {
-    //         // Make sure to change this to your payment completion page
-    //         return_url: "http://localhost:3000/complete",
-    //       },
-    //     });
-    
-    //     // This point will only be reached if there is an immediate error when
-    //     // confirming the payment. Otherwise, your customer will be redirected to
-    //     // your `return_url`. For some payment methods like iDEAL, your customer will
-    //     // be redirected to an intermediate site first to authorize the payment, then
-    //     // redirected to the `return_url`.
-    //     if (error.type === "card_error" || error.type === "validation_error") {
-    //       setMessage(error.message);
-    //     } else {
-    //       setMessage("An unexpected error occurred.");
-    //     }
-    
-    //     setIsLoading(false);
-    //   };
-
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        bookingForm.dateBooked = Date.now
-        bookingForm.occupancy = parseInt(bookingForm.occupancy)
+        e.preventDefault();
         try {
-            await validationSchema.validate(bookingForm, {abortEarly: false})
-            setErrors({})
-            PostBooking(bookingForm).then(() => {
-                navigate("/")
-            });
-            
+                
+                await validationSchema.validate(bookingForm, {abortEarly: false})
         } catch (validationErrors) {
             const formattedErrors = validationErrors.inner.reduce((acc,err) => {
                 acc[err.path] = err.message
@@ -127,9 +97,64 @@ export const BookingForm = () => {
             }, {})
             setErrors(formattedErrors)
         }
-    }
+                
+                
+            
+                setIsLoading(true);
+            
+                const { error, paymentIntent } = await stripe.confirmPayment({
+                elements ,
+                confirmParams: {
+                    // Make sure to change this to your payment completion page
+                    return_url: "/complete",
+                },
+                });
+            
+                // This point will only be reached if there is an immediate error when
+                // confirming the payment. Otherwise, your customer will be redirected to
+                // your `return_url`. For some payment methods like iDEAL, your customer will
+                // be redirected to an intermediate site first to authorize the payment, then
+                // redirected to the `return_url`.
+                if (error.type === "card_error" || error.type === "validation_error") {
+                setMessage(error.message);
+                } else {
+                setMessage("An unexpected error occurred.");
+                }
+                if (paymentIntent.status === "succeeded") {
+                    bookingForm.dateBooked = Date.now
+                    bookingForm.occupancy = parseInt(bookingForm.occupancy)
+                    PostBooking(bookingForm).then(() => setIsLoading(false))
+                    
+                }
+        
+      };
+      const options = {
+        clientSecret: stripeData.clientSecret
+        
+      };
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     bookingForm.dateBooked = Date.now
+    //     bookingForm.occupancy = parseInt(bookingForm.occupancy)
+    //     try {
+    //         await validationSchema.validate(bookingForm, {abortEarly: false})
+    //         setErrors({})
+    //         PostBooking(bookingForm).then(() => {
+    //             navigate("/")
+    //         });
+            
+    //     } catch (validationErrors) {
+    //         const formattedErrors = validationErrors.inner.reduce((acc,err) => {
+    //             acc[err.path] = err.message
+    //             return acc
+    //         }, {})
+    //         setErrors(formattedErrors)
+    //     }
+    // }
 
     return (
+        <Elements stripe={stripePromise}  options={options}>
          <Container className="">
             <header>
                 <h4>{session.sewClass?.name}</h4>
@@ -193,7 +218,15 @@ export const BookingForm = () => {
                 </Col>
                 <Col >
                     <div className="payment-form-container ">
-                        <PaymentForm stripeData={stripeData}/>
+                    <Container id="checkout">
+                        { options.clientSecret &&
+                       
+                            <PaymentElement />
+
+                        
+
+                        }
+                    </Container>
 
                         <div className="py-3 px-2">
                             
@@ -214,5 +247,6 @@ export const BookingForm = () => {
                     </Form>
 
          </Container>
+         </Elements>
     )
 }

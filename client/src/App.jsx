@@ -14,6 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './App.css'
+import { BookingComplete } from "./components/customer/customerForm/BookingComplete";
 export const UserContext = createContext()
 export default function App() {
   const [loggedInUser, setLoggedInUser] = useState();
@@ -52,6 +53,7 @@ export default function App() {
             </AuthorizedRoute>
           }
         />
+        <Route path="complete" element={<BookingComplete/>}/>
 
       </Routes>
     </UserContext.Provider>
