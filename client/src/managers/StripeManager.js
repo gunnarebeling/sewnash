@@ -1,9 +1,10 @@
  const _apiUrl = "/api/stripe";
-export const getStripeForm = (classId) => {
-    return fetch(`${_apiUrl}/create-checkout-session/${classId}`, {
+export const getStripeForm = (itemObj) => {
+    return fetch(`${_apiUrl}`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify(itemObj)
     }).then(res => res.json())
 }

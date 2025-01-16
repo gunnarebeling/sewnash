@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Stripe.Model;
 using SewNash.Data;
 using SewNash.Models;
+using Stripe.Tax;
 namespace sewnash.Controllers
 {
     [Route("api/[controller]")]
@@ -18,45 +19,115 @@ namespace sewnash.Controllers
            _dbContext = dbContext;
         }
 
-        [HttpPost("create-checkout-session/{classId}")]
-        public ActionResult Create(int classId)
+    [HttpPost]
+    public ActionResult Create([FromBody] PaymentIntentCreateRequest request)
+    {
+        
+      // Create a Tax Calculation for the items being sold
+       
+        // Create a Tax Calculation for the items being sold
+        var taxCalculation = CalculateTax(request.Items, "usd");
+
+       Console.WriteLine($"Calculation ID: {taxCalculation.Id}");
+Console.WriteLine($"Total Tax Amount: {taxCalculation.AmountTotal}");
+Console.WriteLine($"Amount Total: {taxCalculation.AmountTotal}");
+        var AmountTotal = taxCalculation.AmountTotal;
+
+      var paymentIntentService = new PaymentIntentService();
+      var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
+      {
+        Amount = AmountTotal,
+        Currency = "usd",
+        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+        AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
         {
-            SewClass SewClass = _dbContext.SewClasses.SingleOrDefault(sc => sc.Id == classId);
-            if (classId == default)
+          Enabled = true,
+        },
+        Metadata = new Dictionary<string, string>
+        {
+          { "tax_calculation", taxCalculation.Id },
+        },
+      });
+
+      return new JsonResult(new 
+      { 
+        clientSecret = paymentIntent.ClientSecret,
+    
+        TotalAmount = AmountTotal / 100.0
+       });
+    }
+
+    // Securely calculate the order amount, including tax
+    [NonAction]
+    public long CalculateOrderAmount(Calculation taxCalculation)
+    {
+        // Calculate the order total with any exclusive taxes on the server to prevent
+        // people from directly manipulating the amount on the client
+        return taxCalculation.AmountTotal;
+    }
+
+    [NonAction]
+    public Calculation CalculateTax(Item[] items, string currency)
+    {
+        var lineItems = items.Select(item => BuildLineItem(item)).ToList();
+        foreach (var lineItem in lineItems)
+{
+    Console.WriteLine($"Line Item: Amount = {lineItem.Amount}, Reference = {lineItem.Reference}");
+}
+        var calculationCreateOptions = new CalculationCreateOptions
+        {
+            Currency = currency,
+            CustomerDetails = new CalculationCustomerDetailsOptions
             {
-                return NotFound();
-            }
-            var domain = "http://localhost:3000";
-            var options = new SessionCreateOptions
-            {
-                UiMode = "embedded",
-                LineItems = new List<SessionLineItemOptions>
+                Address = new AddressOptions
                 {
-                  new SessionLineItemOptions
-                  {
-                    // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    Price = $"{SewClass.PriceId}",
-                    Quantity = 1,
-                  },
+                    Line1 = "635 W Iris Drive",
+                    City = "Nashville",
+                    State = "TN",
+                    PostalCode = "37204",
+                    Country = "US",
                 },
-                Mode = "payment",
-                ReturnUrl = domain + "/return?session_id={CHECKOUT_SESSION_ID}",
-                AutomaticTax = new SessionAutomaticTaxOptions { Enabled = true },
-            };
-            var service = new SessionService();
-            Stripe.Checkout.Session session = service.Create(options);
+                AddressSource = "shipping",
+            },
+            LineItems = lineItems,
+        };
+        Console.WriteLine($"Currency: {calculationCreateOptions.Currency}");
+Console.WriteLine($"Customer Address: {calculationCreateOptions.CustomerDetails.Address.Line1}, {calculationCreateOptions.CustomerDetails.Address.City}");
+Console.WriteLine($"Line Items Count: {calculationCreateOptions.LineItems.Count}");
 
-            return new JsonResult(new { clientSecret = session.ClientSecret });
-        }
+        var calculationService = new CalculationService();
+        var calculation = calculationService.Create(calculationCreateOptions);
 
-        [HttpGet("session-status")]
-        public ActionResult SessionStatus([FromQuery] string session_id)
+        return calculation;
+    }
+
+    [NonAction]
+    public CalculationLineItemOptions BuildLineItem(Item item)
+    {
+        return new CalculationLineItemOptions
         {
-            var sessionService = new SessionService();
-            Stripe.Checkout.Session session = sessionService.Get(session_id);
+            Amount = item.Amount * item.Quantity, // Amount in cents
+            Reference = item.Id, // Unique reference for the item in the scope of the calculation
+        };
+    }
 
-            return new JsonResult(new {status = session.Status,  customer_email = session.CustomerDetails.Email});
-        }
+
+    // Invoke this method in your webhook handler when `payment_intent.succeeded` webhook is received
+    [NonAction]
+    public void HandlePaymentIntentSucceeded(PaymentIntent paymentIntent)
+    {
+        // Create a Tax Transaction for the successful payment
+        var transactionCreateOptions = new TransactionCreateFromCalculationOptions
+        {
+            Calculation = paymentIntent.Metadata["tax_calculation"],
+            Reference = "myOrder_123", // Replace with a unique reference from your checkout/order system
+        };
+        var transactionService = new TransactionService();
+        transactionService.CreateFromCalculation(transactionCreateOptions);
+    }
+
+
+        
     }
 
     
