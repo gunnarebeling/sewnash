@@ -17,7 +17,7 @@ import { logout } from "../../managers/authManager";
 
 
 export default function EmployeeNavBar() {
-    const { setLoggedInUser} = useContext(UserContext)
+    const { loggedInUser, setLoggedInUser} = useContext(UserContext)
     const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => {
@@ -41,26 +41,28 @@ export default function EmployeeNavBar() {
       {/* Collapsible part of the navbar */}
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mx-auto d-flex justify-content-center " navbar>
-          <NavItem>
+          <NavItem className="mx-3">
             <NavLink tag={RRNavLink} onClick={toggleNavbar} to="/employee">
               Bookings
             </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem className="mx-3">
             <NavLink tag={RRNavLink} onClick={toggleNavbar} to="classes">
               Classes
             </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem className="mx-3">
             <NavLink tag={RRNavLink}  onClick={toggleNavbar} to="/">
               Customer
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink tag={RRNavLink} onClick={toggleNavbar} to="/register">
-              Register Employee
-            </NavLink>
-          </NavItem>
+          {loggedInUser.roles?.some(r => r === "Admin") && 
+            <NavItem className="mx-3">
+              <NavLink tag={RRNavLink} onClick={toggleNavbar} to="/register">
+                Register Employee
+              </NavLink>
+            </NavItem>
+          }
           </Nav>
           <Nav className="ms-auto">
 

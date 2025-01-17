@@ -38,13 +38,13 @@ export function Register({ setLoggedInUser }) {
         password,
       };
       register(newUser).then((user) => {
-        if (user.errors) {
+        if (user?.errors) {
           setErrors(user.errors)
           setRegistrationFailure(true)
         }
         else {
           setLoggedInUser(user);
-          navigate("/employee");
+          navigate("/");
         }
       });
     }

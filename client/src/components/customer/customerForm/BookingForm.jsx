@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
-import { Button, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from "reactstrap"
+import { Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from "reactstrap"
 import { getSessionById } from "../../../managers/sessionManager"
-import { useNavigate, useParams } from "react-router-dom"
-import { convertToDollars, formatAmericanDate } from "../../../managers/FormatFunctions"
+import { useParams } from "react-router-dom"
+import { formatAmericanDate } from "../../../managers/FormatFunctions"
 import InputMask from 'react-input-mask'
-import { PostBooking } from "../../../managers/bookingManager"
+
 import * as Yup from "yup";
 import { PaymentForm } from "./PaymentForm"
 import { getStripeForm } from "../../../managers/StripeManager"
 import './BookingForm.css'
-import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { Elements, useElements, useStripe } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -17,7 +17,6 @@ export const BookingForm = () => {
     const [session, setSession] = useState({})
     const {sessionId} = useParams()
     const [stripeData, setStripeData] = useState("")
-    const navigate = useNavigate()
     const [errors, setErrors] = useState({})
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +29,7 @@ export const BookingForm = () => {
          dateBooked: "" ,
          phoneNumber: "",
          occupancy: 0,
+         email: "",
          sessionId: parseInt(sessionId)
  
         })
@@ -61,6 +61,7 @@ export const BookingForm = () => {
     phoneNumber: Yup.string()
         .matches(/^\d{3}-\d{3}-\d{4}$/, "Phone number must be in the format 123-456-7890")
         .required("Phone number is required"),
+    email: Yup.string().email("invalid email").required("Must enter an email"),
     occupancy: Yup
     .number()
     .required("Age is required")
@@ -153,7 +154,7 @@ export const BookingForm = () => {
     // }
 
     return (
-         <Container className="">
+         <Container className="bg-light bg-opacity-50 border border-3 rounded p-3 mt-3">
             <header>
                 <h4>{session.sewClass?.name}</h4>
                 <p>{formatAmericanDate(session?.dateTime)}{" "}{session.day?.dayOfWeek}{" "}{session.time?.startTime}</p>
@@ -177,6 +178,18 @@ export const BookingForm = () => {
                         
                             />
                             <FormFeedback type='invalid'>{errors.name}</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>Email</Label>
+                            <Input
+                            type="text"
+                            name="email"
+                            value={bookingForm.email || ""}
+                            onChange={handleChange}
+                            invalid= {!!errors?.email}
+                        
+                            />
+                            <FormFeedback type='invalid'>{errors.email}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label>Phone Number</Label>

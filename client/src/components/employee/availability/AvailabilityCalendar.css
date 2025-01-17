@@ -1,0 +1,6 @@
+.btn-xxs {
+    padding: 0.2rem 0.4rem; /* Adjust padding for smaller size */
+    font-size: 0.6rem;       /* Smaller font size */
+    line-height: 1;          /* Keep it compact */
+    border-radius: 0.2rem;   /* Optional: Adjust border radius */
+  }
