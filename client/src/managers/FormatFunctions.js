@@ -19,6 +19,8 @@ export const formatDate = (date) => {
   }
   }
 
+
+
 export const formatAmericanDate = (date) => {
   if (typeof date === "string") {
     date = new Date(date)

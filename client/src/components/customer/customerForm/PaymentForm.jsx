@@ -56,13 +56,6 @@ export const PaymentForm = ({ stripeData, validationSchema, bookingForm, setErro
                           window.alert(`${res.error?.message}`)
                         } 
                     })
-                
-                    // This point will only be reached if there is an immediate error when
-                    // confirming the payment. Otherwise, your customer will be redirected to
-                    // your `return_url`. For some payment methods like iDEAL, your customer will
-                    // be redirected to an intermediate site first to authorize the payment, then
-                    // redirected to the `return_url`
-            
           }; 
 
     
@@ -78,7 +71,7 @@ export const PaymentForm = ({ stripeData, validationSchema, bookingForm, setErro
                 <h3 className="text-bold">Total</h3>
                 <h3>{stripeData ? convertToDollars(stripeData?.totalAmount) : "$0"}</h3>
             </div>
-            <Button variant="primary" onClick={handleSubmit} className="mt-3">
+            <Button variant="primary" color="primary" onClick={handleSubmit} className="mt-3 ">
                             Submit
                         </Button>
             </div>

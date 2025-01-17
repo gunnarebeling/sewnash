@@ -130,6 +130,20 @@ export const AvailabilityForm = ({ isOpen, toggle, selectedDate, sewClass, setNe
                 days: finalDays,
                 sewClass: sewClass.id
             }
+
+            let justStartDate = new Date(copy.dateRange[0])
+            let justEndDate = new Date(copy.dateRange[1])
+            justStartDate = new Date(
+                justStartDate.getFullYear(),
+                justStartDate.getMonth(),
+                justStartDate.getDate()
+            )
+            justEndDate = new Date(
+                justEndDate.getFullYear(),
+                justEndDate.getMonth(),
+                justEndDate.getDate()
+            )
+            copy.dateRange = [justStartDate, justEndDate]
             await validationSchema.validate(copy, {abortEarly: false})
             postAvailability(copy).then(() => setNewAvailability(a => !a))
             toggle(); // Close the modal

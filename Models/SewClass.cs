@@ -14,7 +14,7 @@ public class SewClass
     public int MaxPeople { get; set; }
     [Required]
     public decimal PricePerPerson { get; set; }
-    public string PriceId { get; set; }
+   
     [Required]
     public int Duration { get; set; }
     public List<Availability> Availabilities { get; set; }
