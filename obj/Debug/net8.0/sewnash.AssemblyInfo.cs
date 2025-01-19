@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sewnash")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed0334e1d401e4adc78ee93d23038696dc449df0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95041de3c04bc509626a2b1813b89b9e32cf3247")]
 [assembly: System.Reflection.AssemblyProductAttribute("sewnash")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sewnash")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

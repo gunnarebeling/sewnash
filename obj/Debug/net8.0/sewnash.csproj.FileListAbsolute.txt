@@ -112,3 +112,7 @@
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.pdb
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/sewnash.genruntimeconfig.cache
 /Users/gunnarebeling/workspace/csharp/sewnash/obj/Debug/net8.0/ref/sewnash.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/Stripe.net.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/System.Configuration.ConfigurationManager.dll
+/Users/gunnarebeling/workspace/csharp/sewnash/bin/Debug/net8.0/System.Security.Cryptography.ProtectedData.dll

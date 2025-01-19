@@ -89,8 +89,8 @@ export const CustomerHome = () => {
           lg="6"
           className="mb-2  p-4 mx-5 justify-content-center"
         >
-          <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
-            <CustomerClassCard sewClass={c} showDelete={false}/>
+          <div className="class-selector " onClick={handleClassClick} data-id={c.id}>
+            <CustomerClassCard sewClass={c}  showDelete={false}/>
           </div>
         </Col>
       ))}

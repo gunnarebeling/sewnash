@@ -12,6 +12,7 @@ public class SessionForClassBookingDTO
     public int TimeId { get; set; }
     public TimeDTO Time { get; set; }
     public int DayId { get; set; }
+    public List<SimpleEmployeeDTO> Employees { get; set; }
     
     public DayDTO Day { get; set; }
     public bool Open { get; set; }
@@ -29,6 +30,7 @@ public class SessionDTO
     
     public DayDTO Day { get; set; }
     public List<BookingForSessionDTO> Bookings { get; set; }
+    public List<SimpleEmployeeDTO> Employees { get; set; }
     public int TotalPeople 
     { 
         get 

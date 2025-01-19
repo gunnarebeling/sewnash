@@ -19,6 +19,7 @@
 
     .bookings-table {
         display: block;
+        background: rgba(255, 255, 255, 0.085);
     }
 
     .bookings-table thead {
@@ -52,7 +53,7 @@
     }
     .update-btn{
         flex-grow: 1;
-        margin: 0 5px;
+        margin: 0 0px;
     }
    
 }

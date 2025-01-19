@@ -120,15 +120,6 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 MaxPeople = 6,
                 PricePerPerson = 75.00m,
                 Duration = 2
-            },
-            new SewClass
-            {
-                Id = 3,
-                Name = "boot stocking",
-                Description = "Learn to build a boot stocking .",
-                MaxPeople = 10,
-                PricePerPerson = 60.00m,
-                Duration = 2
             }
             
         });
@@ -231,6 +222,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Name = "Carly Olds",
                 DateBooked = new DateTime(2025, 1, 1),
                 PhoneNumber = "123-456-7890",
+                Email = "test@test.com",
                 Occupancy = 2,
                 SessionId = 1
             },
@@ -240,6 +232,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Name = "Jane Smith",
                 DateBooked = new DateTime(2024, 6, 5),
                 PhoneNumber = "987-654-3210",
+                Email = "test2@test.com",
                 Occupancy = 3,
                 SessionId = 2
             },
@@ -249,6 +242,7 @@ public class SewNashDbContext : IdentityDbContext<IdentityUser>
                 Name = "Alice Johnson",
                 DateBooked = new DateTime(2024, 4, 10),
                 PhoneNumber = "555-123-4567",
+                Email = "test3@test.com",
                 Occupancy = 1,
                 SessionId = 3
             }

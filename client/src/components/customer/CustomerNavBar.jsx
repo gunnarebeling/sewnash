@@ -28,7 +28,7 @@ return (
         <Nav className=" ms-auto" navbar>
             <NavItem>
             <NavLink tag={RRNavLink} to="/employee">
-                <Button color="primary">Employee</Button>
+                <Button  className="employee-btn">Employee</Button>
             </NavLink>
             </NavItem>
         </Nav>

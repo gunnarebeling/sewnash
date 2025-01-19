@@ -1,0 +1,11 @@
+.responsive-input {
+    min-width: 150px; /* Adjust the minimum width as needed */
+    width: auto;
+  }
+  
+  @media (max-width: 576px) {
+    .responsive-input {
+      width: 25%;
+      
+    }
+  }

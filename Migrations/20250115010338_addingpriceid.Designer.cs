@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SewNash.Data;
@@ -11,9 +12,11 @@ using SewNash.Data;
 namespace sewnash.Migrations
 {
     [DbContext(typeof(SewNashDbContext))]
-    partial class SewNashDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250115010338_addingpriceid")]
+    partial class addingpriceid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,13 +231,13 @@ namespace sewnash.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a995700b-78bf-409b-8adf-1303b93b4591",
+                            ConcurrencyStamp = "4475a757-8eb0-45b2-b065-fa59780a9139",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKjKVbkdcEL/LKPeM3Rf7t7RltTk1hcGgvS6f1ZvDer1a4pnkxajrFyGnXtKtEXnNg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAxIn2pHQWZ/Lj/wjHUEStfQjnmAuv4kH7RT/iE4hswew5bPqP0i5JskodrCGSP73A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eadc1757-a869-40b3-b7e1-7fd2c3897287",
+                            SecurityStamp = "693cde68-ae3c-4776-b42d-10d152dba87c",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -242,13 +245,13 @@ namespace sewnash.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a41be096-c14d-4caf-895c-f2cddbb909a9",
+                            ConcurrencyStamp = "8871824c-6018-4ca6-9fd9-9d44e970fefb",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEAgsoKBiApNc8bjerg5QvH0qsZwWExZ3r+s+0vniNAflAgigtHM7DoK8V+lEEKQ6dA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJH4XVpzFrnJ//287kZ8NRO3vNJFRIPr5lXaGO2BM77XV5umFNMRkh8PUhhiQEdM3g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fc23d1ab-b65f-47c2-8a43-40e3aee363ed",
+                            SecurityStamp = "ae674e8c-02ff-4dcb-b06f-6a3a7f1e3eec",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -400,10 +403,6 @@ namespace sewnash.Migrations
                     b.Property<DateTime>("DateBooked")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -429,7 +428,6 @@ namespace sewnash.Migrations
                         {
                             Id = 1,
                             DateBooked = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "test@test.com",
                             Name = "Carly Olds",
                             Occupancy = 2,
                             PhoneNumber = "123-456-7890",
@@ -439,7 +437,6 @@ namespace sewnash.Migrations
                         {
                             Id = 2,
                             DateBooked = new DateTime(2024, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "test2@test.com",
                             Name = "Jane Smith",
                             Occupancy = 3,
                             PhoneNumber = "987-654-3210",
@@ -449,7 +446,6 @@ namespace sewnash.Migrations
                         {
                             Id = 3,
                             DateBooked = new DateTime(2024, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "test3@test.com",
                             Name = "Alice Johnson",
                             Occupancy = 1,
                             PhoneNumber = "555-123-4567",
@@ -731,6 +727,10 @@ namespace sewnash.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PriceId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<decimal>("PricePerPerson")
                         .HasColumnType("numeric");
 
@@ -746,6 +746,7 @@ namespace sewnash.Migrations
                             Duration = 2,
                             MaxPeople = 8,
                             Name = "Bag class",
+                            PriceId = "prod_RaVxV02HCSlej2",
                             PricePerPerson = 50.00m
                         },
                         new
@@ -755,6 +756,7 @@ namespace sewnash.Migrations
                             Duration = 2,
                             MaxPeople = 6,
                             Name = "Dog Bandana",
+                            PriceId = "prod_RaVyiIgmzIyGuB",
                             PricePerPerson = 75.00m
                         });
                 });

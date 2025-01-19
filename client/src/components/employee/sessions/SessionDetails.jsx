@@ -36,17 +36,17 @@ export const SessionDetails = () => {
     };
 
     return (
-        <Container>
+        <Container className="border border-3 bg-light px-3 rounded bg-opacity-50 p-2 mt-4">
             <header className="mt-2">
                 <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center">
                     <h4 className="flex-grow-1">
                         {session.sewClass?.name}
                     </h4>
-                    <div className="d-flex ">
+                    <div className="d-flex  ">
                         {session.bookings?.length === 0 && 
                             <Button 
                                 color="danger" 
-                                className="me-2 my-2 my-md-0" 
+                                className="me-2 my-2 my-md-0 " 
                                 onClick={handleDeleteSession} 
                             >Delete
                             </Button>}

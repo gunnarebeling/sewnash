@@ -23,7 +23,7 @@ export function Login({ setLoggedInUser }) {
   };
 
   return (
-    <div className="container" style={{ maxWidth: "500px" }}>
+    <div className="container border rounded border-3 bg-light bg-opacity-50 p-4" style={{ maxWidth: "500px" }}>
       <h3>Login</h3>
       <FormGroup>
         <Label>Email</Label>
@@ -54,7 +54,7 @@ export function Login({ setLoggedInUser }) {
       <Button color="primary" onClick={handleSubmit}>
         Login
       </Button>
-      <Button  className="mx-2" color="warning" onClick={() => navigate("/employee")}>
+      <Button  className="mx-2" color="warning" onClick={() => navigate("/")}>
         HOME
       </Button>
       

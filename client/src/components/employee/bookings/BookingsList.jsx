@@ -6,18 +6,37 @@ import { useEffect, useState } from 'react';
 import { getAllSessions } from '../../../managers/sessionManager';
 import { setTimeFromString } from '../../../managers/FormatFunctions';
 import { useNavigate } from 'react-router-dom';
+import { getAllEmployees } from '../../../managers/employeeManager';
+import { Input } from 'reactstrap';
+import './BookingList.css';
 
 export const BookingsList = () => {
     const [sessions, setSessions] = useState([])
     const [events, setEvents] = useState([])
+    const [employees, setAllEmployees] = useState([])
+    const [selectedEmployee, setSelectedEmployee] = useState(null)
+    const [selectedEmployeeSessions, setSelectedEmployeeSessions] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         getAllSessions().then(setSessions)
+        getAllEmployees().then(setAllEmployees)
     }, [])
+    useEffect(() => {
+        setSelectedEmployeeSessions(sessions)
+    }, [sessions])
 
     useEffect(() => {
-       const events = sessions.map(s => {
+        if (selectedEmployee) {
+            const employeeSessions = sessions.filter(s => s.employees.some(s => s.id === parseInt(selectedEmployee)))
+            setSelectedEmployeeSessions(employeeSessions)
+        } else {
+            setSelectedEmployeeSessions(sessions)
+        }
+    }, [selectedEmployee])
+
+    useEffect(() => {
+       const events = selectedEmployeeSessions.map(s => {
         if (s.bookings.length > 0) {
           
           let newDate = setTimeFromString(new Date(s.dateTime), s.time?.startTime); 
@@ -36,7 +55,7 @@ export const BookingsList = () => {
         }
        }) 
        setEvents(events)
-    }, [sessions])
+    }, [sessions, selectedEmployeeSessions])
 
     const locales = {
       'en-US': enUS,
@@ -57,8 +76,22 @@ export const BookingsList = () => {
     }
 
     return (
-      <div>
-        <h4 className='m-3'>Bookings</h4>
+      <div className='container'>
+        <div className='d-flex justify-content-between'>
+          <h4 className='m-3'>Bookings</h4>
+          <Input
+            type='select'
+            value={selectedEmployee}
+            onChange={(e) => setSelectedEmployee(e.target.value)}
+            className='responsive-input m-3 w-25'
+            >
+            <option value={""}>All Employees</option>
+            {employees.map(e => (
+              <option key={e.id} value={e.id}>{e.fullName}</option>
+            ))}
+            </Input>
+
+        </div>
         <Calendar
           localizer={localizer}
           events={events}

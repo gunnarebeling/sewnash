@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { setTimeFromString } from '../../../managers/FormatFunctions';
 import { AvailabilityForm } from './AvailabilityForm';
 import { getClassById } from '../../../managers/sewClassManager';
+import './AvailabilityCalendar.css'
 
 export const AvailabilityCalendar = () => {
   const {classId} = useParams()
@@ -62,7 +63,7 @@ export const AvailabilityCalendar = () => {
 
   const MyDateHeader = ({ date }) => {
     
-      return <div>{date.getDate()} <Button onClick={(e => handleClick(date, e))}>+</Button></div>;
+      return <div>{date.getDate()} <Button onClick={(e => handleClick(date, e))} className='btn-xxs'>+</Button></div>;
     }
     const toggleModal = () => {
       setIsModalOpen(!isModalOpen);
@@ -92,9 +93,9 @@ export const AvailabilityCalendar = () => {
         sewClass={sewClass}
         setNewAvailability = {setNewAvailability}
       />
-      <div className='m-3'>
-        <h3>{sewClass.name}</h3>
-        <Button onClick={toggleModal}>add availability</Button>
+      <div className='m-3 d-flex justify-content-between align-items-center'>
+        <h3 className=''>{sewClass.name}</h3>
+        <Button onClick={toggleModal} color='primary'>add availability</Button>
       </div>
       <Calendar
         localizer={localizer}
