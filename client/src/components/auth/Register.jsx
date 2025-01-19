@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
 
-export function Register({ setLoggedInUser }) {
+export function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
@@ -43,15 +43,15 @@ export function Register({ setLoggedInUser }) {
           setRegistrationFailure(true)
         }
         else {
-          setLoggedInUser(user);
-          navigate("/");
+          
+          navigate("/employee");
         }
       });
     }
   };
 
   return (
-    <div className="container" style={{ maxWidth: "500px" }}>
+    <div className="container border border-3 bg-light bg-opacity-50 p-3 mb-3" style={{ maxWidth: "500px" }}>
       <h3>Sign Up</h3>
       <FormGroup>
         <Label>First Name</Label>

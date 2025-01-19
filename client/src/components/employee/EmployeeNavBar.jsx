@@ -14,6 +14,7 @@ Collapse,
 import { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import { logout } from "../../managers/authManager";
+import './EmployeeNavBar.css'
 
 
 export default function EmployeeNavBar() {
@@ -68,7 +69,7 @@ export default function EmployeeNavBar() {
 
             <NavItem>
                 <Button
-                color="primary"
+                className="logout-btn"
                 onClick={(e) => {
                     e.preventDefault();
                     logout().then(() => {

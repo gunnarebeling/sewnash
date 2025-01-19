@@ -44,7 +44,7 @@ export const ClassList = () => {
                 lg="6"
                 className="mb-4  justify-content-center"
                 >
-                <div className="class-selector" onClick={handleClassClick} data-id={c.id}>
+                <div className="class-selector " onClick={handleClassClick} data-id={c.id}>
                     <EmployeeSewClassCard sewClass={c} showDelete={true} setClassChange={setClassChange}/>
                 </div>
                 </Col>

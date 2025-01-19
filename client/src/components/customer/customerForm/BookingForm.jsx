@@ -7,7 +7,7 @@ import InputMask from 'react-input-mask'
 
 import * as Yup from "yup";
 import { PaymentForm } from "./PaymentForm"
-import { getStripeForm } from "../../../managers/StripeManager"
+import { getStripeForm, UpdateStripeForm } from "../../../managers/StripeManager"
 import './BookingForm.css'
 import { Elements, useElements, useStripe } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
@@ -18,8 +18,9 @@ export const BookingForm = () => {
     const {sessionId} = useParams()
     const [stripeData, setStripeData] = useState("")
     const [errors, setErrors] = useState({})
+    // eslint-disable-next-line no-unused-vars
     const [message, setMessage] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    
     const [priceOccupancy, setPriceOccupancy] = useState(0)
     const stripe = useStripe(); // Hook to access the stripe object
     const elements = useElements(); // Hook to access elements
@@ -28,7 +29,7 @@ export const BookingForm = () => {
          name: "",
          dateBooked: "" ,
          phoneNumber: "",
-         occupancy: 0,
+         occupancy: 1,
          email: "",
          sessionId: parseInt(sessionId)
  
@@ -37,11 +38,11 @@ export const BookingForm = () => {
         const sewClass = session.sewClass
 
         
-        if (sewClass && priceOccupancy ) {
+        if (sewClass && !priceOccupancy ) {
             const stripeObj = {
                 id: `sewClass_${sewClass.id}`,
                 amount: sewClass.pricePerPerson * 100,
-                quantity: priceOccupancy
+                quantity: 1
             }
             const items = [stripeObj]
             const itemsObj = { items: items}
@@ -49,11 +50,21 @@ export const BookingForm = () => {
                 setStripeData(res)
             })
             
-        }
-    }, [ priceOccupancy])
+        }else if (priceOccupancy ) {
+            const stripeObj = {
+                id: `sewClass_${sewClass.id}`,
+                amount: sewClass.pricePerPerson * 100,
+                quantity: priceOccupancy
+            }
+            const items = [stripeObj]
+            const itemsObj = {paymentIntentId: stripeData.paymentIntentId,items: items}
+            UpdateStripeForm(itemsObj).then(res => {
+                setStripeData(res)
+        })
+    }
 
-    
-        
+    }, [session, priceOccupancy])
+      
     const maxPeople = session.sewClass?.maxPeople - session.totalPeople
 
     const validationSchema = Yup.object().shape({
@@ -84,74 +95,11 @@ export const BookingForm = () => {
             setPriceOccupancy(parseInt(value))
         }
     }
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-                
-    //             await validationSchema.validate(bookingForm, {abortEarly: false})
-    //     } catch (validationErrors) {
-    //         const formattedErrors = validationErrors.inner.reduce((acc,err) => {
-    //             acc[err.path] = err.message
-    //             return acc
-    //         }, {})
-    //         setErrors(formattedErrors)
-    //     }
-                
-                
-            
-    //             setIsLoading(true);
-            
-    //             const { error, paymentIntent } = await stripe.confirmPayment({
-    //             elements ,
-
-    //             confirmParams: {
-    //                 // Make sure to change this to your payment completion page
-    //                 return_url: "/complete",
-    //             },
-    //             });
-            
-    //             // This point will only be reached if there is an immediate error when
-    //             // confirming the payment. Otherwise, your customer will be redirected to
-    //             // your `return_url`. For some payment methods like iDEAL, your customer will
-    //             // be redirected to an intermediate site first to authorize the payment, then
-    //             // redirected to the `return_url`.
-    //             if (error.type === "card_error" || error.type === "validation_error") {
-    //             setMessage(error.message);
-    //             } else {
-    //             setMessage("An unexpected error occurred.");
-    //             }
-    //             if (paymentIntent.status === "succeeded") {
-    //                 bookingForm.dateBooked = Date.now
-    //                 bookingForm.occupancy = parseInt(bookingForm.occupancy)
-    //                 PostBooking(bookingForm).then(() => setIsLoading(false))
-                    
-    //             }
-        
-    //   };
+   
       const options = {
         clientSecret: stripeData.clientSecret
         
       };
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     bookingForm.dateBooked = Date.now
-    //     bookingForm.occupancy = parseInt(bookingForm.occupancy)
-    //     try {
-    //         await validationSchema.validate(bookingForm, {abortEarly: false})
-    //         setErrors({})
-    //         PostBooking(bookingForm).then(() => {
-    //             navigate("/")
-    //         });
-            
-    //     } catch (validationErrors) {
-    //         const formattedErrors = validationErrors.inner.reduce((acc,err) => {
-    //             acc[err.path] = err.message
-    //             return acc
-    //         }, {})
-    //         setErrors(formattedErrors)
-    //     }
-    // }
 
     return (
          <Container className="bg-light bg-opacity-50 border border-3 rounded p-3 mt-3">
@@ -218,7 +166,7 @@ export const BookingForm = () => {
                             value={bookingForm.occupancy || ""}
                             onChange={handleChange}
                             invalid= {!!errors?.occupancy}
-                            max={maxPeople}
+                            max={maxPeople || 1}
                             min={1}
                         
                             />
@@ -232,7 +180,7 @@ export const BookingForm = () => {
                     <Container id="checkout">
                         { options.clientSecret &&
                         <Elements stripe={stripePromise}  options={options}>
-                           <PaymentForm stripeData={stripeData} validationSchema={validationSchema} bookingForm={bookingForm} setErrors={setErrors} setIsLoading={setIsLoading} setMessage={setMessage} options={options} elements={elements} stripe={stripe}/>
+                           <PaymentForm stripeData={stripeData} validationSchema={validationSchema} bookingForm={bookingForm} setErrors={setErrors}  setMessage={setMessage} options={options} elements={elements} stripe={stripe}/>
                         </Elements>
 
                         }

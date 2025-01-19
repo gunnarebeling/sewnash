@@ -17,3 +17,12 @@ public class Item
       [JsonProperty("items")]
       public Item[] Items { get; set; }
     }
+
+   
+      public class UpdatePaymentIntentRequest
+    {
+        public string PaymentIntentId { get; set; }
+        public Item[] Items { get; set; }
+        
+    }
+    

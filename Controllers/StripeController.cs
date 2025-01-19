@@ -28,9 +28,6 @@ namespace sewnash.Controllers
         // Create a Tax Calculation for the items being sold
         var taxCalculation = CalculateTax(request.Items, "usd");
 
-       Console.WriteLine($"Calculation ID: {taxCalculation.Id}");
-Console.WriteLine($"Total Tax Amount: {taxCalculation.AmountTotal}");
-Console.WriteLine($"Amount Total: {taxCalculation.AmountTotal}");
         var AmountTotal = taxCalculation.AmountTotal;
 
       var paymentIntentService = new PaymentIntentService();
@@ -53,7 +50,8 @@ Console.WriteLine($"Amount Total: {taxCalculation.AmountTotal}");
       { 
         clientSecret = paymentIntent.ClientSecret,
     
-        TotalAmount = AmountTotal / 100.0
+        TotalAmount = AmountTotal / 100.0,
+        paymentIntentId = paymentIntent.Id
        });
     }
 
@@ -105,7 +103,7 @@ Console.WriteLine($"Line Items Count: {calculationCreateOptions.LineItems.Count}
     public CalculationLineItemOptions BuildLineItem(Item item)
     {
         return new CalculationLineItemOptions
-        {
+        {   
             Amount = item.Amount * item.Quantity, // Amount in cents
             Reference = item.Id, // Unique reference for the item in the scope of the calculation
         };
@@ -125,7 +123,30 @@ Console.WriteLine($"Line Items Count: {calculationCreateOptions.LineItems.Count}
         var transactionService = new TransactionService();
         transactionService.CreateFromCalculation(transactionCreateOptions);
     }
+    [HttpPost("update-payment-intent")]
+        public ActionResult UpdatePaymentIntent([FromBody] UpdatePaymentIntentRequest request)
+        {
+            // Calculate the new total amount
+            var taxCalculation = CalculateTax(request.Items, "usd");
+            var amountTotal = taxCalculation.AmountTotal;
 
+            var paymentIntentService = new PaymentIntentService();
+            var paymentIntent = paymentIntentService.Update(request.PaymentIntentId, new PaymentIntentUpdateOptions
+            {
+                Amount = amountTotal,
+                Metadata = new Dictionary<string, string>
+                {
+                    { "tax_calculation", taxCalculation.Id },
+                },
+            });
+
+            return new JsonResult(new
+            {
+                clientSecret = paymentIntent.ClientSecret,
+                totalAmount = amountTotal / 100.0,
+                paymentIntentId = paymentIntent.Id
+            });
+        }
 
         
     }

@@ -1,16 +1,19 @@
 /* eslint-disable react/prop-types */
-import { CardElement, Elements, EmbeddedCheckout, EmbeddedCheckoutProvider, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
-import { loadStripe } from "@stripe/stripe-js";
-import { Button, Container, Form } from "reactstrap";
-import * as Yup from "yup";
+import {  PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { Button, Container} from "reactstrap";
+
 import { PostBooking } from "../../../managers/bookingManager";
 import { convertToDollars } from "../../../managers/FormatFunctions";
 import { useNavigate } from "react-router-dom";
-export const PaymentForm = ({ stripeData, validationSchema, bookingForm, setErrors, setIsLoading, setMessage, options, }) => {
+import { useState } from "react";
+import './PaymentForm.css'
+
+export const PaymentForm = ({ stripeData, validationSchema, bookingForm, setErrors, options, }) => {
     
   const stripe = useStripe(); // Hook to access the stripe object
   const elements = useElements();
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -71,9 +74,11 @@ export const PaymentForm = ({ stripeData, validationSchema, bookingForm, setErro
                 <h3 className="text-bold">Total</h3>
                 <h3>{stripeData ? convertToDollars(stripeData?.totalAmount) : "$0"}</h3>
             </div>
-            <Button variant="primary" color="primary" onClick={handleSubmit} className="mt-3 ">
-                            Submit
-                        </Button>
+            <Button variant="primary" color="primary" disabled={isLoading || !stripe || !elements} onClick={handleSubmit} className="mt-3 ">
+              <span id="button-text">
+                {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+              </span>
+            </Button>
             </div>
          
 
